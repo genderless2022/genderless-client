@@ -3,9 +3,8 @@ import './App.css';
 function App() { return (
     <div className="App">
       <p>Holaaaaaasadfasd</p>
-      <div>ppapapa</div>
+      <h1>HOLA OTRA VEZ</h1>
       <p>peepep</p>
-      <p>pipipip</p>
       <p>poooppopo</p>
     </div>
   );
