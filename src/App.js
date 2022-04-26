@@ -7,6 +7,9 @@ function App() { return (
       <p>peepep</p>
       <p>pipipip</p>
       <p>poooppopo</p>
+      <h1>PEPEP PIPIP POPO PPO  AOPAPUAUA </h1>
+      <h1>PEPEP PIPIP POPO PPO  AOPAPUAUA </h1>
+      <h1>PEPEP PIPIP POPO PPO  AOPAPUAUA </h1>
     </div>
   );
 }
