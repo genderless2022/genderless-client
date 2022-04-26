@@ -2,11 +2,13 @@ import './App.css';
 
 function App() { return (
     <div className="App">
-      <p>Holaaaaaasadfasd</p>
-      <h1>HOLA OTRA VEZ</h1>
+      <p>CHAUUUUUUU</p>
+      <select>
+        ppapapa
+      </select>
       <p>peepep</p>
       <p>poooppopo</p>
-      <div>PEPEP PIPIP POPO PPO  AOPAPUAUA </div>
+      <h2>PEPEPEPEP </h2>
       <h1>PEPEP PIPIP POPO PPO  AOPAPUAUA </h1>
       <h1>PEPEP PIPIP POPO PPO  AOPAPUAUA </h1>
     </div>
