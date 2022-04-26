@@ -6,6 +6,9 @@ function App() { return (
       <h1>HOLA OTRA VEZ</h1>
       <p>peepep</p>
       <p>poooppopo</p>
+      <h1>PEPEP PIPIP POPO PPO  AOPAPUAUA </h1>
+      <h1>PEPEP PIPIP POPO PPO  AOPAPUAUA </h1>
+      <h1>PEPEP PIPIP POPO PPO  AOPAPUAUA </h1>
     </div>
   );
 }
