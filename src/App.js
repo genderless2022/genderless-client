@@ -1,11 +1,8 @@
 import './App.css';
 
-
-//App bonita
-//App bonita
-//AHJBCKDASHBCHDUSC CAMBIO
 function App() { return (
     <div className="App">
+        <p>àààsdfas</p>
       <p>Holaaaaaa</p>
     </div>
   );
