@@ -6,7 +6,6 @@ import './App.css';
 //AHJBCKDASHBCHDUSC CAMBIO
 function App() { return (
     <div className="App">
-      <h1>Henry Dogs</h1>
       <p>Holaaaaaa</p>
       <p>Otra prueba</p>
     </div>
