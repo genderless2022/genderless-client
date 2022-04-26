@@ -2,9 +2,11 @@ import './App.css';
 
 function App() { return (
     <div className="App">
-      <div>Holaaaaaa</div>
-      <div>papapa</div>
-      <h1>asjchaisc</h1>
+      <p>Holaaaaaasadfasd</p>
+      <div>ppapapa</div>
+      <p>peepep</p>
+      <p>pipipip</p>
+      <p>poooppopo</p>
     </div>
   );
 }
