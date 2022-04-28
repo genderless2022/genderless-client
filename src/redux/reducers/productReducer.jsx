@@ -12,7 +12,7 @@ const initialState = {
   status: '',
 
 };
-function productReducer(action, state = initialState) {
+function productReducer( state = initialState, action) {
   switch (action.type) {
     case GET_PRODUCTS:
       return { ...state, productos: action.payload };

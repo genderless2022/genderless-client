@@ -5,7 +5,7 @@ const initialState = {
   status: '',
   usuario: {},
 };
-function userReducer(action, state = initialState) {
+function userReducer( state = initialState, action) {
   switch (action.type) {
     case GET_USERS:
       return { ...state, usuarios: action.payload };
