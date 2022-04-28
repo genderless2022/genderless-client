@@ -44,7 +44,7 @@ export const getUser = ( email ) => async ( dispatch ) => {
 
 // Habilitada
 export const createUser = ({
-  name, lastName, picture, gender, born, dni, email, address, province, phone, postal, password, permission = 'user',
+  name, lastName, picture, born, dni, email, address, province, phone, postal, password, permission = 'user',
 }) => async (dispatch) => {
   axios.post('http://localhost:3001/usuario', {
     name,
