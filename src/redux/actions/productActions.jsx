@@ -9,6 +9,7 @@ export const DELETE_PRODUCT_ID = 'DELETE_PRODUCT_ID';
 export const ERROR = 'ERROR';
 
 export const getProducts = () => async (dispatch) => {
+  console.log('GOT')
   axios.get('http://localhost:3001/productos').then(
     (response) => {
       dispatch({
