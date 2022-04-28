@@ -7,6 +7,7 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const ERROR = 'ERROR';
 
+// Habilitada
 export const getProducts = () => async (dispatch) => {
   await axios.get('http://localhost:3001/productos').then(
     (response) => {
@@ -24,6 +25,7 @@ export const getProducts = () => async (dispatch) => {
   );
 };
 
+// No Habilitada
 export const getProduct = (id) => async (dispatch) => {
   await axios.get(`http://localhost:3001/producto/${id}`).then(
     (response) => {
@@ -41,9 +43,8 @@ export const getProduct = (id) => async (dispatch) => {
   );
 };
 
-export const createProduct = ({
-  name, description, stock_by_size, price, discount, image, brand, disabled, category,
-}) => async (dispatch) => {
+// Habilitada
+export const createProduct = ({ name, description, stock_by_size, price, discount, image, brand, disabled, category,}) => async (dispatch) => {
   await axios.post('http://localhost:3001/productos', {
     name,
     description,
@@ -62,6 +63,8 @@ export const createProduct = ({
   });
 };
 
+
+// No Habilitada
 export const deleteProduct = (id) => async (dispatch) => {
   await axios.delete(`http://localhost:3001/producto/${id}`).then(
     (response) => {
@@ -79,9 +82,19 @@ export const deleteProduct = (id) => async (dispatch) => {
   );
 };
 
-export const editProduct = (producto) => async (dispatch) => {
-  await axios.put('http://localhost:3001/producto/putproduct', producto)
-    .then(
+// Habilitada
+export const editProduct = ({id, description,stock_by_size, price, discount, image, brand, disabled, category }) => async (dispatch) => {
+  await axios.put('http://localhost:3001/producto/putproduct', {
+    id, 
+    description,
+    stock_by_size, 
+    price, 
+    discount, 
+    image, 
+    brand, 
+    disabled, 
+    category 
+  }).then(
       (response) => {
         dispatch({
           type: EDIT_PRODUCT,
