@@ -45,7 +45,7 @@ export const getProduct = (id) => async (dispatch) => {
 export const createProduct = ({
   name, description, size, color, stock, price, discount, image, category,
 }) => async (dispatch) => {
-  axios.post('http://localhost:3001/producto', {
+  axios.post('http://localhost:3001/productos', {
     name,
     description,
     size,
@@ -81,7 +81,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 };
 
 export const editProduct = (producto) => async (dispatch) => {
-  await axios.put('http://localhost:3001/producto', producto)
+  await axios.put('http://localhost:3001/producto/putproduct', producto)
     .then(
       (response) => {
         dispatch({
