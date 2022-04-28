@@ -6,6 +6,7 @@ export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const ERROR = 'ERROR';
 
+// Habilitada
 export const getUsers = () => async (dispatch) => {
   axios.get('http://localhost:3001/usuarios').then(
     (response) => {
@@ -23,10 +24,9 @@ export const getUsers = () => async (dispatch) => {
   );
 };
 
+// Habilitada
 export const getUser = ( email ) => async ( dispatch ) => {
-  axios.get('http://localhost:3001/usuario/info', {
-    email
-  }).then(
+  axios.get(`http://localhost:3001/usuario/${email}`).then(
     (response) => {
       dispatch({
         type: GET_USER,
@@ -42,6 +42,7 @@ export const getUser = ( email ) => async ( dispatch ) => {
   )
 }
 
+// Habilitada
 export const createUser = ({
   name, lastName, picture, born, dni, email, address, province, phone, postal, password, permission = 'user',
 }) => async (dispatch) => {
