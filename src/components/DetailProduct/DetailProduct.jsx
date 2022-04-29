@@ -6,19 +6,16 @@ import { getProduct } from "../../redux/actions/productActions"
 // import { addProductFavorite } from '../../redux/actions/favoriteActions';
 // import { addProduct } from '../../redux/actions/shoppingCartActions';
 import { BsSuitHeartFill } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 
 const DetailProduct = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
-    // const product = useSelector( (state) => state.productReducer.producto)
-    const product = {"id":6,"name":"Pantalon Circa Chino","description":"Pantalon Circa Chino de gabardina, tiro medio, bolsillos laterales y traseros invisibles. Pantalon Circa Chino de gabardina, tiro medio, bolsillos laterales y traseros invisibles","stock_by_size":[{"size":"30","stock":589},{"size":"32","stock":589},{"size":"34","stock":589},{"size":"36","stock":589},{"size":"38","stock":589},{"size":"30","stock":589},{"size":"32","stock":589},{"size":"34","stock":589},{"size":"36","stock":589},{"size":"38","stock":589}],"price":9699,"discount":0,"image":"https://www.cristobalcolon.com/fullaccess/item21339foto95127.jpg","brand":"Circa","disabled":false,"createdAt":"2022-04-28T23:24:36.884Z","updatedAt":"2022-04-28T23:24:37.389Z","CategoryName":"Pantalon","Category":{"name":"Pantalon","createdAt":"2022-04-28T23:24:37.230Z","updatedAt":"2022-04-28T23:24:37.230Z"}};
-
+    const product = useSelector( (state) => state.productReducer.producto)
     const [show, setShow] = useState("")
 
-    // useEffect(() => {
-    //     dispatch(getProduct(id))
-    // }, [dispatch, id])
+    useEffect(() => {
+        dispatch(getProduct(id))
+    }, [dispatch, id])
     
     const addShoppingCart = () => { 
       // dispatch(addProduct({productId : id, userEmail : email}))
@@ -31,7 +28,9 @@ const DetailProduct = () => {
         console.log('agregado a Favoritos')
         setShow("favoritos")
     }
-
+    // const stock = product.stock_by_size?.reduce((a,b) => a.stock + b.stock, 0)
+    // console.log('stock', stock)
+    // console.log('product.stock_by_size', product.stock_by_size[0].stock)
     return (
         <>
             <div>
@@ -56,7 +55,7 @@ const DetailProduct = () => {
                                     <div className="detail-one-size">
                                         <div className="sizesMap">
                                         {
-                                            product.stock_by_size.map((size, i) => {
+                                            product.stock_by_size?.map((size, i) => {
                                                 return <div key={i} className="detail-sizes2">
                                                             <span className="sizes2Size"> {size.size}  </span>
                                                                 <span className="sizes2NumerOfSize">({size.stock}) </span><br />
@@ -86,9 +85,6 @@ const DetailProduct = () => {
                                     <div className="description-bottom">
                                         <div className="description-bottom-p">
                                             <strong>Marca:</strong> {product.brand} <br />
-                                        </div>
-                                        <div className="description-bottom-p">
-                                            <strong>Color:</strong> Negro <br />
                                         </div>
                                     </div>
                                 </div>

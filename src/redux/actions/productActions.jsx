@@ -27,7 +27,7 @@ export const getProducts = () => async (dispatch) => {
 
 // No Habilitada
 export const getProduct = (id) => async (dispatch) => {
-  await axios.get(`http://localhost:3001/producto/${id}`).then(
+  await axios.get(`http://localhost:3001/productos/id/${id}`).then(
     (response) => {
       dispatch({
         type: GET_PRODUCT,

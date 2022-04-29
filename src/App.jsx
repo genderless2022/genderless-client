@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { AdminCreate } from './components/AdminCreate/AdminCreate';
 import { DetailProduct } from './components/DetailProduct/DetailProduct';
 import Landing from './components/Landing/Landing';
 import { Login } from './components/Login/Login';
@@ -17,7 +18,9 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/productoid" element={<DetailProduct />} />
+        <Route path="/producto/:id" element={<DetailProduct />} />
+
+        <Route path="/admin/create" element={<AdminCreate />} />
 
       </Routes>
     </div>
