@@ -5,7 +5,7 @@ import { DetailProduct } from './components/DetailProduct/DetailProduct';
 import Landing from './components/Landing/Landing';
 import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
-import TestRoute from './components/TestRoute/TestRoute';
+
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Routes>
 
         <Route path="/" element={<Landing />} />
-        <Route path="/test" element={<TestRoute />} />
+
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
