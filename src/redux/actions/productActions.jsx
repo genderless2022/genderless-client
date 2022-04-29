@@ -109,3 +109,97 @@ export const editProduct = ({id, description,stock_by_size, price, discount, ima
       },
     );
 };
+
+
+// FILTROS:
+
+// Prueba...
+export const getProductsbyName = (name) => async (dispatch) => {
+  await axios.get(`http://localhost:3001/productos/name/${name}`).then(
+    (response) => {
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
+
+// Prueba...
+export const getProductsbyBrand = (brand) => async (dispatch) => {
+  await axios.get(`http://localhost:3001/productos/marca/${brand}`).then(
+    (response) => {
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
+
+// Prueba...
+// Usar ASC O DESC en order
+export const getProductsbyPrice = (order) => async (dispatch) => {
+  await axios.get(`http://localhost:3001/productos/price/${order}`).then(
+    (response) => {
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
+
+// Prueba...
+export const getProductsbyCategory = (category) => async (dispatch) => {
+  await axios.get(`http://localhost:3001/productos/categoria/${category}`).then(
+    (response) => {
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
+
+// Prueba...
+export const getDiscounts = () => async (dispatch) => {
+  await axios.get(`http://localhost:3001/productos/discount`).then(
+    (response) => {
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
