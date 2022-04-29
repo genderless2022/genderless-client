@@ -26,7 +26,7 @@ export const getUsers = () => async (dispatch) => {
 
 // Habilitada
 export const getUser = ( email ) => async ( dispatch ) => {
-  axios.get(`http://localhost:3001/usuario/${email}`).then(
+  axios.get(`http://localhost:3001/usuario/email/${email}`).then(
     (response) => {
       dispatch({
         type: GET_USER,
