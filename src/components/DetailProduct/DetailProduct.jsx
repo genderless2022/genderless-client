@@ -31,6 +31,9 @@ const DetailProduct = () => {
     // const stock = product.stock_by_size?.reduce((a,b) => a.stock + b.stock, 0)
     // console.log('stock', stock)
     // console.log('product.stock_by_size', product.stock_by_size[0].stock)
+    
+    // const stock = addSizes.length > 0 && addSizes?.map((e) => e.stock)?.reduce((a,b) => a + b)
+
     return (
         <>
             <div>

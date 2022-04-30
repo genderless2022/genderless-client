@@ -201,11 +201,10 @@
 
 .sizes2Size {
     font-size: 15px;
-}
+    color: #EBEBEB;}
 
 .sizes2NumerOfSize {
     font-size: 10px;
-    color: rgba(0, 0, 0, 0.548);
 }
 
 .lds-spinner {
