@@ -5,9 +5,12 @@ import { AdminCreate } from './components/AdminCreate/AdminCreate';
 import { AdminEdit } from './components/AdminEdit/AdminEdit';
 import AdminHome from './components/AdminHome/AdminHome';
 import { DetailProduct } from './components/DetailProduct/DetailProduct';
+import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing';
 import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function App() {
@@ -16,6 +19,7 @@ function App() {
       <Routes>
 
         <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Home />} />
 
 
         <Route path="/login" element={<Login />} />
