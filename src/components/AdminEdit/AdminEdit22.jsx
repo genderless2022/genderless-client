@@ -1,8 +1,10 @@
-import './AdminCreate.css';
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
-import { createProduct } from "../../redux/actions/productActions";
+import './AdminEdit.css'
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+// import { editProduct } from "../../../../redux/actions/productActions"
+import { useDispatch, useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
+import { getProduct, editProduct } from "../../redux/actions/productActions"
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -35,30 +37,68 @@ const formSchema = Yup.object().shape({
         .min(2, "Mínimo 2 carácteres"),
     disabled: Yup.string(),
 });
+    
+// const AdminEdit = ({activeDrawer, product}) => {
+const AdminEdit = ({activeDrawer}) => {
+    const { id } = useParams()
+    const dispatch = useDispatch()
+    const product = useSelector( (state) => state.productReducer.producto)
 
-const formOptions = { resolver: yupResolver(formSchema) };
+    useEffect(() => {
+        dispatch(getProduct(id))
+    }, [dispatch, id])
 
-const AdminCreate = () => {
-    const dispatch = useDispatch();
-    const { register, formState: { errors }, handleSubmit, reset } = useForm(formOptions);
+    const preloadedValues = {
+        description: product?.description,
+        disabled: product?.disabled,
+        price: product?.price,
+        discount: product?.discount,
+        brand: product?.brand,
+        image: product?.image,
+        category: product?.CategoryName,  
+        stock_by_size: product?.stock_by_size
+    }
+    const formOptions = { resolver: yupResolver(formSchema), defaultValues: preloadedValues };
+
+    const { register, formState: { errors }, handleSubmit } = useForm(formOptions);
     const nav = useNavigate()
-    const [addSizes, setAddSizes] = useState([])
+    // const [addSizes, setAddSizes] = useState(product?.stock_by_size)
+    // const [addSizes, setAddSizes] = useState(product?.stock_by_size || [])
+    const [addSizes, setAddSizes] = useState([["XS",25],["35",35],["44",58]])
     const [size, setSize] = useState(null)
-    const [quantity, setQuantity] = useState("")    
-    const sizesState = ['35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', 'L', 'M', 'S', 'XL', 'XS', 'XXL']
-    const [sizeShoes, setSizeShoes] = useState(sizesState); 
+    const [quantity, setQuantity] = useState("25")    
+    const sizesState = ["Size","XS","S","M","L","XL","XXL","35","36","37","38","39","40","41","42","43","44","45","46"]
+    const [sizeShoes, setSizeShoes] = useState(["Size","XS","S","M","L","XL","XXL","35","36","37","38","39","40","41","42","43","44","45","46"]); 
     const [disabled, setDisabled] = useState(true)
 
+    for(let i = 0; i < addSizes?.length ; i++) {
+        for(let j = 0; j < sizesState.length; j++) {
+        if(addSizes[i][0] === sizesState[j]){
+            sizesState.splice(j,1)
+            }
+        }
+    }
+
     const onSubmit = (data) => {
-        reset();
-        nav('/admin')
         const sendData = {...data ,
             "stock_by_size" : addSizes,
             "discount": Number(data.discount),
+            "id": product?.id,
             "price": Number(data.price)
         }
-        dispatch(createProduct(sendData)); 
+        dispatch(editProduct(sendData)); 
+        nav("/admin");
+        // activeDrawer();
     };
+
+    const handleDeleteSize = (e) => {
+        e.preventDefault();
+        const arrayDelete = [...addSizes]
+        arrayDelete.splice(e.target.name, 1)
+        setAddSizes(arrayDelete)
+        const valor = [...sizeShoes, e.target.value]
+        setSizeShoes(valor)
+    }
 
     const handleSize = (e) => {
         e.preventDefault();
@@ -66,7 +106,7 @@ const AdminCreate = () => {
         ...addSizes,
             {"size": size, "stock": Number(quantity)}
         ])
-        const filterSize = sizeShoes.filter(e => e !== size).sort()
+        const filterSize = sizeShoes.filter(e => e != size).sort()
         setSizeShoes(filterSize)
         setDisabled(true)
         setQuantity("")
@@ -83,25 +123,13 @@ const AdminCreate = () => {
         setQuantity(e.target.value)
     }
 
-    const handleDeleteSize = (e) => {
-    e.preventDefault();
-    const arrayDelete = [...addSizes]
-    arrayDelete.splice(e.target.name, 1)
-    setAddSizes(arrayDelete)
-    const valor = [...sizeShoes, e.target.value]
-    setSizeShoes(valor)
-    }
-
     return (
-        <div className="container-register-form-admin">
-            <div className="Btn-back-admin">
-                <Link className="link-button" to='/admin'><p>Panel admin</p></Link>
-            </div>
+        <div className="container-register-form">
             <form onSubmit={handleSubmit(onSubmit)}>
+            <button className="btn-quit-drawer" onClick={()=>activeDrawer()}>X</button>
                 <div className="container-index">
                     <div className="form-container">
-                        <div className="title">Crear producto</div>
-                        <p className="register-subtitle">(* campos requeridos)</p>
+                        <div className="title">Editar artículo</div>
                         <div className="form-group-one">
                             <div className="labelAndInput">
                                 <label className="input-label">*Nombre: </label>
@@ -109,12 +137,13 @@ const AdminCreate = () => {
                                     className="input-register"
                                     type="text"
                                     name="name"
+                                    value={product?.name}
                                     {...register('name')}
                                 />
                                 {<div className="form-register-errors">{errors.name?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*Descripción: </label>
+                                <label className="input-label">Descripción: </label>
                                 <input
                                     className="input-register"
                                     type="text"
@@ -124,7 +153,7 @@ const AdminCreate = () => {
                                 {<div className="form-register-errors">{errors.description?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*Categoría: </label>
+                                <label className="input-label">Categoría: </label>
                                 <input
                                     className="input-register"
                                     type="text"
@@ -134,7 +163,7 @@ const AdminCreate = () => {
                                 {<div className="form-register-errors">{errors.category?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*URL de imagen: </label>
+                                <label className="input-label">URL de imagen: </label>
                                 <input
                                     className="input-register"
                                     type="text"
@@ -144,7 +173,7 @@ const AdminCreate = () => {
                                 {<div className="form-register-errors">{errors.image?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*Precio: </label>
+                                <label className="input-label">Precio: </label>
                                 <input
                                     className="input-register"
                                     type="number"
@@ -164,7 +193,7 @@ const AdminCreate = () => {
                                 {<div className="form-register-errors">{errors.discount?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*Marca: </label>
+                                <label className="input-label">Marca: </label>
                                 <input
                                     className="input-register"
                                     type="text"
@@ -186,7 +215,6 @@ const AdminCreate = () => {
                                         <span className="dot two"></span>
                                         <span className="disabled">Deshabilitado</span>
                                     </label>
-
                                 </div>
                             </div>
                         </div>
@@ -195,7 +223,7 @@ const AdminCreate = () => {
                         
                             <select className="select-create-stock" onChange={(e)=> handleSelectSize(e)}>
                                 {
-                                    sizeShoes?.map((e, i) => {
+                                    sizeShoes.map((e, i) => {
                                         return(
                                             <option key={i} value={e}>{e}</option>
                                             )
@@ -216,15 +244,15 @@ const AdminCreate = () => {
                             {
                                 addSizes?.map((e,i) => {
                                     return(
-                                        <button onClick={(e) => handleDeleteSize(e)} name={i} value={e.size} key={i}>{e.size} : {e.stock}u</button>
+                                        <button onClick={(e) => handleDeleteSize(e)} name={i} value={e[0]} key={i}>{e[0]} : {e[1]}u</button>
                                         )
                                 })
-                            }
+                                }
                         </div>
                         <div className="form-submit">
                             <input
                                 type="submit"
-                                value="CREAR PRODUCTO"
+                                value="EDITAR PRODUCTO"
                             />
                         </div>
                     </div>
@@ -234,4 +262,4 @@ const AdminCreate = () => {
     );
 };
 
-export { AdminCreate }
+export { AdminEdit }

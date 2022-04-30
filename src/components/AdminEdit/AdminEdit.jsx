@@ -1,8 +1,8 @@
-import './AdminCreate.css';
-import { useState } from "react"
+import './AdminEdit.css'
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
-import { createProduct } from "../../redux/actions/productActions";
+import { editProduct } from "../../redux/actions/productActions"
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -33,49 +33,76 @@ const formSchema = Yup.object().shape({
         .required("Este campo es requerido")
         .max(30, "Máximo 30 carácteres")
         .min(2, "Mínimo 2 carácteres"),
-    disabled: Yup.string(),
 });
-
-const formOptions = { resolver: yupResolver(formSchema) };
-
-const AdminCreate = () => {
-    const dispatch = useDispatch();
-    const { register, formState: { errors }, handleSubmit, reset } = useForm(formOptions);
+    
+const AdminEdit = ({activeDrawer, product}) => {
+    const preloadedValues = {
+        description: product?.description,
+        price: product?.price,
+        discount: product?.discount,
+        brand: product?.brand,
+        image: product?.image,  
+        category: product?.CategoryName,  
+        stock_by_size: product?.stock_by_size
+    }
+    const formOptions = { resolver: yupResolver(formSchema), defaultValues: preloadedValues };
+    const { register, formState: { errors }, handleSubmit } = useForm(formOptions);
     const nav = useNavigate()
-    const [addSizes, setAddSizes] = useState([])
+    const dispatch = useDispatch();
+    const [addSizes, setAddSizes] = useState(product?.stock_by_size || [])
     const [size, setSize] = useState(null)
     const [quantity, setQuantity] = useState("")    
-    const sizesState = ['35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', 'L', 'M', 'S', 'XL', 'XS', 'XXL']
+    const sizesState = ["Size","XS","S","M","L","XL","XXL","35","36","37","38","39","40","41","42","43","44","45","46"]
     const [sizeShoes, setSizeShoes] = useState(sizesState); 
-    const [disabled, setDisabled] = useState(true)
+    const [disabledSize, setDisabledSize] = useState(true)
+
+    for(let i = 0; i < addSizes?.length ; i++) {
+        for(let j = 0; j < sizesState.length; j++) {
+        if(addSizes[i].size === sizesState[j]){
+            sizesState.splice(j,1)
+            }
+        }
+    }
 
     const onSubmit = (data) => {
-        reset();
-        nav('/admin')
         const sendData = {...data ,
             "stock_by_size" : addSizes,
             "discount": Number(data.discount),
-            "price": Number(data.price)
+            "id": product?.id,
+            "price": data.price,
+            "disabled": false
         }
-        dispatch(createProduct(sendData)); 
+        console.log('sendData', sendData)
+        dispatch(editProduct(sendData)); 
+        nav("/admin");
+        activeDrawer();
     };
+
+    const handleDeleteSize = (e) => {
+        e.preventDefault();
+        const arrayDelete = [...addSizes]
+        arrayDelete.splice(e.target.name, 1)
+        setAddSizes(arrayDelete)
+        const valor = [...sizeShoes, e.target.value]
+        setSizeShoes(valor)
+    }
 
     const handleSize = (e) => {
         e.preventDefault();
         setAddSizes([
         ...addSizes,
-            {"size": size, "stock": Number(quantity)}
+            {"size":size, "stock":Number(quantity)}
         ])
-        const filterSize = sizeShoes.filter(e => e !== size).sort()
+        const filterSize = sizeShoes.filter(e => e != size)
         setSizeShoes(filterSize)
-        setDisabled(true)
+        setDisabledSize(true)
         setQuantity("")
     }
 
     const handleSelectSize = (e) => {
         e.preventDefault();
         setSize(e.target.value)
-        setDisabled(false)
+        setDisabledSize(false)
     }
 
     const handleSelectQuantity = (e) => {
@@ -83,25 +110,13 @@ const AdminCreate = () => {
         setQuantity(e.target.value)
     }
 
-    const handleDeleteSize = (e) => {
-    e.preventDefault();
-    const arrayDelete = [...addSizes]
-    arrayDelete.splice(e.target.name, 1)
-    setAddSizes(arrayDelete)
-    const valor = [...sizeShoes, e.target.value]
-    setSizeShoes(valor)
-    }
-
     return (
-        <div className="container-register-form-admin">
-            <div className="Btn-back-admin">
-                <Link className="link-button" to='/admin'><p>Panel admin</p></Link>
-            </div>
+        <div className="container-register-form">
             <form onSubmit={handleSubmit(onSubmit)}>
+            <button className="btn-quit-drawer" onClick={()=>activeDrawer()}>X</button>
                 <div className="container-index">
                     <div className="form-container">
-                        <div className="title">Crear producto</div>
-                        <p className="register-subtitle">(* campos requeridos)</p>
+                        <div className="title">Editar artículo</div>
                         <div className="form-group-one">
                             <div className="labelAndInput">
                                 <label className="input-label">*Nombre: </label>
@@ -109,12 +124,13 @@ const AdminCreate = () => {
                                     className="input-register"
                                     type="text"
                                     name="name"
+                                    value={product?.name}
                                     {...register('name')}
                                 />
                                 {<div className="form-register-errors">{errors.name?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*Descripción: </label>
+                                <label className="input-label">Descripción: </label>
                                 <input
                                     className="input-register"
                                     type="text"
@@ -124,7 +140,7 @@ const AdminCreate = () => {
                                 {<div className="form-register-errors">{errors.description?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*Categoría: </label>
+                                <label className="input-label">Categoría: </label>
                                 <input
                                     className="input-register"
                                     type="text"
@@ -134,7 +150,7 @@ const AdminCreate = () => {
                                 {<div className="form-register-errors">{errors.category?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*URL de imagen: </label>
+                                <label className="input-label">URL de imagen: </label>
                                 <input
                                     className="input-register"
                                     type="text"
@@ -144,7 +160,7 @@ const AdminCreate = () => {
                                 {<div className="form-register-errors">{errors.image?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*Precio: </label>
+                                <label className="input-label">Precio: </label>
                                 <input
                                     className="input-register"
                                     type="number"
@@ -164,7 +180,7 @@ const AdminCreate = () => {
                                 {<div className="form-register-errors">{errors.discount?.message}</div>}
                             </div>
                             <div className="labelAndInput">
-                                <label className="input-label">*Marca: </label>
+                                <label className="input-label">Marca: </label>
                                 <input
                                     className="input-register"
                                     type="text"
@@ -173,25 +189,9 @@ const AdminCreate = () => {
                                 />
                                 {<div className="form-register-errors">{errors.brand?.message}</div>}
                             </div>
-                            <div className="disabled-details-create-admin">
-                                <input type="radio" name="disabled" value="false" id="dot-1" {...register('disabled')} />
-                                <input type="radio" name="disabled" value="true" id="dot-2" {...register('disabled')} />
-                                <span className="disabled-title">Habilitar / Deshabilitar</span>
-                                <div className="category">
-                                    <label htmlFor="dot-1">
-                                        <span className="dot one"></span>
-                                        <span className="disabled">Habilitado</span>
-                                    </label>
-                                    <label htmlFor="dot-2">
-                                        <span className="dot two"></span>
-                                        <span className="disabled">Deshabilitado</span>
-                                    </label>
-
-                                </div>
-                            </div>
                         </div>
                         <div className="container-stock">
-                            <button className="button-create-stock" disabled={disabled} onClick={(e)=> handleSize(e)}>Agregar talle</button>
+                            <button className="button-create-stock" disabled={disabledSize} onClick={(e)=> handleSize(e)}>Agregar talle</button>
                         
                             <select className="select-create-stock" onChange={(e)=> handleSelectSize(e)}>
                                 {
@@ -215,16 +215,17 @@ const AdminCreate = () => {
                         <div className="labelAndInput-stock-finally">
                             {
                                 addSizes?.map((e,i) => {
+                                    console.log('e', e, e.stock)
                                     return(
                                         <button onClick={(e) => handleDeleteSize(e)} name={i} value={e.size} key={i}>{e.size} : {e.stock}u</button>
                                         )
                                 })
-                            }
+                                }
                         </div>
                         <div className="form-submit">
                             <input
                                 type="submit"
-                                value="CREAR PRODUCTO"
+                                value="EDITAR PRODUCTO"
                             />
                         </div>
                     </div>
@@ -234,4 +235,4 @@ const AdminCreate = () => {
     );
 };
 
-export { AdminCreate }
+export { AdminEdit }

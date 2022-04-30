@@ -83,18 +83,8 @@ export const deleteProduct = (id) => async (dispatch) => {
 };
 
 // Habilitada
-export const editProduct = ({id, description,stock_by_size, price, discount, image, brand, disabled, category }) => async (dispatch) => {
-  await axios.put('http://localhost:3001/producto/putproduct', {
-    id, 
-    description,
-    stock_by_size, 
-    price, 
-    discount, 
-    image, 
-    brand, 
-    disabled, 
-    category 
-  }).then(
+export const editProduct = (sendData) => async (dispatch) => {
+  await axios.put('http://localhost:3001/productos/putproduct', sendData).then(
       (response) => {
         dispatch({
           type: EDIT_PRODUCT,
