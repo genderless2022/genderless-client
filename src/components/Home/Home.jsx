@@ -20,7 +20,7 @@ function Home() {
   return (
 
     <>
-    <NavigationBar/>
+    {/* <NavigationBar/> */}
 
     <div className="containerCardsHome">
         {

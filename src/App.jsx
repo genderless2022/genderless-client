@@ -10,12 +10,14 @@ import Landing from './components/Landing/Landing';
 import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NavigationBar from './components/Nav/NavigationBar';
 
 
 
 function App() {
   return (
     <div className="App">
+      <NavigationBar></NavigationBar>
       <Routes>
 
         <Route path="/" element={<Landing />} />
