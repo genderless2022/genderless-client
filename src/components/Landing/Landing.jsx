@@ -16,7 +16,7 @@ function Landing() {
     const [index, setIndex] = useState(0);
     const nav = useNavigate()
     const productos = useSelector((state) => state.productReducer.productos.reverse());
-
+    const prodsFinal = productos.filter(p => p.disabled === false);
     useEffect(() => {
       dispatch(getProducts());
     }, []);
@@ -284,7 +284,7 @@ function Landing() {
             gap: "1%",
           }}
         >
-          {productos?.slice(0, 4).map((producto) => (
+          {prodsFinal?.slice(0, 4).map((producto) => (
               <div key={producto.id}>
                 <Card
                   style={{
