@@ -15,3 +15,11 @@
 .cardsProductsButtons .cardsProductsButton {
     font-size: 1.7rem;
 }
+
+.PagedHome {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+}

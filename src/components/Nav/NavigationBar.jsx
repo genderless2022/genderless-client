@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Container, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getProductsbyName } from '../../redux/actions/productActions';
 import './NavigationBar.css'
 
 function NavigationBar() {
 
+  /**
+     //!--------- BUSQUEDA ----------------------------------
+  **/
+     const[name, setName] = useState('')
+     const dispatch = useDispatch();
+
+     function handleInputChange(event) {
+         event.preventDefault();
+         setName(event.target.value.toLowerCase());
+         console.log(name, 'HandleChange')
+     }
+   
+     function handleSubmit(event) {
+         event.preventDefault();
+         dispatch(getProductsbyName(name))
+         setName('');
+         console.log(name, 'HandleSubmit')
+     }
+   
   return (
 
 <Navbar bg="dark" expand="lg">
@@ -22,14 +43,15 @@ function NavigationBar() {
         <Nav.Link href="/login" style={{ maxHeight: '100px', color: 'white' }}>Iniciar sesion</Nav.Link>
         
       </Nav>
-      <Form className="d-flex">
+      <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>
         <FormControl
           type="search"
           placeholder="Buscar producto"
           className="me-2"
           aria-label="Search"
+          onChange={(e) => {handleInputChange(e)}}
         />
-        <Button variant="outline-warning">Buscar</Button>
+        <Button type="submit" variant="outline-warning">Buscar</Button>
       </Form>
     </Navbar.Collapse>
   </Container>
