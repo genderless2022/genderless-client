@@ -2,29 +2,31 @@ import React, { useEffect, useState } from 'react'
 import './Home.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, getProductsbyCategory, getProductsbyPrice } from '../../redux/actions/productActions';
-import { Button, Card, Container, Nav, Navbar, NavDropdown, Pagination, Spinner } from 'react-bootstrap';
+import { Alert, Button, Card, Container, Nav, Navbar, NavDropdown, Pagination, Spinner } from 'react-bootstrap';
 import { CgShoppingCart } from 'react-icons/cg';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import NavigationBar from '../Nav/NavigationBar';
 import Paged from '../Pagination/Pagination';
 
-function Home() {
+function Home({alert, setAlert}) {
   const dispatch = useDispatch();
-  const productos = useSelector((state) => state.productReducer.productos);
+  const productos = useSelector((state) => state.productReducer.productos.reverse());
   useEffect(() => {
     dispatch(getProducts());
   }, []);
   console.log(productos);
 
+  
   /**
-     //!--------- PAGINADO ----------------------------------
-  **/
+   //!--------- PAGINADO ----------------------------------
+   **/
   const [currentPage, setCurrentPage] = useState(1);
   const [prodPerPage] = useState(15);
   const lastIndexProd = currentPage * prodPerPage;
   const firstIndexProd = lastIndexProd - prodPerPage;
   const currentProds = productos.slice(firstIndexProd, lastIndexProd);
+  const prodsFinal = currentProds.filter(p => p.disabled === false);
   console.log(currentProds);
   const Page = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -33,11 +35,17 @@ function Home() {
 
   const filterCategory = (category) => {
     dispatch(getProductsbyCategory(category));
+    setAlert(false);
   };
-
+  
   const filterPrice = (format) => {
     dispatch(getProductsbyPrice(format));
+    setAlert(false);
   };
+  
+
+
+
 
   return (
     <>
@@ -84,9 +92,14 @@ function Home() {
         </Container>
       </Navbar>
 
+      <Container className={alert === true ? 'alertTrue' : 'alertFalse'}>
+        <h1>No hay productos para mostrar</h1>
+      </Container>
+
+
       <div className="containerCardsHome">
-        {productos.length > 0 ? (
-          currentProds.map((producto) => (
+        {productos.length !== 0 ? (
+          prodsFinal.map((producto) => (
             <>
               <Card
                 style={{ width: "18rem", marginBottom: "2%", height: "33rem" }}
@@ -96,7 +109,7 @@ function Home() {
                   to={"/producto/" + producto.id}
                   style={{ textDecoration: "none", color: "black" }}
                 >
-                  <Card.Img variant="top" src={producto.image} />
+                  <Card.Img variant="top" src={producto.image} style={{ height: "350px"}}/>
                   <Card.Title style={{ height: "55px", marginTop: "2%" }}>
                     {producto.name}
                   </Card.Title>
@@ -129,11 +142,24 @@ function Home() {
               </Card>
             </>
           ))
-        ) : (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        )}
+        ) : 
+        
+            
+        <>
+
+                    {
+                      alert === true ? 
+                      null
+                      :
+
+                      <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                    }
+      
+       
+        </>
+        }
       </div>
       <div className={"PagedHome"}>
         <Paged

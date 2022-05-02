@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './Landing.css';
 
 import { Link, useNavigate } from 'react-router-dom';
 import {  Button, Card, Carousel, Col, Container, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { getProductsbyCategory } from '../../redux/actions/productActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts, getProductsbyCategory } from '../../redux/actions/productActions';
+import { CgShoppingCart } from 'react-icons/cg';
+import { MdOutlineFavoriteBorder } from 'react-icons/md';
+
 
 function Landing() {
 
     const dispatch = useDispatch()
     const [index, setIndex] = useState(0);
     const nav = useNavigate()
+    const productos = useSelector((state) => state.productReducer.productos.reverse());
+
+    useEffect(() => {
+      dispatch(getProducts());
+    }, []);
+
 
     const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
@@ -26,226 +35,304 @@ function Landing() {
   
   
     return (
+      <>
+        <Carousel activeIndex={index} onSelect={handleSelect}>
+          <Carousel.Item>
+            <Link to={"/home"}>
+              <img
+                className="d-block w-100"
+                src="https://www.ripcurlargentina.com/fullaccess/banner345.jpg"
+                alt="First slide"
+              />
+            </Link>
+            <Carousel.Caption>
+              <h3>GENDERLESS</h3>
+              <p>Las mejores marcas al mejor precio.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <Link to={"/home"}>
+              <img
+                className="d-block w-100"
+                src="https://www.ripcurlargentina.com/fullaccess/banner344.jpg"
+                alt="Second slide"
+              />
+            </Link>
 
-    <>
-      
-   
-      <Carousel activeIndex={index} onSelect={handleSelect}>
-      <Carousel.Item>
-        <Link to={'/home'}>
+            <Carousel.Caption>
+              <h3>GENDERLESS</h3>
+              <p>Las mejores marcas al mejor precio.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <Link to={"/home"}>
+              <img
+                className="d-block w-100"
+                src="https://www.ripcurlargentina.com/fullaccess/banner346.jpg"
+                alt="Third slide"
+              />
+            </Link>
 
-        <img
-          className="d-block w-100"
-          src="https://www.ripcurlargentina.com/fullaccess/banner345.jpg"
-          alt="First slide"
-          />
-          </Link>
-        <Carousel.Caption>
-          <h3>GENDERLESS</h3>
-          <p>Las mejores marcas al mejor precio.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <Link to={'/home'}>
+            <Carousel.Caption>
+              <h3>GENDERLESS</h3>
+              <p>Las mejores marcas al mejor precio.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <Link to={"/home"}>
+              <img
+                className="d-block w-100"
+                src="https://www.ripcurlargentina.com/fullaccess/banner343.jpg"
+                alt="Fourth slide"
+              />
+            </Link>
 
-        <img
-          className="d-block w-100"
-          src="https://www.ripcurlargentina.com/fullaccess/banner344.jpg"
-          alt="Second slide"
-          />
-          </Link>
+            <Carousel.Caption>
+              <h3>GENDERLESS</h3>
+              <p>Las mejores marcas al mejor precio.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
 
-        <Carousel.Caption>
-          <h3>GENDERLESS</h3>
-          <p>Las mejores marcas al mejor precio.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <Link to={'/home'}>
+        <Container
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            margin: "2% auto",
+            justifyContent: "center",
+            gap: "1%",
+          }}
+        >
+          <Row>
+            <Col>
+              <div className="wrapper" onClick={() => filterCategory("Buzo")}>
+                <div className="cardLanding">
+                  <img
+                    className="cardLandingImage"
+                    alt=""
+                    preview={false}
+                    src="https://cdn.dynamicyield.com/api/8767771/images/87b138afa61f__colorblock_om_promociones_fem.png"
+                  />
+                  <div className="card-container"></div>
+                  <div className="info">
+                    <p>Buzos</p>
+                  </div>
+                </div>
+              </div>
+            </Col>
 
-        <img
-          className="d-block w-100"
-          src="https://www.ripcurlargentina.com/fullaccess/banner346.jpg"
-          alt="Third slide"
-          />
-          </Link>
+            <Col>
+              <div
+                className="wrapper"
+                onClick={() => filterCategory("Campera")}
+              >
+                <div className="cardLanding">
+                  <img
+                    className="cardLandingImage"
+                    alt=""
+                    preview={false}
+                    src="https://cdn.dynamicyield.com/api/8767771/images/26d89cab36e4c__adveture_om_promociones_fem.png"
+                  />
+                  <div className="card-container"></div>
+                  <div className="info">
+                    <p>Camperas</p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
 
-        <Carousel.Caption>
-          <h3>GENDERLESS</h3>
-          <p>
-            Las mejores marcas al mejor precio.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <Link to={'/home'}>
+        <Container
+          style={{
+            display: "flex",
+            margin: "2% auto",
+            justifyContent: "center",
+          }}
+        >
+          <Row>
+            <Col>
+              <div
+                className="wrapper"
+                onClick={() => filterCategory("Pantalon")}
+              >
+                <div className="cardLanding">
+                  <img
+                    className="cardLandingImage"
+                    alt=""
+                    preview={false}
+                    src="https://cdn.cliqueinc.com/posts/290170/best-cargo-pants-290170-1605890558176-square.700x0c.jpg"
+                  />
+                  <div className="card-container"></div>
+                  <div className="info">
+                    <p>Pantalones</p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col>
+              <div className="wrapper" onClick={() => filterCategory("Remera")}>
+                <div className="cardLanding">
+                  <img
+                    className="cardLandingImage"
+                    alt=""
+                    preview={false}
+                    src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fe6%2F96%2Fe6960f61a036b0cbe5b410ec057c05bbbb071725.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]"
+                  />
+                  <div className="card-container"></div>
+                  <div className="info">
+                    <p>Remeras</p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
 
-        <img
-          className="d-block w-100"
-          src="https://www.ripcurlargentina.com/fullaccess/banner343.jpg"
-          alt="Fourth slide"
-          />
-          </Link>
+        <h3 style={{ margin: "3% auto" }}>Productos destacados</h3>
 
-        <Carousel.Caption>
-          <h3>GENDERLESS</h3>
-          <p>
-            Las mejores marcas al mejor precio.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
-
-    
-     
-        
-        
-
-            
-      
-            
+        <Container
+           style={{
+             display: "flex",
+             flexWrap: "wrap",
+             margin: "2% auto",
+             justifyContent: "center",
+             gap: "1%",
+           }}
+        >
 
 
-            
-      <Container style={{  display: 'flex', margin: '2% auto', justifyContent: 'center' }}>
-        <Row>
-        <Col>
-        <div className="wrapper" onClick={() => (filterCategory('Buzo'))} >
-        <div className="cardLanding">
-        <img className="cardLandingImage" alt=""  preview={false} src="https://cdn.dynamicyield.com/api/8767771/images/87b138afa61f__colorblock_om_promociones_fem.png" />
-            <div className="card-container">
+
+
+
+          <Card style={{ width: "18rem", marginBottom: "2%", height: "33rem" }}>
+            <Link
+              to={"/producto/5"}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Card.Img
+                variant="top"
+                src="https://www.cristobalcolon.com/fullaccess/item21385foto95276.jpg"
+              />
+              <Card.Title style={{ height: "55px", marginTop: "2%" }}>
+                Remera Zoo York Immergruen
+              </Card.Title>
+            </Link>
+            <p style={{ height: "35px" }}>$3.999</p>
+            <div className="cardsProductsButtons">
+              <Link to="/producto/5">
+                <Button variant="primary">Ver mas</Button>
+              </Link>
             </div>
-            <div className="info">
-                <p>Buzos</p>
+          </Card>
+
+
+          <Card style={{ width: "18rem", marginBottom: "2%", height: "33rem" }}>
+            <Link
+              to={"/producto/5"}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Card.Img
+                variant="top"
+                src="https://www.cristobalcolon.com/fullaccess/item21406foto95347th.jpg"
+              />
+              <Card.Title style={{ height: "55px", marginTop: "2%" }}>
+              Remera DC Bandan
+              </Card.Title>
+            </Link>
+            <p style={{ height: "35px" }}>$9.699</p>
+            <div className="cardsProductsButtons">
+              <Link to="/producto/2">
+                <Button variant="primary">Ver mas</Button>
+              </Link>
             </div>
-        </div>
-    </div>
-        </Col>
+          </Card>
 
-        <Col>
 
-        <div className="wrapper" onClick={() => (filterCategory('Campera'))}>
-        <div className="cardLanding">
-        <img className="cardLandingImage" alt="" preview={false} src="https://cdn.dynamicyield.com/api/8767771/images/26d89cab36e4c__adveture_om_promociones_fem.png" />
-            <div className="card-container">
+          <Card style={{ width: "18rem", marginBottom: "2%", height: "33rem" }}>
+            <Link
+              to={"/producto/5"}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Card.Img
+                variant="top"
+                src="https://www.cristobalcolon.com/fullaccess/item21402foto95323th.jpg"
+              />
+              <Card.Title style={{ height: "55px", marginTop: "2%" }}>
+                Buzo Rip Curl Guard
+              </Card.Title>
+            </Link>
+            <p style={{ height: "35px" }}>$10.999</p>
+            <div className="cardsProductsButtons">
+              <Link to="/producto/1">
+                <Button variant="primary">Ver mas</Button>
+              </Link>
             </div>
-            <div className="info">
-              <p>Camperas</p>
-            </div>
-        </div>
-    </div>
-
-        </Col>
-
-        </Row>
-
-      </Container>
-          
-        
-      <Container style={{  display: 'flex', margin: '2% auto', justifyContent: 'center' }}>
-        <Row>
-        
-        <Col>
-        
-                 <div className="wrapper" onClick={() => (filterCategory('Pantalon'))}>
-        <div className="cardLanding">
-        <img className="cardLandingImage" alt="" preview={false} src="https://cdn.cliqueinc.com/posts/290170/best-cargo-pants-290170-1605890558176-square.700x0c.jpg" />
-            <div className="card-container">
-            </div>
-            <div className="info">
-            <p>Pantalones</p>
-            </div>
-        </div>
-    </div>
+          </Card>
 
 
-        </Col>
-        <Col>
-        
-            <div className="wrapper" onClick={() => (filterCategory('Remera'))}>
-        <div className="cardLanding">
-        <img className="cardLandingImage" alt="" preview={false} src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fe6%2F96%2Fe6960f61a036b0cbe5b410ec057c05bbbb071725.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]" />  
-            <div className="card-container">
-            </div>
-            <div className="info">
-            <p>Remeras</p>
-            </div>
-        </div>
-    </div>
-        </Col>
 
-        </Row>
+        </Container>
 
-
-      </Container>
-
-
-     
-
-              
-              
-
-  
-    <h3 style={{ margin: '3% auto' }}>Productos destacados</h3>
-    
-    <Container style={{  display: 'flex',flexWrap: 'wrap', margin: '2% auto'}}>
-
-    <Card style={{ width: '18rem', margin: 'auto 2%' }}>
-  <Card.Img variant="top" src="https://www.cristobalcolon.com/fullaccess/item21402foto95323th.jpg" />
-  <Card.Body>
-    <Card.Title>Buzo Rip Curl Guard'</Card.Title>
-    <Card.Text style={{color: 'grey'}}>
-      $10.999
-    </Card.Text>
-    <Link to='/producto/1'>
-      <Button variant="primary">Ver mas</Button>
-    </Link>
-  </Card.Body>
-</Card>
-
-
- 
-  
-
-
-    <Card style={{ width: '18rem', margin: 'auto 2%' }}>
-  <Card.Img variant="top" src="https://www.cristobalcolon.com/fullaccess/item21406foto95347th.jpg" />
-  <Card.Body>
-    <Card.Title>Remera DC Bandana</Card.Title>
-    <Card.Text style={{color: 'grey'}}>
-      $9.699
-    </Card.Text>
-    <Link to='/producto/2'>
-      <Button variant="primary">Ver mas</Button>
-    </Link>
-  </Card.Body>
-</Card>
-
-
- 
-  
-
-
-    <Card style={{ width: '18rem', margin: 'auto 2%' }}>
-  <Card.Img variant="top" src="https://www.cristobalcolon.com/fullaccess/item21385foto95276.jpg" />
-  <Card.Body>
-    <Card.Title>Remera Zoo York Immergruen</Card.Title>
-    <Card.Text style={{color: 'grey'}}>
-      $3.999
-    </Card.Text>
-    <Link to='/producto/5'>
-      <Button variant="primary" >Ver mas</Button>
-    </Link>
-  </Card.Body>
-</Card>
-
-
-</Container>
-
- 
-
-    </>
-  );
+        <h2>Lo nuevo</h2>
+        <Container
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            margin: "2% auto",
+            justifyContent: "center",
+            gap: "1%",
+          }}
+        >
+          {productos?.slice(0, 4).map((producto) => (
+              <div key={producto.id}>
+                <Card
+                  style={{
+                    width: "18rem",
+                    marginBottom: "2%",
+                    height: "33rem",
+                  }}
+                  key={producto.id}
+                >
+                  <Link
+                    to={"/producto/" + producto.id}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <Card.Img variant="top" src={producto.image} style={{ height: "350px"}} />
+                    <Card.Title style={{ height: "55px", marginTop: "2%" }}>
+                      {producto.name}
+                    </Card.Title>
+                  </Link>
+                  <p style={{ height: "35px" }}>${producto.price}</p>
+                  <div className="cardsProductsButtons">
+                    <Button
+                      className="cardsProductsButton"
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        color: "black",
+                      }}
+                    >
+                      <CgShoppingCart />
+                    </Button>
+                    <Button
+                      className="cardsProductsButton"
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        color: "black",
+                      }}
+                    >
+                      {" "}
+                      <MdOutlineFavoriteBorder />{" "}
+                    </Button>
+                  </div>
+                </Card>
+              </div>
+            ))}
+        </Container>
+      </>
+    );
 }
 
 export default Landing;

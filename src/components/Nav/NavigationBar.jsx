@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 import { getProductsbyName } from '../../redux/actions/productActions';
 import './NavigationBar.css'
 
-function NavigationBar() {
+function NavigationBar({alert, setAlert}) {
 
   const user = useSelector( (state) => state.userReducer.usuario)
+  const productos = useSelector((state) => state.productReducer.productos);
+
 
   useEffect(() => {
     console.log(user)
@@ -28,11 +30,12 @@ function NavigationBar() {
      function handleSubmit(event) {
          event.preventDefault();
          dispatch(getProductsbyName(name))
-         setName('');
+         name && productos.length ? setAlert(false) : setAlert(true)
+         setName('')
          console.log(name, 'HandleSubmit')
-     }
-   
-  return (
+        }
+        
+        return (
 
 <Navbar bg="dark" expand="lg">
   <Container fluid>
@@ -61,7 +64,8 @@ function NavigationBar() {
           placeholder="Buscar producto"
           className="me-2"
           aria-label="Search"
-          onChange={(e) => {handleInputChange(e)}}
+          value={name}
+          onChange={(e) => handleInputChange(e)}
         />
         <Button type="submit" variant="outline-warning">Buscar</Button>
       </Form>

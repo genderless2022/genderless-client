@@ -23,3 +23,11 @@
     flex-direction: row;
     width: 100%;
 }
+
+.alertFalse {
+    display: none;
+}
+
+.alertTrue, .spinnerFalse {
+    display: block;
+}
