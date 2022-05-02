@@ -41,7 +41,8 @@ function Home() {
 
   return (
     <>
-      <NavigationBar />
+
+    {/* <NavigationBar/> */}
 
       <Navbar bg="light" expand="lg">
         <Container>
@@ -99,6 +100,7 @@ function Home() {
                   <Card.Title style={{ height: "55px", marginTop: "2%" }}>
                     {producto.name}
                   </Card.Title>
+
                 </Link>
                 <p style={{ height: "35px" }}>${producto.price}</p>
                 <div className="cardsProductsButtons">
