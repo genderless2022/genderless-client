@@ -14,7 +14,7 @@ function Home() {
   const productos = useSelector((state) => state.productReducer.productos);
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch]);
+  }, []);
   console.log(productos);
 
   /**
@@ -43,6 +43,7 @@ function Home() {
             <>
               <Card
                 style={{ width: "18rem", marginBottom: "2%", height: "33rem" }}
+                key={producto.id}
               >
                 <Link
                   to={"/producto/" + producto.id}

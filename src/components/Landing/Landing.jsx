@@ -2,17 +2,27 @@ import React, { useState } from 'react';
 
 import './Landing.css';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {  Button, Card, Carousel, Col, Container, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { getProductsbyCategory } from '../../redux/actions/productActions';
 
 function Landing() {
 
-
+    const dispatch = useDispatch()
     const [index, setIndex] = useState(0);
-  
+    const nav = useNavigate()
+
     const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
     };
+
+    const filterCategory = (category) => {
+      nav('/home')
+      setTimeout(() => {
+        dispatch(getProductsbyCategory(category))
+      }, 100);
+    }
   
   
     return (
@@ -100,7 +110,7 @@ function Landing() {
       <Container style={{  display: 'flex', margin: '2% auto', justifyContent: 'center' }}>..
         <Row>
         <Col>
-        <div className="wrapper">
+        <div className="wrapper" onClick={() => (filterCategory('Buzo'))} >
         <div className="cardLanding">
         <img className="cardLandingImage" alt=""  preview={false} src="https://cdn.dynamicyield.com/api/8767771/images/87b138afa61f__colorblock_om_promociones_fem.png" />
             <div className="card-container">
@@ -114,7 +124,7 @@ function Landing() {
 
         <Col>
 
-        <div className="wrapper">
+        <div className="wrapper" onClick={() => (filterCategory('Campera'))}>
         <div className="cardLanding">
         <img className="cardLandingImage" alt="" preview={false} src="https://cdn.dynamicyield.com/api/8767771/images/26d89cab36e4c__adveture_om_promociones_fem.png" />
             <div className="card-container">
@@ -137,7 +147,7 @@ function Landing() {
         
         <Col>
         
-                 <div className="wrapper">
+                 <div className="wrapper" onClick={() => (filterCategory('Pantalon'))}>
         <div className="cardLanding">
         <img className="cardLandingImage" alt="" preview={false} src="https://cdn.cliqueinc.com/posts/290170/best-cargo-pants-290170-1605890558176-square.700x0c.jpg" />
             <div className="card-container">
@@ -152,13 +162,13 @@ function Landing() {
         </Col>
         <Col>
         
-            <div className="wrapper">
+            <div className="wrapper" onClick={() => (filterCategory('Remera'))}>
         <div className="cardLanding">
-        <img className="cardLandingImage" alt="" preview={false} src="https://cdn.dynamicyield.com/api/8767611/images/163c5ef932a94__onsite_abr22_zapasreef.jpg" />  
+        <img className="cardLandingImage" alt="" preview={false} src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fe6%2F96%2Fe6960f61a036b0cbe5b410ec057c05bbbb071725.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]" />  
             <div className="card-container">
             </div>
             <div className="info">
-            <p>Zapatillas</p>
+            <p>Remeras</p>
             </div>
         </div>
     </div>
