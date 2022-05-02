@@ -4,10 +4,12 @@ import {
 import thunk from 'redux-thunk';
 import productReducer from '../reducers/productReducer';
 import userReducer from '../reducers/userReducer';
+import shoppingReducer from '../reducers/shoppingReducer';
 
 const rootReducer = combineReducers({
   productReducer,
   userReducer,
+  shoppingReducer
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
