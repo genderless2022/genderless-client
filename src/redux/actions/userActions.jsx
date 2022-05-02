@@ -13,7 +13,7 @@ export const ERROR = 'ERROR';
 
 // Habilitada
 export const getUsers = () => async (dispatch) => {
-  axios.get('http://localhost:3001/usuarios').then(
+  await axios.get('http://localhost:3001/usuarios').then(
     (response) => {
       dispatch({
         type: GET_USERS,
@@ -31,7 +31,7 @@ export const getUsers = () => async (dispatch) => {
 
 // Habilitada
 export const getUser = ( email ) => async ( dispatch ) => {
-  axios.get(`http://localhost:3001/usuario/email/${email}`).then(
+  await axios.get(`http://localhost:3001/usuario/email/${email}`).then(
     (response) => {
       dispatch({
         type: GET_USER,
@@ -51,7 +51,7 @@ export const getUser = ( email ) => async ( dispatch ) => {
 export const createUser = ({
   name, lastName, picture, born, dni, email, address, province, phone, postal, password, permission = 'user',
 }) => async (dispatch) => {
-  axios.post('http://localhost:3001/usuario', {
+  await axios.post('http://localhost:3001/usuario', {
     name,
     lastName,
     picture,
@@ -84,7 +84,7 @@ export const createUser = ({
 export const updateUser = ({
   name, lastName, picture, born, dni, email, address, province, phone, postal 
 }) => async (dispatch) => {
-  axios.put('http://localhost:3001/usuario', {
+  await axios.put('http://localhost:3001/usuario', {
     name,
     lastName,
     picture,
@@ -116,7 +116,7 @@ export const updateUser = ({
 export const forgotPassword = ({
   email
 }) => async (dispatch) => {
-  axios.post('http://localhost:3001/usuario/forgotpassword', {
+  await axios.post('http://localhost:3001/usuario/forgotpassword', {
     email,
   }).then(
     (response) => {
@@ -138,7 +138,7 @@ export const forgotPassword = ({
 export const updatePassword = ({
   email, password 
 }) => async (dispatch) => {
-  axios.put('http://localhost:3001/usuario', {
+  await axios.put('http://localhost:3001/usuario', {
     email,
     password
   }).then(
@@ -161,7 +161,7 @@ export const updatePassword = ({
 export const userLogin = ({
   email, password 
 }) => async (dispatch) => {
-  axios.post('http://localhost:3001/usuario/login', {
+  await axios.post('http://localhost:3001/usuario/login', {
     email,
     password
   }).then(
@@ -186,7 +186,7 @@ export const updateRol = ({
   permission,
   token 
 }) => async (dispatch) => {
-  axios.put('http://localhost:3001/usuario/rol', { email, permission }, {
+  await axios.put('http://localhost:3001/usuario/rol', { email, permission }, {
     headers: {
       'Authorization': 'Bearer ' + token
     }
@@ -210,7 +210,7 @@ export const updateRol = ({
 export const userLogout = ({
   token 
 }) => async (dispatch) => {
-  axios.get('http://localhost:3001/usuario/login', {}, {
+  await axios.get('http://localhost:3001/usuario/login', {}, {
     headers: {
       'Authorization': 'Bearer ' + token
     }
