@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './Home.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../redux/actions/productActions';
-import { Button, Card, Pagination, Spinner } from 'react-bootstrap';
+import { getProducts, getProductsbyCategory, getProductsbyPrice } from '../../redux/actions/productActions';
+import { Button, Card, Container, Nav, Navbar, NavDropdown, Pagination, Spinner } from 'react-bootstrap';
 import { CgShoppingCart } from 'react-icons/cg';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -31,11 +31,57 @@ function Home() {
     window.scrollTo(0, 0);
   };
 
+  const filterCategory = (category) => {
+    dispatch(getProductsbyCategory(category));
+  };
 
+  const filterPrice = (format) => {
+    dispatch(getProductsbyPrice(format));
+  };
 
   return (
     <>
       <NavigationBar />
+
+      <Navbar bg="light" expand="lg">
+        <Container>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+
+              <NavDropdown title="Categorias" id="basic-nav-dropdown">
+                <NavDropdown.Item  onClick={() => dispatch(getProducts())}>Todos</NavDropdown.Item>
+                <NavDropdown.Item  onClick={() => filterCategory('Buzo')}>
+                  Buzos
+                </NavDropdown.Item>
+                <NavDropdown.Item  onClick={() => filterCategory('Remera')}>
+                  Remeras
+                </NavDropdown.Item>
+                <NavDropdown.Item  onClick={() => filterCategory('Campera')}>
+                  Camperas
+                </NavDropdown.Item>
+                <NavDropdown.Item  onClick={() => filterCategory('Pantalon')}>
+                  Pantalones
+                </NavDropdown.Item>
+
+              </NavDropdown>
+
+
+
+              <NavDropdown title="Precio" id="basic-nav-dropdown">
+                <NavDropdown.Item  onClick={() => dispatch(getProducts())}>Todos</NavDropdown.Item>
+                <NavDropdown.Item  onClick={() => filterPrice('ASC')}>
+                ASC
+                </NavDropdown.Item>
+                <NavDropdown.Item  onClick={() => filterPrice('DESC')}>
+                DESC
+                </NavDropdown.Item>
+
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
       <div className="containerCardsHome">
         {productos.length > 0 ? (
@@ -86,17 +132,14 @@ function Home() {
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         )}
-
       </div>
-      <div className={'PagedHome'}>
-
+      <div className={"PagedHome"}>
         <Paged
-          
           prodPerPage={prodPerPage}
           prodsLength={productos.length}
           Page={Page}
-          />
-          </div>
+        />
+      </div>
     </>
   );
 }

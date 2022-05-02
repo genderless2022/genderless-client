@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Container, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProductsbyName } from '../../redux/actions/productActions';
 import './NavigationBar.css'
 
 function NavigationBar() {
 
+  const user = useSelector( (state) => state.userReducer.usuario)
+
+  useEffect(() => {
+    console.log(user)
+
+  }, [user])
   /**
      //!--------- BUSQUEDA ----------------------------------
   **/
@@ -40,7 +46,13 @@ function NavigationBar() {
       >
         <Nav.Link href="/" style={{ maxHeight: '100px', color: 'white' }}>Inicio</Nav.Link>
         <Nav.Link href="/home" style={{ maxHeight: '100px', color: 'white' }}>Catalogo</Nav.Link>
+        {
+          user.name ?
+          <Nav.Link href="/carrito" style={{ maxHeight: '100px', color: 'white' }}> {user.name} </Nav.Link>
+          :
+
         <Nav.Link href="/login" style={{ maxHeight: '100px', color: 'white' }}>Iniciar sesion</Nav.Link>
+        }
         
       </Nav>
       <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>

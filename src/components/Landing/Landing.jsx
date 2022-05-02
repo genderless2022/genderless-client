@@ -41,8 +41,8 @@ function Landing() {
           />
           </Link>
         <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <h3>GENDERLESS</h3>
+          <p>Las mejores marcas al mejor precio.</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -56,8 +56,8 @@ function Landing() {
           </Link>
 
         <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <h3>GENDERLESS</h3>
+          <p>Las mejores marcas al mejor precio.</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -71,9 +71,9 @@ function Landing() {
           </Link>
 
         <Carousel.Caption>
-          <h3>Third slide label</h3>
+          <h3>GENDERLESS</h3>
           <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+            Las mejores marcas al mejor precio.
           </p>
         </Carousel.Caption>
       </Carousel.Item>
@@ -88,9 +88,9 @@ function Landing() {
           </Link>
 
         <Carousel.Caption>
-          <h3>Fourth slide label</h3>
+          <h3>GENDERLESS</h3>
           <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+            Las mejores marcas al mejor precio.
           </p>
         </Carousel.Caption>
       </Carousel.Item>
@@ -107,7 +107,7 @@ function Landing() {
 
 
             
-      <Container style={{  display: 'flex', margin: '2% auto', justifyContent: 'center' }}>..
+      <Container style={{  display: 'flex', margin: '2% auto', justifyContent: 'center' }}>
         <Row>
         <Col>
         <div className="wrapper" onClick={() => (filterCategory('Buzo'))} >
@@ -197,7 +197,9 @@ function Landing() {
     <Card.Text style={{color: 'grey'}}>
       $10.999
     </Card.Text>
-    <Button variant="primary">Ver mas</Button>
+    <Link to='/producto/1'>
+      <Button variant="primary">Ver mas</Button>
+    </Link>
   </Card.Body>
 </Card>
 
@@ -213,7 +215,9 @@ function Landing() {
     <Card.Text style={{color: 'grey'}}>
       $9.699
     </Card.Text>
-    <Button variant="primary">Ver mas</Button>
+    <Link to='/producto/2'>
+      <Button variant="primary">Ver mas</Button>
+    </Link>
   </Card.Body>
 </Card>
 
@@ -229,7 +233,9 @@ function Landing() {
     <Card.Text style={{color: 'grey'}}>
       $3.999
     </Card.Text>
-    <Button variant="primary" >Ver mas</Button>
+    <Link to='/producto/5'>
+      <Button variant="primary" >Ver mas</Button>
+    </Link>
   </Card.Body>
 </Card>
 
