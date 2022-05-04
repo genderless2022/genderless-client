@@ -11,6 +11,7 @@ import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
+import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
 
 
 
@@ -30,6 +31,13 @@ function App() {
 
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/create" element={<AdminCreate />} />
+
+
+        
+        <Route path="/connect/metamask" element={<ConnectMetamask />} />
+
+
+
 
       </Routes>
     </div>
