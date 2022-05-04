@@ -1,0 +1,44 @@
+.metaLogo{
+    width: 30px;
+}
+
+.metaLoginButton{
+    padding: 10px;
+    background-color: rgb(13, 11, 36);
+    animation: metaUnselect;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    transform: scale(1);
+}
+.metaLoginButton:hover{
+    animation-name: metaSelect;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    transform: scale(1.2);
+}
+
+.payMetaButton{
+    padding: 10px;
+}
+
+.logoutMetaButton{
+    padding: 10px;
+}
+
+@keyframes metaSelect {
+    0%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(1.2);
+    }
+}
+@keyframes metaUnselect {
+    0%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
