@@ -12,27 +12,34 @@ const DetailProduct = () => {
     const dispatch = useDispatch()
     const product = useSelector( (state) => state.productReducer.producto)
     const [show, setShow] = useState("")
+    const [sizeSelect, setSizeSelect] = useState(null)
+    const [favorite, setFavorite] = useState(false)
 
     useEffect(() => {
         dispatch(getProduct(id))
     }, [dispatch, id])
     
+    //enviar el talle tambien!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     const addShoppingCart = () => { 
       // dispatch(addProduct({productId : id, userEmail : email}))
-        console.log('agregado al Carrito')
+        // console.log('agregado al Carrito')
         setShow("carrito")
     }
 
     const addFavorites = () => { 
       // dispatch(addProductFavorite({ productId: Number(id), email: email}))
-        console.log('agregado a Favoritos')
+        // console.log('agregado a Favoritos')
         setShow("favoritos")
+        handleFavorites()
     }
-    // const stock = product.stock_by_size?.reduce((a,b) => a.stock + b.stock, 0)
-    // console.log('stock', stock)
-    // console.log('product.stock_by_size', product.stock_by_size[0].stock)
-    
-    // const stock = addSizes.length > 0 && addSizes?.map((e) => e.stock)?.reduce((a,b) => a + b)
+
+    const handleFavorites = () => {
+        setFavorite(true)
+    }
+
+    const handleSize = (sizes) => {
+        setSizeSelect(sizes);
+    }
 
     return (
         <>
@@ -53,27 +60,46 @@ const DetailProduct = () => {
                                     <h1 className="detail-one-name"> {product.name} </h1>
                                     <div className="detail-one-sku">SKU: Item No. NI_{product.id}  </div>
                                     <div className="detail-one-price">${product.price} </div>
-                                    <div className="detail-one-cards">Medios de pago</div>
+                                    <div className="detail-one-cards">
+                                        <img className="detail-img-pagos-eth" src="https://www.profesionalreview.com/wp-content/uploads/2021/05/eth-1024x576.jpg" alt="ethereum" />
+                                        <img className="detail-img-pagos" src="https://i.pinimg.com/originals/b6/3b/54/b63b54d4f0074710e9dd0f8e6d3c9fbd.jpg" alt="zapatilla" />
+                                    </div>
                                     <div className="detail-size">Talles</div>
                                     <div className="detail-one-size">
-                                        <div className="sizesMap">
-                                        {
-                                            product.stock_by_size?.map((size, i) => {
-                                                return <div key={i} className="detail-sizes2">
-                                                            <span className="sizes2Size"> {size.size}  </span>
-                                                                <span className="sizes2NumerOfSize">({size.stock}) </span><br />
-                                                        </div>
-                                            })
+                                        {product.disabled
+                                            ? 
+                                            <div className= "detail-sizes2-disabled">
+                                                <span className="sizes2Size">Producto no disponible</span>
+                                            </div> 
+                                            : 
+                                            <div className="sizesMap">
+                                                {
+                                                    product.stock_by_size?.map((size, i) => {
+                                                        const sizes = size.size
+                                                        const selectSize = sizeSelect === sizes
+                                                        return <button 
+                                                                    key={i}
+                                                                    value="2"
+                                                                    onClick={ (e) => handleSize(sizes)}
+                                                                    disabled={!(size.stock)}
+                                                                    className= {size.stock ? selectSize ? "detail-sizes2-selected" : "detail-sizes2" : "detail-sizes2-disabled" }
+                                                                >
+                                                                    <span className="sizes2Size"> {size.size}  </span>
+                                                                    <span className="sizes2NumerOfSize">({size.stock}) </span><br />
+                                                                </button>
+                                                    })
+                                                }
+                                            </div>
                                         }
-                                        
-                                        </div>
                                     </div>
-                                    <p className={show ? 'producto_agregado' : 'producto_sinagregar'}> 🟢 El producto fue agregado al carrito</p>
+                                    <p className={show ? 'producto_agregado' : 'producto_sinagregar'}>{show === "carrito" ? "🟢 El producto fue agregado al carrito" :  "🟢 El producto fue agregado a favoritos" } </p>
                                     <div className="detail-one-buttons">
-                                        <button onClick={ () => addShoppingCart()} className="detail-button-buy">
+                                        <button 
+                                        disabled= {product.disabled}
+                                        onClick={ () => addShoppingCart()} className={product.disabled ? "detail-button-buy-disabled" : "detail-button-buy" }>
                                             Agregar al carrito
                                         </button>            
-                                        <button  onClick={ () => addFavorites()} className="detail-button-like" style={{border: 'none', background: 'none', textDecoration: 'none' }}>
+                                        <button  onClick={ () => addFavorites()} className={favorite ? "detail-button-like-select" : "detail-button-like"} style={{border: 'none', background: 'none', textDecoration: 'none' }}>
                                             <BsSuitHeartFill/>
                                         </button>
                                     </div>

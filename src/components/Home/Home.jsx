@@ -15,7 +15,6 @@ function Home() {
     useEffect(() => {
         dispatch(getProducts());
     }, [dispatch]);
-    console.log(productos);
 
   return (
 
