@@ -1,11 +1,12 @@
 import './DetailProduct.css'
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { getProduct } from "../../redux/actions/productActions"
 // import { addProductFavorite } from '../../redux/actions/favoriteActions';
 // import { addProduct } from '../../redux/actions/shoppingCartActions';
 import { BsSuitHeartFill } from 'react-icons/bs';
+import { TiArrowBack } from 'react-icons/ti';
 
 const DetailProduct = () => {
     const { id } = useParams()
@@ -51,6 +52,9 @@ const DetailProduct = () => {
                         <div className="detailProduct-container">
                             <div className="title-category">
                                 <p> {'Categoría/'+product?.CategoryName}  </p>
+                                <Link to='/home' style={{ color: 'white', fontSize: '20px' }}>
+                                    <TiArrowBack/>
+                                </Link>
                             </div>
                             <div className="detail-one">
                                 <div className="detail-one-left">
