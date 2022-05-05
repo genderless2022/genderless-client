@@ -10,7 +10,8 @@ function ConnectMetamask(props) {
         userBalance: localStorage.getItem('balance'),
         tx: null,
         error: null,
-        eth: props.eth || 0.005
+        eth: props.eth || 0.005,
+        ishoverLogout: false
     })
 
     // Creamos los punteros al estado para facilitar lectura
@@ -19,6 +20,7 @@ function ConnectMetamask(props) {
     let tx = state.tx
     let error = state.error
     let eth = state.eth
+    let ishoverLogout = state.ishoverLogout
     // Funcion que abre Pop Up y obtiene los datos de la extensión de Metamask
     async function requestAccount(){
 
@@ -130,7 +132,27 @@ function ConnectMetamask(props) {
 
         {/* Logout Button */}
         <div>
-            { props.type === 'logout' && walletAddress && <button className='logoutMetaButton' onClick={ () => logoutMetamask() }>Logout Meta</button> }
+            { props.type === 'logout' && walletAddress && 
+            <button className='logoutMetaButton' onMouseEnter={ () => setState({
+                ...state, 
+                ishoverLogout: !ishoverLogout
+            })} onMouseLeave = { () => setState({
+                ...state,
+                ishoverLogout: !ishoverLogout
+            })} onClick={ () => logoutMetamask() }>
+                
+                {
+                    ishoverLogout ? 
+                    <span>
+                        Logout MetaMask
+                    </span>
+                    :
+                    <span>
+                        L
+                    </span>
+                }
+
+            </button> }
         </div>
 
         {/* Error Messages */}
