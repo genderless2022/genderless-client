@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { AdminCreate } from './components/AdminCreate/AdminCreate';
-import { AdminEdit } from './components/AdminEdit/AdminEdit';
 import AdminHome from './components/AdminHome/AdminHome';
 import { DetailProduct } from './components/DetailProduct/DetailProduct';
 import Home from './components/Home/Home';
@@ -23,7 +22,6 @@ function App() {
 
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
-
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
