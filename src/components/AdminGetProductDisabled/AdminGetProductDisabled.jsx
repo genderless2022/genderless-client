@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
-import './AdminGetProducts.css'
 import { useDispatch, useSelector } from "react-redux"
 import { getProducts } from "../../redux/actions/productActions"
 import AdminCardProduct from "../../components/AdminCardProduct/AdminCardProduct"
 
-export default function AdminGetProducts ({activeDrawer, receiveProduct}) {
+export default function AdminGetProductsDisabled ({activeDrawer, receiveProduct}) {
     const productos = useSelector( (state) => state.productReducer.productos )
     const status = useSelector( (state) => state.productReducer.status )
     const dispatch = useDispatch()
@@ -14,7 +13,7 @@ export default function AdminGetProducts ({activeDrawer, receiveProduct}) {
     const categories = new Set(filterCategory)
     const arrayCategories = [...categories]
 
-    const productEnabled = productos.filter(p => p.disabled === false) 
+    const productEnabled = productos.filter(p => p.disabled === true)
     const productViews = selectCategory === "" 
         ? productEnabled 
         : productEnabled.filter(p => p.CategoryName === selectCategory)
