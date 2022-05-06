@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Home.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts, getProductsbyCategory, getProductsbyPrice } from '../../redux/actions/productActions';
+import { getDiscounts, getProducts, getProductsbyCategory, getProductsbyPrice } from '../../redux/actions/productActions';
 import { Alert, Button, Card, Container, Nav, Navbar, NavDropdown, Pagination, Spinner } from 'react-bootstrap';
 import { CgShoppingCart } from 'react-icons/cg';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
@@ -35,12 +35,14 @@ function Home({alert, setAlert}) {
 
   const filterCategory = (category) => {
     dispatch(getProductsbyCategory(category));
-    setAlert(false);
   };
   
   const filterPrice = (format) => {
     dispatch(getProductsbyPrice(format));
-    setAlert(false);
+  };
+
+  const filterDiscounts = (format) => {
+    dispatch(getDiscounts(format));
   };
   
 
@@ -50,7 +52,7 @@ function Home({alert, setAlert}) {
   return (
     <>
 
-    {/* <NavigationBar/> */}
+     <NavigationBar/>
 
       <Navbar bg="light" expand="lg">
         <Container>
@@ -80,10 +82,13 @@ function Home({alert, setAlert}) {
               <NavDropdown title="Precio" id="basic-nav-dropdown">
                 <NavDropdown.Item  onClick={() => dispatch(getProducts())}>Todos</NavDropdown.Item>
                 <NavDropdown.Item  onClick={() => filterPrice('ASC')}>
-                ASC
+                Menor a mayor
                 </NavDropdown.Item>
                 <NavDropdown.Item  onClick={() => filterPrice('DESC')}>
-                DESC
+                Mayor a menor
+                </NavDropdown.Item>
+                <NavDropdown.Item  onClick={() => filterDiscounts()}>
+                Descuentos
                 </NavDropdown.Item>
 
               </NavDropdown>
@@ -102,7 +107,7 @@ function Home({alert, setAlert}) {
           prodsFinal.map((producto) => (
             <>
               <Card
-                style={{ width: "18rem", marginBottom: "2%", height: "33rem" }}
+                style={{ width: "18rem", marginBottom: "2%", height: "30rem" }}
                 key={producto.id}
               >
                 <Link
@@ -110,35 +115,28 @@ function Home({alert, setAlert}) {
                   style={{ textDecoration: "none", color: "black" }}
                 >
                   <Card.Img variant="top" src={producto.image} style={{ height: "350px"}}/>
-                  <Card.Title style={{ height: "55px", marginTop: "2%" }}>
+                 
+                {
+                  producto.discount > 0 ? 
+                  <>
+                  <div className="card-container">
+                    <div className="top-left" >%{producto.discount}</div>
+                    <div style={{ height: "20px" }}>
+                      <span  className="precioTachado">${producto.price}</span>
+                      <span  className="precioFinal">${producto.price}</span>
+                    </div>
+                  </div>
+                  </>
+                  :
+                  <p style={{ height: "20px" }} className="precioFinal">${producto.price}</p>
+                }
+                  <Card.Title style={{ height: "55px", marginTop: "15%", fontWeight: '200', fontSize: "1.1rem" }}>
                     {producto.name}
                   </Card.Title>
 
                 </Link>
-                <p style={{ height: "35px" }}>${producto.price}</p>
-                <div className="cardsProductsButtons">
-                  <Button
-                    className="cardsProductsButton"
-                    style={{
-                      background: "transparent",
-                      border: "none",
-                      color: "black",
-                    }}
-                  >
-                    <CgShoppingCart />
-                  </Button>
-                  <Button
-                    className="cardsProductsButton"
-                    style={{
-                      background: "transparent",
-                      border: "none",
-                      color: "black",
-                    }}
-                  >
-                    {" "}
-                    <MdOutlineFavoriteBorder />{" "}
-                  </Button>
-                </div>
+                
+
               </Card>
             </>
           ))
@@ -166,6 +164,9 @@ function Home({alert, setAlert}) {
           prodPerPage={prodPerPage}
           prodsLength={productos.length}
           Page={Page}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          prodsFinal={prodsFinal}
         />
       </div>
     </>

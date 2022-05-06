@@ -6,6 +6,10 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const ERROR = 'ERROR';
+/*****
+ * FILTROS
+ *****/
+export const FILTER_BY_NAME = 'FILTER_BY_NAME';
 
 // Habilitada
 export const getProducts = () => async (dispatch) => {
@@ -104,22 +108,36 @@ export const editProduct = (sendData) => async (dispatch) => {
 // FILTROS:
 
 // Prueba...
-export const getProductsbyName = (name) => async (dispatch) => {
-  await axios.get(`http://localhost:3001/productos/name/${name}`).then(
-    (response) => {
-      dispatch({
-        type: GET_PRODUCTS,
-        payload: response.data,
-      });
-    },
-    (error) => {
-      dispatch({
-        type: ERROR,
-        payload: error.error,
-      });
-    },
-  );
-};
+//export const getProductsbyName = (name) => async (dispatch) => {
+//  await axios.get(`http://localhost:3001/productos/name/${name}`).then(
+//    (response) => {
+//      dispatch({
+//        type: GET_PRODUCTS,
+//        payload: response.data,
+//      });
+//    },
+//    (error) => {
+//      dispatch({
+//        type: ERROR,
+//        payload: error.error,
+//      });
+//    },
+//  );
+//};
+
+export function getProductsbyName(payload) {
+  return async function (dispatch) {
+      try {
+          dispatch ({
+              type: FILTER_BY_NAME,
+              payload,
+          });
+      }
+      catch (error) {
+          console.log(error)
+      }    
+  }
+}
 
 // Prueba...
 export const getProductsbyBrand = (brand) => async (dispatch) => {

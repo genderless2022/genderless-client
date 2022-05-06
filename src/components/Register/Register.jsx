@@ -71,6 +71,7 @@ const Register = () => {
         var mensaje = window.confirm("Al registrarse acepta nuestros términos y condiciones")
         if(mensaje) {
             dispatch(createUser(data));
+            console.log(data, 'data');
             alert("Gracias por registrarse!")
             nav('/home')
         }else {

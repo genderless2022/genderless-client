@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { AdminCreate } from './components/AdminCreate/AdminCreate';
@@ -15,14 +15,12 @@ import NavigationBar from './components/Nav/NavigationBar';
 
 
 function App() {
-  const [alert, setAlert] = useState(false);
   return (
     <div className="App">
-      <NavigationBar alert={alert} setAlert={setAlert}></NavigationBar>
       <Routes>
 
         <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<Home   alert={alert} setAlert={setAlert} />}/>
+        <Route path="/home" element={<Home />}/>
 
 
         <Route path="/login" element={<Login />} />

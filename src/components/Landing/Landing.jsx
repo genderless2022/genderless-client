@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './Landing.css';
 
 import { Link, useNavigate } from 'react-router-dom';
-import {  Button, Card, Carousel, Col, Container, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
+import {  Button, Card, Carousel, Col, Container, ListGroup, ListGroupItem, Nav, Navbar, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, getProductsbyCategory } from '../../redux/actions/productActions';
 import { CgShoppingCart } from 'react-icons/cg';
@@ -32,10 +32,44 @@ function Landing() {
         dispatch(getProductsbyCategory(category))
       }, 100);
     }
+    const user = useSelector( (state) => state.userReducer.usuario)
   
   
     return (
       <>
+
+
+
+<Navbar bg="dark" expand="lg">
+  <Container fluid>
+    <Navbar.Brand className='titleNavBar' style={{ maxHeight: '100px', color: 'white' }}>GENDERLESS</Navbar.Brand>
+    <Navbar.Toggle aria-controls="navbarScroll" />
+    <Navbar.Collapse id="navbarScroll">
+      <Nav
+        className="me-auto my-2 my-lg-0"
+        style={{ maxHeight: '100px', color: 'white' }}
+        navbarScroll
+      >
+        <Nav.Link href="/" style={{ maxHeight: '100px', color: 'white' }}>Inicio</Nav.Link>
+        <Nav.Link href="/home" style={{ maxHeight: '100px', color: 'white' }}>Catalogo</Nav.Link>
+        {
+          user.name ?
+          <Nav.Link href="/carrito" style={{ maxHeight: '100px', color: 'white' }}> {user.name} </Nav.Link>
+          :
+
+        <Nav.Link href="/login" style={{ maxHeight: '100px', color: 'white' }}>Iniciar sesion</Nav.Link>
+        }
+        
+      </Nav>
+    
+    </Navbar.Collapse>
+  </Container>
+</Navbar>
+
+
+
+
+
         <Carousel activeIndex={index} onSelect={handleSelect}>
           <Carousel.Item>
             <Link to={"/home"}>
@@ -189,9 +223,9 @@ function Landing() {
           </Row>
         </Container>
 
-        <h3 style={{ margin: "3% auto" }}>Productos destacados</h3>
+{/*                <h3 style={{ margin: "3% auto" }}>Productos destacados</h3>
 
-        <Container
+<Container
            style={{
              display: "flex",
              flexWrap: "wrap",
@@ -272,7 +306,7 @@ function Landing() {
 
 
 
-        </Container>
+        </Container> */}
 
         <h2>Lo nuevo</h2>
         <Container
@@ -287,47 +321,37 @@ function Landing() {
           {prodsFinal?.slice(0, 4).map((producto) => (
               <div key={producto.id}>
                 <Card
-                  style={{
-                    width: "18rem",
-                    marginBottom: "2%",
-                    height: "33rem",
-                  }}
-                  key={producto.id}
+                style={{ width: "18rem", marginBottom: "2%", height: "30rem" }}
+                key={producto.id}
+              >
+                <Link
+                  to={"/producto/" + producto.id}
+                  style={{ textDecoration: "none", color: "black" }}
                 >
-                  <Link
-                    to={"/producto/" + producto.id}
-                    style={{ textDecoration: "none", color: "black" }}
-                  >
-                    <Card.Img variant="top" src={producto.image} style={{ height: "350px"}} />
-                    <Card.Title style={{ height: "55px", marginTop: "2%" }}>
-                      {producto.name}
-                    </Card.Title>
-                  </Link>
-                  <p style={{ height: "35px" }}>${producto.price}</p>
-                  <div className="cardsProductsButtons">
-                    <Button
-                      className="cardsProductsButton"
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        color: "black",
-                      }}
-                    >
-                      <CgShoppingCart />
-                    </Button>
-                    <Button
-                      className="cardsProductsButton"
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        color: "black",
-                      }}
-                    >
-                      {" "}
-                      <MdOutlineFavoriteBorder />{" "}
-                    </Button>
+                  <Card.Img variant="top" src={producto.image} style={{ height: "350px"}}/>
+                 
+                {
+                  producto.discount > 0 ? 
+                  <>
+                  <div className="card-container">
+                    <div className="top-left" >%{producto.discount}</div>
+                    <div style={{ height: "20px" }}>
+                      <span  className="precioTachado">${producto.price}</span>
+                      <span  className="precioFinal">${producto.price}</span>
+                    </div>
                   </div>
-                </Card>
+                  </>
+                  :
+                  <p style={{ height: "20px" }} className="precioFinal">${producto.price}</p>
+                }
+                  <Card.Title style={{ height: "55px", marginTop: "15%", fontWeight: '200', fontSize: "1.1rem" }}>
+                    {producto.name}
+                  </Card.Title>
+
+                </Link>
+                
+
+              </Card>
               </div>
             ))}
         </Container>
