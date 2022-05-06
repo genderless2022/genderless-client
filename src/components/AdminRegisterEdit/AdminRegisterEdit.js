@@ -109,7 +109,7 @@ function handlerOnChange (e){
     return (
         <div className="container-register-form">
             <form onSubmit={onSubmit} >
-                <div className="container-index">
+                <div className="container-admin-edit">
                     <div className="form-container">
                         <div className="title">Modificar mis datos</div>
                         <p className="register-subtitle">(* campos requeridos)</p>

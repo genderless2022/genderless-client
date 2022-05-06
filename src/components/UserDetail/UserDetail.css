@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-.container {
+.container-user-detail {
   display: flex;
   align-items: center;
   min-height: 80.7vh;
