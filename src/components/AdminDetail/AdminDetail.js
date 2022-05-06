@@ -25,7 +25,7 @@ let user={
     
 }
     return (
-        <div className="container-admin-details">
+        <div className="container-admin-detail">
 
             {user
                 ? <div>
