@@ -76,10 +76,17 @@ function NavigationBar() {
 
         {/* Agregando Componente de Metamask */}
         {/* Agregando Widgetmenu Metamask */}
-        { wallet  && <ConnectMetamask type= {'widget_menu'} ></ConnectMetamask>}
+        { wallet  &&
+          <div className='login-meta-container'>
+            <ConnectMetamask type= {'widget_menu'} ></ConnectMetamask>
+          </div>}
       
         {/* Agregando Login Metamask */}
-        { !wallet  && <ConnectMetamask type= {'login'} ></ConnectMetamask>}
+        { !wallet  &&
+          <div className='login-meta-container'>
+            <ConnectMetamask type= {'login'} ></ConnectMetamask>
+          </div>
+        }
 
       </Nav>
       <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>
