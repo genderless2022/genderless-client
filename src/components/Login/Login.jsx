@@ -23,6 +23,7 @@ const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm(formOptions);
     let dispatch = useDispatch();
 
+
     const onSubmit = async (data) => {
         dispatch(userLogin(data));
         nav('/home');
@@ -35,6 +36,7 @@ const Login = () => {
     const handleRegister = () => {
         nav('/register');
     }
+    
 
     return (
         <>

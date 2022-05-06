@@ -8,12 +8,24 @@ import './NavigationBar.css'
 import { BiUser } from 'react-icons/bi';
 import { RiUserUnfollowLine } from 'react-icons/ri';
 import { AiOutlineShopping } from 'react-icons/ai';
+import { FiShoppingCart } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import { FaRegHeart } from 'react-icons/fa';
+import Cookies from 'universal-cookie';
+import { userLogout } from '../../redux/actions/userActions';
 
 function NavigationBar() {
 
+  const cookies = new Cookies();
+  console.log(cookies.get('user'));
   const user = useSelector( (state) => state.userReducer.usuario)
   const productos = useSelector((state) => state.productReducer.productos);
 
+  const nav = useNavigate()
+  const logout = () => {
+    dispatch(userLogout(cookies.get('user')?.tokenSession))
+  }
+  console.log(cookies.get('user')?.tokenSession, 'token')
 
   // Pesadilla de Tomi:
   let [state, setState] = useState({
@@ -46,6 +58,8 @@ function NavigationBar() {
          setName('')
          console.log(name, 'HandleSubmit')
         }
+
+
         
         return (
 
@@ -62,12 +76,12 @@ function NavigationBar() {
         <Nav.Link href="/" style={{ maxHeight: '100px', color: 'white' }}>Inicio</Nav.Link>
         <Nav.Link href="/home" style={{ maxHeight: '100px', color: 'white' }}>Catalogo</Nav.Link>
         {
-          user.name ?
-          <NavDropdown title={<span style={{ color: 'white' }} >{user.name}</span>}id="basic-nav-dropdown">
+          cookies.get('user') ?
+          <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user').user?.name}</span>}id="basic-nav-dropdown">
           <NavDropdown.Item>  <BiUser/> Mi perfil</NavDropdown.Item>
           <NavDropdown.Item>  <AiOutlineShopping/> Mis compras</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item>  <RiUserUnfollowLine/> Cerrar sesión</NavDropdown.Item>
+          <NavDropdown.Item  onClick={() => logout()}>  <RiUserUnfollowLine/> Cerrar sesión</NavDropdown.Item>
           </NavDropdown>
           :
 
@@ -93,6 +107,11 @@ function NavigationBar() {
         />
         <Button type="submit" variant="outline-warning">Buscar</Button>
       </Form>
+
+      <div style={{ marginTop: '10px'}}>
+        <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/shoppingcart">  <FiShoppingCart/></Link>
+        <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/shoppingcart">  <FaRegHeart/></Link>
+      </div>
     </Navbar.Collapse>
   </Container>
 
