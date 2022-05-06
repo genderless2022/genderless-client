@@ -82,7 +82,6 @@ const Register = () => {
 
     const onSubmit = (data) => {
         MessageConfirm(data);
-        console.log(data, 'data')
         reset();
     };
 

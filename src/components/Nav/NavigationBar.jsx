@@ -3,6 +3,7 @@ import { Button, Container, Form, FormControl, Nav, Navbar, NavDropdown } from '
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProductsbyName } from '../../redux/actions/productActions';
+import ConnectMetamask from '../ConnectMetamask/ConnectMetamask';
 import './NavigationBar.css'
 import { BiUser } from 'react-icons/bi';
 import { RiUserUnfollowLine } from 'react-icons/ri';
@@ -13,6 +14,14 @@ function NavigationBar() {
   const user = useSelector( (state) => state.userReducer.usuario)
   const productos = useSelector((state) => state.productReducer.productos);
 
+
+  // Pesadilla de Tomi:
+  let [state, setState] = useState({
+    wallet: localStorage.getItem('wallet') || null,
+    balance: localStorage.getItem('balance') || null
+  })
+  let wallet = state.wallet
+  let balance = state.balance
 
   useEffect(() => {
     console.log(user)
@@ -63,8 +72,15 @@ function NavigationBar() {
           :
 
         <Nav.Link href="/login" style={{ maxHeight: '100px', color: 'white' }}>Iniciar sesion</Nav.Link>
-        }
-        
+      }
+
+        {/* Agregando Componente de Metamask */}
+        {/* Agregando Widgetmenu Metamask */}
+        { wallet  && <ConnectMetamask type= {'widget_menu'} ></ConnectMetamask>}
+      
+        {/* Agregando Login Metamask */}
+        { !wallet  && <ConnectMetamask type= {'login'} ></ConnectMetamask>}
+
       </Nav>
       <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>
         <FormControl
@@ -79,6 +95,8 @@ function NavigationBar() {
       </Form>
     </Navbar.Collapse>
   </Container>
+
+
 </Navbar>
 
   )
