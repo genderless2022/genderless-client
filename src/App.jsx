@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { AdminCreate } from './components/AdminCreate/AdminCreate';
@@ -17,10 +17,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
 import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
+import Cookies from 'universal-cookie';
+import { userLogin } from './redux/actions/userActions';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 
 
 function App() {
+
+  const dispatch = useDispatch();
+  const cookies = new Cookies();
+  console.log(cookies.get('user'));
+  
+
   return (
     <div className="App">
       <Routes>
