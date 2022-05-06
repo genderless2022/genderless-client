@@ -13,6 +13,7 @@ import AdminDetail from './components/AdminDetail/AdminDetail';
 import AdminRegisterEdit from './components/AdminRegisterEdit/AdminRegisterEdit';
 import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
+//import Footer from './components/Footer/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
 import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
@@ -48,6 +49,7 @@ function App() {
 
 
       </Routes>
+      {/* <Footer /> */}
     </div>
   );
 }

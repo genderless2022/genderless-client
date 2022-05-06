@@ -3,11 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
-.container {
+.container-user-detail {
   display: flex;
   align-items: center;
-  min-height: 80.7vh;
+  
   justify-content: center;
+  background-color: #EBEBEB;
+    height: 100vh;
   
  
 }
@@ -15,7 +17,7 @@
 .profile-container {
 
   background-color: #0E1428;
-    color: white;
+    color: #EBEBEB;
     display: flex;
     flex-direction: column;
     align-items: center;
