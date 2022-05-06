@@ -12,7 +12,8 @@ function ConnectMetamask(props) {
         tx: null,
         error: null,
         eth: props.eth || 0.005,
-        ishoverWidget_menu: false
+        ishoverWidget_menu: false,
+        isRequesting: false
     })
 
     // Creamos los punteros al estado para facilitar lectura
@@ -22,54 +23,61 @@ function ConnectMetamask(props) {
     let error = state.error
     let eth = state.eth
     let ishoverWidget_menu = state.ishoverWidget_menu
+    let isRequesting = state.isRequesting
     // Funcion que abre Pop Up y obtiene los datos de la extensión de Metamask
     async function requestAccount(){
 
         // Se revisa si existe la extension
-        if(window.ethereum){
-            console.log(window.ethereum)
-            
-            try{
-                // Se realiza una petición con la extensión
-                await window.ethereum.request({
-                    // Abre el Pop Up de login 
-                    method: 'eth_requestAccounts'
+        if (!isRequesting){
 
-                    // Obtiene las cuentas 
-                }).then( async accounts => {
-                    
-                    // Se guarda en el localStorage la dirección de la primera wallet encontrada
-                    localStorage.setItem( 'wallet', accounts[0] )
-                    
-                    // Posteriormente se realiza una petición nueva para obtener el balance de cuenta
+            if(window.ethereum){
+                console.log(window.ethereum)
+
+                
+                try{
+                    setState({...state, isRequesting: true})
+                    // Se realiza una petición con la extensión
                     await window.ethereum.request({
-                        // No abre popUp y se le pasa la cuenta encontrada pidiendo el último estado de transacción ('latest')
-                        method: 'eth_getBalance',
-                        params: [accounts[0], 'latest']
-
-                        // Obtiene balance en formato Ether
-                    }).then( balance => {
+                        // Abre el Pop Up de login 
+                        method: 'eth_requestAccounts'
+    
+                        // Obtiene las cuentas 
+                    }).then( async accounts => {
                         
-                        // Se guarda en el localStorage el balance, dandole formato para que aparezca como cantidad
-                        localStorage.setItem( 'balance', String(ethers.utils.formatEther(balance)))
-
-                        // Se actualiza la página para ver los cambios
-                        window.location.reload()
-                    })
-                } )
-                
-                
+                        // Se guarda en el localStorage la dirección de la primera wallet encontrada
+                        localStorage.setItem( 'wallet', accounts[0] )
+                        
+                        // Posteriormente se realiza una petición nueva para obtener el balance de cuenta
+                        await window.ethereum.request({
+                            // No abre popUp y se le pasa la cuenta encontrada pidiendo el último estado de transacción ('latest')
+                            method: 'eth_getBalance',
+                            params: [accounts[0], 'latest']
+    
+                            // Obtiene balance en formato Ether
+                        }).then( balance => {
+                            
+                            // Se guarda en el localStorage el balance, dandole formato para que aparezca como cantidad
+                            localStorage.setItem( 'balance', String(ethers.utils.formatEther(balance)))
+    
+                            setState({...state, isRequesting: false})
+                            // Se actualiza la página para ver los cambios
+                            window.location.reload()
+                        })
+                    } )
+                    
+                    
+                }
+                catch (error) {
+                    console.log('Error connecting...' + error);
+                    setState({...state, error: error.message})
+                }
             }
-            catch (error) {
-                console.log('Error connecting...' + error);
-                setState({...state, error: error})
+            else{
+                console.log('Install Metamask')
+                setState({...state, error: 'Install Metamask'})
             }
-        }
-        else{
-            console.log('Install Metamask')
-            setState({...state, error: 'Install Metamask'})
-        }
-        
+            
+        } 
     }
     
     // Se crea una transaccion a partir de los datos de Metamask
@@ -110,7 +118,7 @@ function ConnectMetamask(props) {
       
         {/* Login Button */}
         <div>
-            { props.type === 'login' && <button className='metaLoginButton' onClick={ () => requestAccount()}><img className='metaLogo' src={metaLogo}></img></button>}
+            { props.type === 'login'  && <button className='metaLoginButton' onClick={ () => requestAccount()}><img className='metaLogo' src={metaLogo}></img></button>}
         </div>
 
         {/* Wallet Addres */}
@@ -139,12 +147,12 @@ function ConnectMetamask(props) {
         {/* Dropdown Menu */}
          <div>
             { props.type === 'widget_menu' && walletAddress && 
-            <span className='widget_menu' onMouseEnter={ () => setState({
+            <span className='widget_menu' onClick={ () => setState({
                 ...state, 
                 ishoverWidget_menu: !ishoverWidget_menu
             })} onMouseLeave = { () => setState({
                 ...state,
-                ishoverWidget_menu: !ishoverWidget_menu
+                // ishoverWidget_menu: !ishoverWidget_menu
             })} >
                 
                 {
@@ -160,7 +168,9 @@ function ConnectMetamask(props) {
                     :
                     // Esto se muestra en el icono de menú de dropdownn
                     <span className='dropdown-widget_menu-false'>
-                        <img className='metaLogo' src={metaLogo} alt="" />
+                        <button className='metaLoginButton'>
+                            <img className='metaLogo' src={metaLogo} alt="" />
+                        </button>
                     </span>
                 }
 

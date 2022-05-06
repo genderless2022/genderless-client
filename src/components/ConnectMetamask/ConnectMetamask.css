@@ -59,10 +59,13 @@
     animation-name: showwidget_menu;
     animation-duration: 0.5s;
     animation-timing-function: linear;
+   
 
 }
 .dropdown-widget_menu-true{
-    color: white;
+    color: black;
+    
+    
     /* position: fixed; */
     /* display: flex; */
     /* flex-direction: row; */
@@ -74,6 +77,13 @@
 }
 .dropdown-widget_menu-false{
     color: white;
+    
+}
+.dropdown-widget_menu-false:hover{
+    animation: metaSelect;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    
 }
 .balance{
     color: white;
