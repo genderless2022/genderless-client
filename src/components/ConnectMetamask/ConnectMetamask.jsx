@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './ConnectMetamask.css';
 // props = { type, eth }
 function ConnectMetamask(props) {
+    let metaLogo = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/1200px-MetaMask_Fox.svg.png'
 
     // Estado donde guardamos los datos de metamask del usuario 
     let [state, setState] = useState({
@@ -11,7 +12,7 @@ function ConnectMetamask(props) {
         tx: null,
         error: null,
         eth: props.eth || 0.005,
-        ishoverLogout: false
+        ishoverWidget_menu: false
     })
 
     // Creamos los punteros al estado para facilitar lectura
@@ -20,7 +21,7 @@ function ConnectMetamask(props) {
     let tx = state.tx
     let error = state.error
     let eth = state.eth
-    let ishoverLogout = state.ishoverLogout
+    let ishoverWidget_menu = state.ishoverWidget_menu
     // Funcion que abre Pop Up y obtiene los datos de la extensión de Metamask
     async function requestAccount(){
 
@@ -109,7 +110,7 @@ function ConnectMetamask(props) {
       
         {/* Login Button */}
         <div>
-            { props.type === 'login' && <button className='metaLoginButton' onClick={ () => requestAccount()}><img className='metaLogo' src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/1200px-MetaMask_Fox.svg.png'></img></button>}
+            { props.type === 'login' && <button className='metaLoginButton' onClick={ () => requestAccount()}><img className='metaLogo' src={metaLogo}></img></button>}
         </div>
 
         {/* Wallet Addres */}
@@ -132,27 +133,38 @@ function ConnectMetamask(props) {
 
         {/* Logout Button */}
         <div>
-            { props.type === 'logout' && walletAddress && 
-            <button className='logoutMetaButton' onMouseEnter={ () => setState({
+            { props.type === 'logout' && walletAddress && <button className='logoutMetaButton' onClick={ () => logoutMetamask() }>Logout Meta</button> }
+        </div>
+
+        {/* Dropdown Menu */}
+         <div>
+            { props.type === 'widget_menu' && walletAddress && 
+            <span className='widget_menu' onMouseEnter={ () => setState({
                 ...state, 
-                ishoverLogout: !ishoverLogout
+                ishoverWidget_menu: !ishoverWidget_menu
             })} onMouseLeave = { () => setState({
                 ...state,
-                ishoverLogout: !ishoverLogout
-            })} onClick={ () => logoutMetamask() }>
+                ishoverWidget_menu: !ishoverWidget_menu
+            })} >
                 
                 {
-                    ishoverLogout ? 
-                    <span>
-                        Logout MetaMask
+                    ishoverWidget_menu ? 
+                    // Esto se muestra en el dropdownn
+                    <span className='dropdown-widget_menu-true'>
+                        <li>{walletAddress.slice(0, 5) + '****' + walletAddress.slice(-4) }</li>
+                        <li>{Number.parseFloat(userBalance).toFixed(5)+ ' ETH' }</li>
+                        <li>{ walletAddress && <button className='logoutMetaButton' onClick={ () => logoutMetamask() }>Logout Meta</button> }</li>
+                        {/* Seguir el formato:  */}
+                        {/* <li>Objeto 4</li> */}
                     </span>
                     :
-                    <span>
-                        L
+                    // Esto se muestra en el icono de menú de dropdownn
+                    <span className='dropdown-widget_menu-false'>
+                        <img className='metaLogo' src={metaLogo} alt="" />
                     </span>
                 }
 
-            </button> }
+            </span> }
         </div>
 
         {/* Error Messages */}

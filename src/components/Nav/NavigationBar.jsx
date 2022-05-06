@@ -64,8 +64,11 @@ function NavigationBar() {
       }
 
         {/* Agregando Componente de Metamask */}
-      { balance && <ConnectMetamask type= {'balance'} ></ConnectMetamask>}
+        {/* Agregando Widgetmenu Metamask */}
+        { wallet  && <ConnectMetamask type= {'widget_menu'} ></ConnectMetamask>}
       
+        {/* Agregando Login Metamask */}
+        { !wallet  && <ConnectMetamask type= {'login'} ></ConnectMetamask>}
 
       </Nav>
       <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>
@@ -81,10 +84,6 @@ function NavigationBar() {
     </Navbar.Collapse>
   </Container>
 
-  {/* Agregando Login Metamask */}
-  { !wallet  && <ConnectMetamask type= {'login'} ></ConnectMetamask>}
-  {/* Agregando Logout Metamask */}
-  { wallet  && <ConnectMetamask type= {'logout'} ></ConnectMetamask>}
 
 </Navbar>
 
