@@ -158,28 +158,25 @@ export const updatePassword = ({
 };
 
 //Habilitada
-export const userLogin = ({
-  email, password 
-}) => async (dispatch) => {
-  await axios.post('http://localhost:3001/usuario/login', {
-    email,
-    password
-  }).then(
-    (response) => {
+export const userLogin = ({ email, password}) => async (dispatch) => {
+  
+  axios.post('http://localhost:3001/usuario/login',{
+      email,
+      password,
+  }).then( response => {
       dispatch({
-        type: USER_LOGIN,
-        payload: response.data,
-      });
-    },
-    (error) => {
+          type: USER_LOGIN,
+          payload: response.data
+      })
+  },
+  (error) => {
       dispatch({
-        type: ERROR,
-        payload: error.error,
-      });
-    },
-  );
-};
-
+          type: ERROR,
+          payload: error.error
+      })
+  }
+  )
+}
 //Habilitada
 export const updateRol = ({
   email,

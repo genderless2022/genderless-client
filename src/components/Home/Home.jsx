@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import './Home.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts, getProductsbyCategory, getProductsbyPrice } from '../../redux/actions/productActions';
-import { Button, Card, Container, Nav, Navbar, NavDropdown, Pagination, Spinner } from 'react-bootstrap';
+import { getDiscounts, getProducts, getProductsbyCategory, getProductsbyPrice } from '../../redux/actions/productActions';
+import { Alert, Button, Card, Container, Nav, Navbar, NavDropdown, Pagination, Spinner } from 'react-bootstrap';
 import { CgShoppingCart } from 'react-icons/cg';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import NavigationBar from '../Nav/NavigationBar';
 import Paged from '../Pagination/Pagination';
 
-function Home() {
+function Home({alert, setAlert}) {
   const dispatch = useDispatch();
-  const productos = useSelector((state) => state.productReducer.productos);
+  const productos = useSelector((state) => state.productReducer.productos.reverse());
   useEffect(() => {
     dispatch(getProducts());
   }, []);
   console.log(productos);
 
+  
   /**
-     //!--------- PAGINADO ----------------------------------
-  **/
+   //!--------- PAGINADO ----------------------------------
+   **/
   const [currentPage, setCurrentPage] = useState(1);
   const [prodPerPage] = useState(15);
   const lastIndexProd = currentPage * prodPerPage;
   const firstIndexProd = lastIndexProd - prodPerPage;
   const currentProds = productos.slice(firstIndexProd, lastIndexProd);
+  const prodsFinal = currentProds.filter(p => p.disabled === false);
   console.log(currentProds);
   const Page = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -34,15 +36,23 @@ function Home() {
   const filterCategory = (category) => {
     dispatch(getProductsbyCategory(category));
   };
-
+  
   const filterPrice = (format) => {
     dispatch(getProductsbyPrice(format));
   };
 
+  const filterDiscounts = (format) => {
+    dispatch(getDiscounts(format));
+  };
+  
+
+
+
+
   return (
     <>
 
-    {/* <NavigationBar/> */}
+     <NavigationBar/>
 
       <Navbar bg="light" expand="lg">
         <Container>
@@ -72,10 +82,13 @@ function Home() {
               <NavDropdown title="Precio" id="basic-nav-dropdown">
                 <NavDropdown.Item  onClick={() => dispatch(getProducts())}>Todos</NavDropdown.Item>
                 <NavDropdown.Item  onClick={() => filterPrice('ASC')}>
-                ASC
+                Menor a mayor
                 </NavDropdown.Item>
                 <NavDropdown.Item  onClick={() => filterPrice('DESC')}>
-                DESC
+                Mayor a menor
+                </NavDropdown.Item>
+                <NavDropdown.Item  onClick={() => filterDiscounts()}>
+                Descuentos
                 </NavDropdown.Item>
 
               </NavDropdown>
@@ -84,62 +97,76 @@ function Home() {
         </Container>
       </Navbar>
 
+      <Container className={alert === true ? 'alertTrue' : 'alertFalse'}>
+        <h1>No hay productos para mostrar</h1>
+      </Container>
+
+
       <div className="containerCardsHome">
-        {productos.length > 0 ? (
-          currentProds.map((producto) => (
+        {productos.length !== 0 ? (
+          prodsFinal.map((producto) => (
             <>
               <Card
-                style={{ width: "18rem", marginBottom: "2%", height: "33rem" }}
+                style={{ width: "18rem", marginBottom: "2%", height: "30rem" }}
                 key={producto.id}
               >
                 <Link
                   to={"/producto/" + producto.id}
                   style={{ textDecoration: "none", color: "black" }}
                 >
-                  <Card.Img variant="top" src={producto.image} />
-                  <Card.Title style={{ height: "55px", marginTop: "2%" }}>
+                  <Card.Img variant="top" src={producto.image} style={{ height: "350px"}}/>
+                 
+                {
+                  producto.discount > 0 ? 
+                  <>
+                  <div className="card-container">
+                    <div className="top-left" >%{producto.discount}</div>
+                    <div style={{ height: "20px" }}>
+                      <span  className="precioTachado">${producto.price}</span>
+                      <span  className="precioFinal">${producto.price}</span>
+                    </div>
+                  </div>
+                  </>
+                  :
+                  <p style={{ height: "20px" }} className="precioFinal">${producto.price}</p>
+                }
+                  <Card.Title style={{ height: "55px", marginTop: "15%", fontWeight: '200', fontSize: "1.1rem" }}>
                     {producto.name}
                   </Card.Title>
 
                 </Link>
-                <p style={{ height: "35px" }}>${producto.price}</p>
-                <div className="cardsProductsButtons">
-                  <Button
-                    className="cardsProductsButton"
-                    style={{
-                      background: "transparent",
-                      border: "none",
-                      color: "black",
-                    }}
-                  >
-                    <CgShoppingCart />
-                  </Button>
-                  <Button
-                    className="cardsProductsButton"
-                    style={{
-                      background: "transparent",
-                      border: "none",
-                      color: "black",
-                    }}
-                  >
-                    {" "}
-                    <MdOutlineFavoriteBorder />{" "}
-                  </Button>
-                </div>
+                
+
               </Card>
             </>
           ))
-        ) : (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        )}
+        ) : 
+        
+            
+        <>
+
+                    {
+                      alert === true ? 
+                      null
+                      :
+
+                      <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                    }
+      
+       
+        </>
+        }
       </div>
       <div className={"PagedHome"}>
         <Paged
           prodPerPage={prodPerPage}
           prodsLength={productos.length}
           Page={Page}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          prodsFinal={prodsFinal}
         />
       </div>
     </>

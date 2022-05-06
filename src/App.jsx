@@ -23,11 +23,10 @@ import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 function App() {
   return (
     <div className="App">
-      <NavigationBar></NavigationBar>
       <Routes>
 
         <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<Home />}/>
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
