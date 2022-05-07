@@ -6,6 +6,7 @@ import instagram from '../../assets/social-instagram.png'
 import terminos from '../../assets/terminos.png';
 import localizacion from '../../assets/localizacion.png';
 import email from '../../assets/email.png'
+import GENDERLESS from '../../assets/GENDERLESS.png';
 
 function Footer() {
   const {pathname} = window.location;
@@ -13,39 +14,40 @@ function Footer() {
   return (!pathname.includes("admin")  &&
     <div className="footer">
       <div className="footer-container">
-        <h1>Genderless </h1>
+      <img src={GENDERLESS} alt=" " width={200} />
+        {/* <h2>Genderless</h2> */}
 
         <div>
-          <Link to={'/terminos'} className='link-footer' >
+          <Link to={'/terminos'} className='link-footer' style={{ maxHeight: '100px', color: 'white' }} >
             <p>Terminos y condiciones</p>
-            <img src={terminos} alt=" " width={25} />
+            <img src={terminos} color="white" alt=" " width={25} />
           </Link>
         </div>
 
         <div className='footer-container'>
-          <a className='link-footer'
-            href="https://www.facebook.com/profile.php?id=100080195515452">
+          <a className='link-footer' style={{ maxHeight: '100px', color: 'white' }}
+            href="https://www.facebook.com/profile.php?id=100081210152105">
             <p>Facebook</p>
             <img src={facebook} alt=" " width={30} />
           </a>
         </div>
 
         <div className='footer-container'>
-          <a className='link-footer'
-            href="http://www.instagram.com/boomaropadeportiva"><p>Instagram</p>
+          <a className='link-footer' style={{ maxHeight: '100px', color: 'white' }}
+            href="http://www.instagram.com/genderless_ropa"><p>Instagram</p>
             <img src={instagram} alt=" " width={30} />
           </a>
         </div>
 
         <div>
-          <Link to="/map" className='link-footer'>
+          <Link to="/map" className='link-footer' style={{ maxHeight: '100px', color: 'white' }}>
             <p>Visítanos en nuestra tienda</p>
             <img src={localizacion} alt=" " className='email' width={30} />
           </Link>
         </div>
 
         <div className='footer-container'>
-          <a className='link-footer'
+          <a className='link-footer' style={{ maxHeight: '100px', color: 'white' }}
             href="mailto:genderless2022@gmail.com">
             <p>Reclamos o sugerencias</p>
             <img src={email} alt=" " className='email' width={30} />

@@ -2,28 +2,19 @@ import React from "react";
 import { Link} from "react-router-dom";
 import './UserDetail.css';
 //import { useState } from "react";
+import Cookies from "universal-cookie";
 
 
 
 export default function UserDetail() {
 
-//let user = useState(state=> state?.userReducer.usuario);
-let user={
-    name:'Roxana',
-    lastName:'Canciani', 
-    email:'roxis@correo.com', 
-    picture:'', 
-    born:'12-11-1979', 
-    dni:'23444555', 
-    address:'baltazar Gallegos 614', 
-    province:'Cordoba', 
-    postal:'5008', 
-    phone:'3645738373'
+    let cookie = new Cookies();
+    const user = cookie.get('user')
+   
+
+   
 
 
-
-    
-}
     return (
         <div className="container-user-detail">
 
@@ -42,10 +33,6 @@ let user={
 
                         <Link to="/editar">
                             <button className="loginbtn">Editar mis Datos</button>
-                        </Link>
-
-                        <Link to="/order">
-                            <button className="loginbtn">Mi compra</button>
                         </Link>
                         
                        

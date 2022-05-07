@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import {updateUser}  from '../../redux/actions/userActions';
 import './index.css';
+import Cookies from "universal-cookie";
 
 
 
@@ -43,6 +44,9 @@ function validate(input){
 
 
 export default function EditUser  () {
+    let cookie = new Cookies();
+    const userEdit = cookie.get('user')
+
     const dispatch = useDispatch();
 
     
@@ -50,7 +54,7 @@ export default function EditUser  () {
    
    const nav = useNavigate();
 
-   const userEdit = useSelector(state => state.userReducer.status.user);
+   //const userEdit = useSelector(state => state.userReducer.status.user);
   
 
    const[errors, setErrors] = useState({});
@@ -110,7 +114,7 @@ function handlerOnChange (e){
         <div className="container-register-form">
             <form onSubmit={onSubmit} >
                 <div className="container-user-edit">
-                    <div className="form-container">
+                    <div className="form-container-edit">
                         <div className="title">Modificar mis datos</div>
                         <p className="register-subtitle">(* campos requeridos)</p>
                         <div className="form-group-one">
@@ -218,5 +222,4 @@ function handlerOnChange (e){
         </div>
     );
 };
-
 

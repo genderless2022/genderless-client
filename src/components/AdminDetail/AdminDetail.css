@@ -2,13 +2,15 @@
 .container-admin-detail {
   display: flex;
   align-items: center;
-  min-height: 80.7vh;
+  
   justify-content: center;
+  background-color: #EBEBEB;
+    height: 100vh;
   
  
 }
 
-.profile-container {
+.profile-container-admin {
 
   background-color: #0E1428;
     color: white;

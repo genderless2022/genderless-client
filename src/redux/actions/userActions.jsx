@@ -168,7 +168,7 @@ const cookies = new Cookies();
       email,
       password,
   }).then( response => {
-    cookies.set('user', response.data, { path: '/' });
+    cookies.set('user', response.data.user, { path: '/' });
     console.log(cookies.get('user')); // Pacman
       dispatch({
           type: USER_LOGIN,

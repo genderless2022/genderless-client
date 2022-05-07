@@ -80,7 +80,7 @@ function NavigationBar() {
         {
           cookies.get('user') ?
           <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user').user?.name}</span>}id="basic-nav-dropdown">
-          <NavDropdown.Item>  <BiUser/> Mi perfil</NavDropdown.Item>
+          <NavDropdown.Item>  <BiUser/><Link to="/user/profile" className="input-profile"> Mi perfil</Link></NavDropdown.Item>
           <NavDropdown.Item>  <AiOutlineShopping/> Mis compras</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item  onClick={() => logout()}>  <RiUserUnfollowLine/> Cerrar sesión</NavDropdown.Item>
