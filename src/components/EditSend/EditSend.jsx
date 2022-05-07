@@ -87,7 +87,7 @@ function handlerOnChange (e){
                     province: '',
                     postal: '',
                 })
-             nav('/user/profile')
+             nav('/shoppingcart')
             }
         }
 
