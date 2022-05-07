@@ -12,7 +12,8 @@ import AdminDetail from './components/AdminDetail/AdminDetail';
 import AdminRegisterEdit from './components/AdminRegisterEdit/AdminRegisterEdit';
 import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
-//import Footer from './components/Footer/Footer';
+// import Footer from './components/Footer/Footer';
+import Terminos from './components/Terminos/Terminos';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
 import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
@@ -51,7 +52,7 @@ function App() {
         <Route path="/admin/profile" element={<AdminDetail></AdminDetail>} />
         <Route path="/admin/editar" element={<AdminRegisterEdit></AdminRegisterEdit>} />
 
-        
+        <Route path='/terminos' element={<Terminos></Terminos>} />
         <Route path="/connect/metamask" element={<ConnectMetamask />} />
 
 

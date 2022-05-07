@@ -1,12 +1,14 @@
 .footer {
-  background-color:black;
+  background-color: grey;
    position: absolute;
    bottom: 0;
    width: 100%;
    height: 5em;
    display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; 
+  
+  
   
 }
 
@@ -17,6 +19,9 @@
   align-items: center;
   font-size: 12px;
   font-weight: bold;
+  font-family: 'Monoton';
+  color: white;
+
 }
 
 .footer-container p {

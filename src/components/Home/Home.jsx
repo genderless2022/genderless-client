@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import NavigationBar from '../Nav/NavigationBar';
 import Paged from '../Pagination/Pagination';
 
+
 function Home({alert, setAlert}) {
   const dispatch = useDispatch();
   const productos = useSelector((state) => state.productReducer.productos.reverse());
@@ -168,7 +169,9 @@ function Home({alert, setAlert}) {
           currentPage={currentPage}
           prodsFinal={prodsFinal}
         />
+       
       </div>
+      
     </>
   );
 }
