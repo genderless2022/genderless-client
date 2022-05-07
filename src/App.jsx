@@ -14,6 +14,7 @@ import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
 // import Footer from './components/Footer/Footer';
 import Terminos from './components/Terminos/Terminos';
+import EditSend from './components/EditSend/EditSend';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
 import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
@@ -43,6 +44,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/producto/:id" element={<DetailProduct />} />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
+        <Route path="/user/products/send" element={<EditSend></EditSend>} />
 
         <Route path="/user/profile" element={<UserDetail></UserDetail>} />
         <Route path="/editar" element={<EditUser></EditUser>} />
