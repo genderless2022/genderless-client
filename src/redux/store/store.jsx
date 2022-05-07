@@ -8,6 +8,7 @@ import shoppingReducer from '../reducers/shoppingReducer';
 import favoriteReducer from '../reducers/favoriteReducer';
 import mercadoReducer from '../reducers/mercadoReducer';
 import reviewReducer from '../reducers/reviewReducer';
+import newsletterReducer from '../reducers/newsletterReducer';
 
 const rootReducer = combineReducers({
   productReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   shoppingReducer,
   favoriteReducer,
   mercadoReducer,
-  reviewReducer
+  reviewReducer,
+  newsletterReducer
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
