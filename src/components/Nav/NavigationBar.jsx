@@ -13,6 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import { FaRegHeart } from 'react-icons/fa';
 import Cookies from 'universal-cookie';
 import { userLogout } from '../../redux/actions/userActions';
+import { GoogleLogin, GoogleLogout } from 'react-google-login'
+import ConnectGoogle from '../ConnectGoogle/ConnectGoogle';
 
 function NavigationBar() {
 
@@ -119,6 +121,7 @@ function NavigationBar() {
         <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/shoppingcart">  <FiShoppingCart/></Link>
         <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/shoppingcart">  <FaRegHeart/></Link>
       </div>
+      <ConnectGoogle></ConnectGoogle>
     </Navbar.Collapse>
   </Container>
 
