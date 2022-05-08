@@ -12,7 +12,7 @@ import AdminDetail from './components/AdminDetail/AdminDetail';
 import AdminRegisterEdit from './components/AdminRegisterEdit/AdminRegisterEdit';
 import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
-// import Footer from './components/Footer/Footer';
+import Footer from './components/Footer/Footer';
 import Terminos from './components/Terminos/Terminos';
 import EditSend from './components/EditSend/EditSend';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -61,7 +61,7 @@ function App() {
 
 
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
