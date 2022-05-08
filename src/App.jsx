@@ -23,6 +23,7 @@ import Cookies from 'universal-cookie';
 import { userLogin } from './redux/actions/userActions';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 
 
 
@@ -55,7 +56,8 @@ function App() {
         <Route path="/admin/editar" element={<AdminRegisterEdit></AdminRegisterEdit>} />
 
         <Route path='/terminos' element={<Terminos></Terminos>} />
-        <Route path="/connect/metamask" element={<ConnectMetamask />} />
+        
+        <Route path="/meta/checkout" element={<MetaCheckout />} />
 
 
 

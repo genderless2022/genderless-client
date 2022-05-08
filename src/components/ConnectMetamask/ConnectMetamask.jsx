@@ -1,10 +1,10 @@
 import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react'
 import './ConnectMetamask.css';
-// props = { type, eth }
+// props = { type, eth, loginTextButton }
 function ConnectMetamask(props) {
     let metaLogo = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/1200px-MetaMask_Fox.svg.png'
-
+    let metaMaskXtensionURL = 'https://metamask.io/download/'
     // Estado donde guardamos los datos de metamask del usuario 
     let [state, setState] = useState({
         walletAddress: localStorage.getItem('wallet'),
@@ -74,7 +74,7 @@ function ConnectMetamask(props) {
             }
             else{
                 console.log('Install Metamask')
-                setState({...state, error: 'Install Metamask'})
+                setState({...state, error: <a href={metaMaskXtensionURL} target = '_blank'>Install Metamask</a>})
             }
             
         } 
@@ -118,7 +118,7 @@ function ConnectMetamask(props) {
       
         {/* Login Button */}
         <div>
-            { props.type === 'login'  && <button className='metaLoginButton' onClick={ () => requestAccount()}><img className='metaLogo' src={metaLogo}></img></button>}
+            { props.type === 'login'  && <button className='metaLoginButton' onClick={ () => requestAccount()}><img className='metaLogo' src={metaLogo}></img> {props.loginTextButton}</button>}
         </div>
 
         {/* Wallet Addres */}
@@ -132,7 +132,7 @@ function ConnectMetamask(props) {
         </div>
 
         {/* Make a transaction */}
-            { props.type === 'transaction' && <button className='payMetaButton' onClick={ () => transaction(eth)}>{"Pay: " + eth }</button>}
+            { props.type === 'transaction' && <button className='payMetaButton' onClick={ () => transaction(eth)}>{"Pay: " + eth + ' ETH' }</button>}
 
         {/* Hash de Transaccion */}
         <div>

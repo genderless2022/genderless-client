@@ -2,6 +2,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 // import {getShoppingList} from '../../redux/actions/shoppingCartActions'
 import CardSlim from "../../components/CardSlim/CardSlim"
 import { Link } from "react-router-dom"
@@ -17,6 +18,7 @@ const ProductosParaMostrar = [
 
 export default function ShoppingCart ( ) {
     
+    let nav = useNavigate()
     const status = useSelector( state => state )
     const dispatch = useDispatch()
     const [select, setSelect] = useState("Retiro por la tienda");
@@ -46,6 +48,7 @@ export default function ShoppingCart ( ) {
 
     const handleEthereum = () => {
         console.log('CONTINUAR')
+        nav('/meta/checkout')
     }
 
     useEffect( ( )=> {
