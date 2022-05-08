@@ -7,13 +7,17 @@ import userReducer from '../reducers/userReducer';
 import shoppingReducer from '../reducers/shoppingReducer';
 import favoriteReducer from '../reducers/favoriteReducer';
 import mercadoReducer from '../reducers/mercadoReducer';
+import reviewReducer from '../reducers/reviewReducer';
+import newsletterReducer from '../reducers/newsletterReducer';
 
 const rootReducer = combineReducers({
   productReducer,
   userReducer,
   shoppingReducer,
   favoriteReducer,
-  mercadoReducer
+  mercadoReducer,
+  reviewReducer,
+  newsletterReducer
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
