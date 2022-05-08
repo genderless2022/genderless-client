@@ -19,6 +19,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
 import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
+import MapTienda from './components/MapTienda/MapTienda';
 import Cookies from 'universal-cookie';
 import { userLogin } from './redux/actions/userActions';
 import { useDispatch } from 'react-redux';
@@ -54,6 +55,7 @@ function App() {
         <Route path="/admin/profile" element={<AdminDetail></AdminDetail>} />
         <Route path="/admin/editar" element={<AdminRegisterEdit></AdminRegisterEdit>} />
 
+        <Route path='/mapa' element={<MapTienda></MapTienda>} />
         <Route path='/terminos' element={<Terminos></Terminos>} />
         <Route path="/connect/metamask" element={<ConnectMetamask />} />
 
