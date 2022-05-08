@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 export const GET_USERS = 'GET_USERS';
 export const GET_USER = 'GET_USER';
@@ -157,29 +158,31 @@ export const updatePassword = ({
   );
 };
 
-//Habilitada
-export const userLogin = ({
-  email, password 
-}) => async (dispatch) => {
-  await axios.post('http://localhost:3001/usuario/login', {
-    email,
-    password
-  }).then(
-    (response) => {
-      dispatch({
-        type: USER_LOGIN,
-        payload: response.data,
-      });
-    },
-    (error) => {
-      dispatch({
-        type: ERROR,
-        payload: error.error,
-      });
-    },
-  );
-};
 
+
+//Habilitada
+export const userLogin = ({ email, password}) => async (dispatch) => {
+const cookies = new Cookies();
+  
+  axios.post('http://localhost:3001/usuario/login',{
+      email,
+      password,
+  }).then( response => {
+    cookies.set('user', response.data.user, { path: '/' });
+    console.log(cookies.get('user')); // Pacman
+      dispatch({
+          type: USER_LOGIN,
+          payload: response.data
+      })
+  },
+  (error) => {
+      dispatch({
+          type: ERROR,
+          payload: error.error
+      })
+  }
+  )
+}
 //Habilitada
 export const updateRol = ({
   email,
@@ -208,14 +211,17 @@ export const updateRol = ({
 
 //Habilitada
 export const userLogout = ({
-  token 
+  tokenSession 
 }) => async (dispatch) => {
-  await axios.get('http://localhost:3001/usuario/login', {}, {
+  const cookies = new Cookies();
+  await axios.post('http://localhost:3001/usuario/logout', {email: cookies.get('user').email}, {
     headers: {
-      'Authorization': 'Bearer ' + token
+      'Authorization': 'Bearer ' + tokenSession
     }
  }).then(
     (response) => {
+    cookies.remove('user');
+    console.log(cookies.get('user')); // Pacman
       dispatch({
         type: USER_LOGOUT,
         payload: response.data,

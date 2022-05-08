@@ -4,3 +4,14 @@
     font-family: 'Monoton', cursive !important;
 
 }
+.login-meta-container{
+    position: fixed;
+    bottom: 30px;
+    left: 2px;
+}
+.input-profile{
+    text-decoration: none;
+    color:black;
+    
+
+}

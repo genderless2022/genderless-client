@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../../redux/actions/userActions';
 
 const formSchema = Yup.object().shape({
     email: Yup.string()
@@ -19,8 +21,11 @@ const formOptions = { resolver: yupResolver(formSchema) };
 const Login = () => {
     const nav = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm(formOptions);
+    let dispatch = useDispatch();
+
 
     const onSubmit = async (data) => {
+        dispatch(userLogin(data));
         nav('/home');
     };
 
@@ -31,6 +36,7 @@ const Login = () => {
     const handleRegister = () => {
         nav('/register');
     }
+    
 
     return (
         <>
