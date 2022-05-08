@@ -1,0 +1,23 @@
+.title-container-fav {
+    display: flex;
+    margin: 20px;
+    color: #0E1428;
+}
+
+.fav-cart-container {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    flex: 1;
+}
+
+.into-container-fav {
+    background-color: white;
+    padding: 0 10%;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}

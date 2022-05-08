@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
 import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
+import Favorites from './components/Favorites/Favorites';
 
 
 
@@ -28,12 +29,11 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/producto/:id" element={<DetailProduct />} />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
+        <Route path="/favorites" element={<Favorites />} />
 
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/create" element={<AdminCreate />} />
 
-
-        
         <Route path="/connect/metamask" element={<ConnectMetamask />} />
 
 
