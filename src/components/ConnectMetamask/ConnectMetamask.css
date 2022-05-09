@@ -90,6 +90,10 @@
     /* margin-left: 10px; */
 
 }
+.lastTxHash{
+    color: red;
+    filter: drop-shadow( 1px 1px 1px white);
+}
 
 @keyframes metaSelect {
     0%{

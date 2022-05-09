@@ -1,14 +1,22 @@
 import './ShoppingCart.css'
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+// import {getShoppingList} from '../../redux/actions/shoppingCartActions'
 import { getShopping } from '../../redux/actions/shoppingActions'
 import CardSlim from "../../components/CardSlim/CardSlim"
 import { Link } from "react-router-dom"
 import Cookies from "universal-cookie";
 
 export default function ShoppingCart ( ) {
+
+    
+    let nav = useNavigate()
+    const status = useSelector( state => state )
+
     let cookie = new Cookies();
     const user = cookie.get('user')
+
     const dispatch = useDispatch()
     const [select, setSelect] = useState("Retiro por la tienda");
     const shopping = useSelector( state => state.shoppingReducer)
@@ -31,6 +39,7 @@ export default function ShoppingCart ( ) {
 
     const handleEthereum = () => {
         console.log('CONTINUAR')
+        nav('/meta/checkout')
     }
 
     // console.log('shopping.totalShopping', shopping?.totalShopping)
