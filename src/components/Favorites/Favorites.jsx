@@ -6,16 +6,23 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { getFavorites } from '../../redux/actions/favoritesActions';
 import CardFavorites from '../CardFavorites/CardFavorites';
+import { subscribeFavorites } from '../../redux/actions/newsletterActions';
+import Cookies from "universal-cookie";
 
 export default function Favorites ( ) {
+    let cookie = new Cookies();
+    const user = cookie.get('user')
     const productsFavorites = useSelector( state => state.favoriteReducer.favorites)
     const dispatch = useDispatch()
     
-    console.log('productsFavorites', productsFavorites)
     useEffect(()=> {
-        dispatch(getFavorites({ email : "maximilianosorichetti@gmail.com" }))
+        dispatch(getFavorites({ email : user?.email }))
     }, [])
 
+    const handleNewsletter = (e) => {
+        e.preventDefault();
+        dispatch(subscribeFavorites({ email : user?.email }))
+    }
     return (<>
         {productsFavorites.length
             ?
@@ -39,7 +46,11 @@ export default function Favorites ( ) {
                             price= { product?.price }
                             />
                         })}
+                        <div className="fav-newsletter-btn">
+                            <button onClick={(e) => handleNewsletter(e)} className="btn-newsletter-fav">Agregar a Newsletter mis favoritos</button>
                         </div>
+                        </div>
+
                 </div>
             </div>
             : <div>No se encuentran productos en Favoritos</div>              

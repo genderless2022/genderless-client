@@ -13,6 +13,7 @@ export const ERROR = 'ERROR';
 export const mercadoCheckout = ({
     name, picture_url, size, price, quantity
 }) => async (dispatch) => {
+  console.log('name,picture_url, size, price, quantity', name,picture_url, size, price, quantity)
   await axios.post('http://localhost:3001/mercado/checkout', {
       name,
       picture_url,

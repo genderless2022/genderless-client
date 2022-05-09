@@ -35,6 +35,7 @@ function App() {
 
   return (
     <div className="App">
+      <NavigationBar />
       <Routes>
 
         <Route path="/" element={<Landing />} />
@@ -44,6 +45,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/producto/:id" element={<DetailProduct />} />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
+        <Route path="/favorites" element={<Favorites />} />
         <Route path="/user/products/send" element={<EditSend></EditSend>} />
         <Route path="/user/profile" element={<UserDetail></UserDetail>} />
         <Route path="/editar" element={<EditUser></EditUser>} />

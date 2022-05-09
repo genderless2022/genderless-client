@@ -21,3 +21,22 @@
     flex-direction: row;
     flex: 1;
 }
+
+.btn-newsletter-fav {
+    /* width: 10%; */
+/* height: 10%; */
+    width: auto;
+    height: auto;
+    /* border-radius: 3px; */
+    background-color: #E7BF50;
+    color: #0E1428;
+    border-radius: 3px;
+    font-weight: 1000;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.fav-newsletter-btn {
+    display: flex;
+}

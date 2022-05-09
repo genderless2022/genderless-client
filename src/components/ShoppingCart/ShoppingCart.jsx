@@ -1,22 +1,23 @@
+import './ShoppingCart.css'
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getShopping } from '../../redux/actions/shoppingActions'
 import CardSlim from "../../components/CardSlim/CardSlim"
 import { Link } from "react-router-dom"
-import './ShoppingCart.css'
+import Cookies from "universal-cookie";
 
 export default function ShoppingCart ( ) {
-
+    let cookie = new Cookies();
+    const user = cookie.get('user')
     const dispatch = useDispatch()
     const [select, setSelect] = useState("Retiro por la tienda");
     const shopping = useSelector( state => state.shoppingReducer)
-
     const total = shopping.totalShopping.length 
                 ? shopping.totalShopping?.reduce((a,b) => a + b).toFixed(2)
                 : 0;
 
     useEffect( ( )=> {
-        dispatch(getShopping({ email : "maximilianosorichetti@gmail.com" }))
+        dispatch(getShopping({ email : user?.email }))
     }, [dispatch])
     
     const handleSelect = (e) => {
@@ -32,17 +33,19 @@ export default function ShoppingCart ( ) {
         console.log('CONTINUAR')
     }
 
-    // const obje = 
-    // console.log('obje', obje)
-    console.log('obje', shopping.products)
-    console.log('shopping.totalShopping', shopping?.totalShopping)
+    // console.log('shopping.totalShopping', shopping?.totalShopping)
     //falta el size y quantity, pasar al reducer y manejarlo? si reinicio se pierde... 
     const data = {
-        name: ["remera azul", "remera roja", "remera gris"],
-        picture_url: ['https://www.cristobalcolon.com/fullaccess/item21385foto95276.jpg,https://www.cristobalcolon.com/fullaccess/item21405foto95345.jpg','https://www.cristobalcolon.com/fullaccess/item21385foto95276.jpg,https://www.cristobalcolon.com/fullaccess/item21405foto95345.jpg'],
+        name: shopping.products.map((e) => e.name),
+        picture_url: shopping.products.map((e) => e.image),
         size: ["S", "XXL", "L"],
-        price: [1234,12123, 23123],
+        price: total,
         quantity: [1, 3, 3]
+        // name: ["remera azul", "remera roja", "remera gris"],
+        // picture_url: ['https://www.cristobalcolon.com/fullaccess/item21385foto95276.jpg,https://www.cristobalcolon.com/fullaccess/item21405foto95345.jpg','https://www.cristobalcolon.com/fullaccess/item21385foto95276.jpg,https://www.cristobalcolon.com/fullaccess/item21405foto95345.jpg'],
+        // size: ["S", "XXL", "L"],
+        // price: [1234,12123, 23123],
+        // quantity: [1, 3, 3]
     }
 
     return (<div>
@@ -122,7 +125,7 @@ export default function ShoppingCart ( ) {
                                     </div>
                                     <div className="cart-mp">
                                         <p>Ir a pagar</p>
-                                         <form className="form-mp" action='http://localhost:3001/mercado/checkout' method='POST'>
+                                            <form className="form-mp" action='http://localhost:3001/mercado/checkout' method='POST'>
                                             <input type='hidden' name='name' value={data.name}></input>
                                             <input type='hidden' name='picture_url' value={data.picture_url}></input>
                                             <input type='hidden' name='size' value={data.size} ></input>

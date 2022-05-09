@@ -17,7 +17,8 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import ConnectGoogle from '../ConnectGoogle/ConnectGoogle';
 
 function NavigationBar() {
-
+const {pathname} = window.location;
+console.log('pathname', pathname)
   const cookies = new Cookies();
   console.log(cookies.get('user'));
   const user = useSelector( (state) => state.userReducer.usuario)
@@ -63,7 +64,7 @@ function NavigationBar() {
 
 
         
-        return (
+        return ((!pathname.includes("admin") && pathname !=="/")  &&
 
 <Navbar bg="dark" expand="lg" >
   <Container fluid >
@@ -119,7 +120,7 @@ function NavigationBar() {
 
       <div style={{ marginTop: '10px'}}>
         <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/shoppingcart">  <FiShoppingCart/></Link>
-        <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/shoppingcart">  <FaRegHeart/></Link>
+        <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/favorites">  <FaRegHeart/></Link>
       </div>
       <ConnectGoogle></ConnectGoogle>
     </Navbar.Collapse>
