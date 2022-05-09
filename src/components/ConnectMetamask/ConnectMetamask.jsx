@@ -183,7 +183,7 @@ function ConnectMetamask(props) {
         </div>
 
         {/* Last Stored Transaction */}
-        { localStorage.getItem('lastTx') && <div>Your Last Transaction made hash: {' ' + localStorage.getItem('lastTx')}</div>}
+        { localStorage.getItem('lastTx') && <div className='lastTxHash'>Your Last Transaction made hash: {' ' + localStorage.getItem('lastTx')}</div>}
     </>
   );
 }
