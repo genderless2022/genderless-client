@@ -36,9 +36,9 @@ export default function MapTienda () {
             <p> <b>SIN CARGO!!</b></p>
             <p> a cualquier parte del país !</p> 
              <br></br>  
-            <p> En caso de estar buscado para otra zona,    
-             podes comunicarte a nuestro correo    
-             para coordinar con nosotros!</p>    
+            <p> En caso de estar buscado para otra</p>
+            <p> zona, podes comunicarte a nuestro</p>
+            <p> correo para coordinar con nosotros!</p>    
         </div>
         </div>
         </>
