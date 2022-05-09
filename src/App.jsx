@@ -26,6 +26,7 @@ import { userLogin } from './redux/actions/userActions';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
+import { NewPassword } from './components/NewPassword/NewPassword';
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/user/newpassword" element={<NewPassword />} />
         <Route path="/producto/:id" element={<DetailProduct />} />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
         <Route path="/favorites" element={<Favorites />} />
