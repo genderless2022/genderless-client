@@ -4,10 +4,12 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const GET_SHOPPING = 'GET_SHOPPING'
 export const RETURN_PRODUCT = 'RETURN_PRODUCT'
 export const EMPTY_SHOPPING = 'EMPTY_SHOPPING'
+export const TOTAL_SHOPPING = 'TOTAL_SHOPPING'
+export const TOTAL_DELETE_SHOPPING = 'TOTAL_DELETE_SHOPPING'
 export const ERROR = 'ERROR';
 
 // Habilitada
-export const addProduct = ( email, productId ) => async (dispatch) => {
+export const addProduct = ( {email, productId} ) => async (dispatch) => {
   await axios.post('http://localhost:3001/usuario/shoppingcart', { email, productId }).then(
     (response) => {
       dispatch({
@@ -25,7 +27,7 @@ export const addProduct = ( email, productId ) => async (dispatch) => {
 };
 
 // Habilitada
-export const getShopping = ( email ) => async (dispatch) => {
+export const getShopping = ( {email} ) => async (dispatch) => {
   await axios.get(`http://localhost:3001/usuario/shoppingcart/${email}`).then(
     (response) => {
       dispatch({
@@ -43,7 +45,7 @@ export const getShopping = ( email ) => async (dispatch) => {
 };
 
 // Habilitada
-export const returnProduct = ( email, productId ) => async (dispatch) => {
+export const returnProduct = ( {email, productId} ) => async (dispatch) => {
   await axios.delete(`http://localhost:3001/usuario/shoppingcart/${email}/${productId}`).then(
     (response) => {
       dispatch({
@@ -61,7 +63,7 @@ export const returnProduct = ( email, productId ) => async (dispatch) => {
 };
 
 // Habilitada
-export const emptyShopping = ( email ) => async (dispatch) => {
+export const emptyShopping = ( {email} ) => async (dispatch) => {
   await axios.delete(`http://localhost:3001/usuario/deleteshoppingcart/${email}`).then(
     (response) => {
       dispatch({
@@ -78,3 +80,16 @@ export const emptyShopping = ( email ) => async (dispatch) => {
   );
 };
 
+export const totalShopping = ( data ) => (dispatch) => {
+      dispatch({
+        type: TOTAL_SHOPPING,
+        payload: data,
+      });
+    }
+
+export const totalDeleteShopping = ( index ) => (dispatch) => {
+      dispatch({
+        type: TOTAL_DELETE_SHOPPING,
+        payload: index,
+      });
+    }

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
 import { getProduct } from "../../redux/actions/productActions"
-// import { addProductFavorite } from '../../redux/actions/favoriteActions';
-// import { addProduct } from '../../redux/actions/shoppingCartActions';
+import { addfavProduct } from '../../redux/actions/favoritesActions';
+import { addProduct } from '../../redux/actions/shoppingActions';
 import { BsSuitHeartFill } from 'react-icons/bs';
 import { TiArrowBack } from 'react-icons/ti';
 
@@ -20,16 +20,13 @@ const DetailProduct = () => {
         dispatch(getProduct(id))
     }, [dispatch, id])
     
-    //enviar el talle tambien!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     const addShoppingCart = () => { 
-      // dispatch(addProduct({productId : id, userEmail : email}))
-        // console.log('agregado al Carrito')
+        dispatch(addProduct({ email: "maximilianosorichetti@gmail.com", productId: Number(id), size:sizeSelect }))
         setShow("carrito")
     }
 
     const addFavorites = () => { 
-      // dispatch(addProductFavorite({ productId: Number(id), email: email}))
-        // console.log('agregado a Favoritos')
+        dispatch(addfavProduct({ email: "maximilianosorichetti@gmail.com", productId: Number(id) }))
         setShow("favoritos")
         handleFavorites()
     }

@@ -19,13 +19,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
 import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
+import Favorites from './components/Favorites/Favorites';
+import MapTienda from './components/MapTienda/MapTienda';
 import Cookies from 'universal-cookie';
 import { userLogin } from './redux/actions/userActions';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
-
-
 
 function App() {
 
@@ -36,6 +36,7 @@ function App() {
 
   return (
     <div className="App">
+      <NavigationBar />
       <Routes>
 
         <Route path="/" element={<Landing />} />
@@ -45,22 +46,18 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/producto/:id" element={<DetailProduct />} />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
+        <Route path="/favorites" element={<Favorites />} />
         <Route path="/user/products/send" element={<EditSend></EditSend>} />
-
         <Route path="/user/profile" element={<UserDetail></UserDetail>} />
         <Route path="/editar" element={<EditUser></EditUser>} />
-
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/create" element={<AdminCreate />} />
         <Route path="/admin/profile" element={<AdminDetail></AdminDetail>} />
         <Route path="/admin/editar" element={<AdminRegisterEdit></AdminRegisterEdit>} />
-
+        <Route path='/mapa' element={<MapTienda></MapTienda>} />
         <Route path='/terminos' element={<Terminos></Terminos>} />
         
         <Route path="/meta/checkout" element={<MetaCheckout />} />
-
-
-
 
       </Routes>
       <Footer />

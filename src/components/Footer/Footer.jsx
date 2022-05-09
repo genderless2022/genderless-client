@@ -40,7 +40,7 @@ function Footer() {
         </div>
 
         <div>
-          <Link to="/map" className='link-footer' style={{ maxHeight: '100px', color: 'black' }}>
+          <Link to="/mapa" className='link-footer' style={{ maxHeight: '100px', color: 'black' }}>
             <p>Visítanos en nuestra tienda</p>
             <img src={localizacion} alt=" " className='email' width={30} />
           </Link>
