@@ -117,6 +117,7 @@ export const updateUser = ({
 export const forgotPassword = ({
   email
 }) => async (dispatch) => {
+  console.log('email', email)
   await axios.post('http://localhost:3001/usuario/forgotpassword', {
     email,
   }).then(

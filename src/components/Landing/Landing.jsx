@@ -15,12 +15,14 @@ import { AiOutlineShopping } from 'react-icons/ai';
 import { FiShoppingCart } from 'react-icons/fi';
 import { FaRegHeart } from 'react-icons/fa';
 import { userLogout } from '../../redux/actions/userActions';
+import { subscribeNewsletter } from '../../redux/actions/newsletterActions';
 
 
 function Landing() {
 
     const dispatch = useDispatch()
     const [index, setIndex] = useState(0);
+    const [input, setInput] = useState("");
     const nav = useNavigate()
     const productos = useSelector((state) => state.productReducer.productos.reverse());
     const prodsFinal = productos.filter(p => p.disabled === false);
@@ -40,6 +42,14 @@ function Landing() {
       }, 100);
     }
     const user = useSelector( (state) => state.userReducer.usuario)
+
+    const handleOnChangeSusbribe = (e) => {
+      setInput(e.target.value)
+    }
+
+    const handleSusbribe = (e) => {
+      dispatch(subscribeNewsletter({email: input}))
+    }
   
     const cookies = new Cookies();
 
@@ -372,6 +382,15 @@ function Landing() {
               </div>
             ))}
         </Container>
+         <div className="home-newsletter">
+          <div className="home-newsletter-container-landing">
+          <h2 className="home-newsletter-title">¡RECIBÍ NOVEDADES Y PROMOCIONES EXCLUSIVAS EN TU MAIL!</h2>
+          <p className="home-newsletter-p">Además recibí novedades y promociones exclusivas en tu mail.</p>
+          <input className="home-newsletter-input" type="text" placeholder="Ingresá tu mail" value={input} onChange={(e)=>handleOnChangeSusbribe(e)} />
+          {/* <p className={msg ? 'newsletter_agregado_landing' : 'producto_sinagregar'}>{msg}</p> */}
+          <button className="home-newsletter-button" onClick={(e) => handleSusbribe(e)}>Suscribirme</button>
+        </div>
+      </div>
       </>
     );
 }

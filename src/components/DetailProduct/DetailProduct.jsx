@@ -3,8 +3,8 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
 import { getProduct } from "../../redux/actions/productActions"
-// import { addProductFavorite } from '../../redux/actions/favoriteActions';
-// import { addProduct } from '../../redux/actions/shoppingCartActions';
+import { addfavProduct, deletefavProduct, getFavorites } from '../../redux/actions/favoritesActions';
+import { addProduct } from '../../redux/actions/shoppingActions';
 import { BsSuitHeartFill } from 'react-icons/bs';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { TiArrowBack } from 'react-icons/ti';
@@ -24,26 +24,34 @@ const DetailProduct = () => {
     const [favorite, setFavorite] = useState(false)
     const cookies = new Cookies();
 
+    
+    const productsFavorites = useSelector( state => state.favoriteReducer.favorites)
+    const productInFavorites = productsFavorites.filter(p=> p.id == id)
+
+    let cookie = new Cookies();
+
     useEffect(() => {
+        dispatch(getFavorites({ email : user?.email })) 
         dispatch(getProduct(id))
     }, [dispatch, id])
     
-    //enviar el talle tambien!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     const addShoppingCart = () => { 
-      // dispatch(addProduct({productId : id, userEmail : email}))
-        // console.log('agregado al Carrito')
-        setShow("carrito")
+        dispatch(addProduct({ email: user?.email, productId: Number(id), size:sizeSelect }))
+        setShow("Añadido al carrito")
     }
+
+    console.log('productInFavorites', productInFavorites)
 
     const addFavorites = () => { 
-      // dispatch(addProductFavorite({ productId: Number(id), email: email}))
-        // console.log('agregado a Favoritos')
-        setShow("favoritos")
-        handleFavorites()
-    }
-
-    const handleFavorites = () => {
-        setFavorite(true)
+        setFavorite(!favorite)
+        // console.log('favorite', favorite)
+        if(!favorite) {
+            dispatch(addfavProduct({ email: user?.email, productId: Number(id) }))
+            setShow("Añadido a favoritos")
+        }else {
+            dispatch(deletefavProduct({ email: user?.email, productId: Number(id) }))
+            setShow("Eliminado de favoritos")
+        }
     }
 
     const handleSize = (sizes) => {

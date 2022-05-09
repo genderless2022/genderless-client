@@ -1,4 +1,4 @@
-import './Login.css';
+// import './Login.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { userLogin } from '../../redux/actions/userActions';
 import  ConnectGoogle  from '../ConnectGoogle/ConnectGoogle'
 import Cookies from 'universal-cookie';
+import { forgotPassword } from '../../redux/actions/userActions'
 
 const formSchema = Yup.object().shape({
     email: Yup.string()
@@ -14,13 +15,13 @@ const formSchema = Yup.object().shape({
         .max(50, "Máximo 50 carácteres")
         .min(8, "Mínimo 8 carácteres")
         .matches(RegExp(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/), "El email no es válido"),
-    password: Yup.string()
-        .required("Este campo es requerido")
+    // password: Yup.string()
+    //     .required("Este campo es requerido")
     });
 
 const formOptions = { resolver: yupResolver(formSchema) };
 
-const Login = () => {
+const NewPassword = () => {
     let cookie = new Cookies()
     const nav = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm(formOptions);
@@ -28,17 +29,18 @@ const Login = () => {
 
 
     const onSubmit = async (data) => {
-        dispatch(userLogin(data));
-        nav('/home');
+        console.log('data.email', data.email)
+        dispatch(forgotPassword({email: data.email}))
+        nav('/login');
+        // nav('/home');
     };
 
-    const handleRecovery = () => {
-        nav('/user/newpassword');
-    }
+    // const handleRecovery = () => {
+    // }
 
-    const handleRegister = () => {
-        nav('/register');
-    }
+    // const handleRegister = () => {
+    //     nav('/register');
+    // }
     
 
     return (
@@ -47,11 +49,11 @@ const Login = () => {
                 <div className="form-login-container">
                     <div className="login-container">
                         <div className="title-login">
-                            Inicia sesión aquí
+                            Ingresá tu mail 
                         </div>
                         <div className="form-group-login">
                             <div className="login-labelAndInput">
-                                <label className="input-label-login">Email: </label>
+                                {/* <label className="input-label-login">Email: </label> */}
                                 <input
                                     className="input-login"
                                     type="text"
@@ -60,7 +62,7 @@ const Login = () => {
                                 />
                                 {<div className="form-register-errors">{errors.email?.message}</div>}
                             </div>
-                            <div className="login-labelAndInput">
+                            {/* <div className="login-labelAndInput">
                                 <label className="input-label-login">Contraseña: </label>
                                 <input
                                     autoComplete="on"
@@ -70,26 +72,26 @@ const Login = () => {
                                     {...register('password')}
                                 />
                                 {<div className="form-register-errors">{errors.password?.message}</div>}
-                            </div>
+                            </div> */}
                         </div>
-                        <div className="recover-pwd">
+                        {/* <div className="recover-pwd">
                             <button className="button-password-recovery" onClick={handleRecovery}>
                                 ¿Olvidaste tu contraseña?
                             </button>
-                        </div>
+                        </div> */}
                         <div className="register-btn">
                             <input
                                 className="input-Login"
                                 type="submit"
-                                value="Ingresar"
+                                value="Enviar nueva contraseña"
                             />
                         </div>
-                        <button className='register-btn' onClick={handleRegister}>
-                            Registrarse
-                        </button>
-                        <div className='googleButtonContainer'>
+                        {/* <button className='register-btn' onClick={handleRecovery}>
+                            Enviar
+                        </button> */}
+                        {/* <div className='googleButtonContainer'>
                             <ConnectGoogle login = {true} redirect = {true}></ConnectGoogle>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </form>
@@ -97,4 +99,4 @@ const Login = () => {
     );
 };
 
-export { Login };
+export { NewPassword };
