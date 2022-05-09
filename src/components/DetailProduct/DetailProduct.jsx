@@ -3,36 +3,46 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
 import { getProduct } from "../../redux/actions/productActions"
-import { addfavProduct } from '../../redux/actions/favoritesActions';
+import { addfavProduct, deletefavProduct, getFavorites } from '../../redux/actions/favoritesActions';
 import { addProduct } from '../../redux/actions/shoppingActions';
 import { BsSuitHeartFill } from 'react-icons/bs';
 import { TiArrowBack } from 'react-icons/ti';
+import Cookies from "universal-cookie";
 
 const DetailProduct = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const product = useSelector( (state) => state.productReducer.producto)
+    const productsFavorites = useSelector( state => state.favoriteReducer.favorites)
+    const productInFavorites = productsFavorites.filter(p=> p.id == id)
     const [show, setShow] = useState("")
     const [sizeSelect, setSizeSelect] = useState(null)
-    const [favorite, setFavorite] = useState(false)
+    const [favorite, setFavorite] = useState(productInFavorites.length)
+    let cookie = new Cookies();
+    const user = cookie.get('user')
 
     useEffect(() => {
+        dispatch(getFavorites({ email : user?.email })) 
         dispatch(getProduct(id))
     }, [dispatch, id])
     
     const addShoppingCart = () => { 
-        dispatch(addProduct({ email: "maximilianosorichetti@gmail.com", productId: Number(id), size:sizeSelect }))
-        setShow("carrito")
+        dispatch(addProduct({ email: user?.email, productId: Number(id), size:sizeSelect }))
+        setShow("Añadido al carrito")
     }
+
+    console.log('productInFavorites', productInFavorites)
 
     const addFavorites = () => { 
-        dispatch(addfavProduct({ email: "maximilianosorichetti@gmail.com", productId: Number(id) }))
-        setShow("favoritos")
-        handleFavorites()
-    }
-
-    const handleFavorites = () => {
-        setFavorite(true)
+        setFavorite(!favorite)
+        // console.log('favorite', favorite)
+        if(!favorite) {
+            dispatch(addfavProduct({ email: user?.email, productId: Number(id) }))
+            setShow("Añadido a favoritos")
+        }else {
+            dispatch(deletefavProduct({ email: user?.email, productId: Number(id) }))
+            setShow("Eliminado de favoritos")
+        }
     }
 
     const handleSize = (sizes) => {
@@ -93,7 +103,8 @@ const DetailProduct = () => {
                                             </div>
                                         }
                                     </div>
-                                    <p className={show ? 'producto_agregado' : 'producto_sinagregar'}>{show === "carrito" ? "🟢 El producto fue agregado al carrito" :  "🟢 El producto fue agregado a favoritos" } </p>
+                                    <p className={show ? 'producto_agregado' : 'producto_sinagregar'}>{`🟢 ${show}`}</p>
+                                    {/* <p className={show ? 'producto_agregado' : 'producto_sinagregar'}>{show === "carrito" ? "🟢 El producto fue agregado al carrito" :  "🟢 El producto fue agregado a favoritos" } </p> */}
                                     <div className="detail-one-buttons">
                                         <button 
                                         disabled= {product.disabled}

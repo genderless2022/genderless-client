@@ -4,19 +4,21 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom"
 import { returnProduct, totalDeleteShopping, totalShopping  } from "../../redux/actions/shoppingActions"
+import Cookies from "universal-cookie";
 
 function CardSlim({ image, name, size, stock, price, index, discount, id }) {
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
-
   const subtotal = Number((((1-(discount/100))*price)*count).toFixed(0));
+  let cookie = new Cookies();
+  const user = cookie.get('user')
 
   useEffect(() => {
     dispatch(totalShopping([index, subtotal]))
   },[dispatch, count]);
 
   const handleDelete = () => {
-    dispatch(returnProduct({ email: "maximilianosorichetti@gmail.com", productId: Number(id) }))
+    dispatch(returnProduct({ email: user?.email, productId: Number(id) }))
     dispatch(totalDeleteShopping(index))
   }
 

@@ -3,14 +3,17 @@ import '../CardSlim/CardSlim.css';
 import { useDispatch } from "react-redux";
 import { deletefavProduct } from '../../redux/actions/favoritesActions';
 import { Link } from 'react-router-dom';
+import Cookies from "universal-cookie";
 
 function CardFavorites({ image, name, stock_by_size, price, discount, id }) {
     const dispatch = useDispatch()
     const subtotal = Number(((1-(discount/100))*price).toFixed(2));
+    let cookie = new Cookies();
+    const user = cookie.get('user')
 
     const handleDeleteFav = (e) => {
         e.preventDefault();
-        dispatch(deletefavProduct({ productId: Number(id), email : "maximilianosorichetti@gmail.com" }))
+        dispatch(deletefavProduct({ productId: Number(id), email : user?.email }))
     }
 
     const stock = stock_by_size.map((a)=> a.stock).reduce((a,b) => a + b, 0)
