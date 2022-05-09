@@ -33,11 +33,12 @@ export default function MapTienda () {
         <div className="envios-container" >
             <h2>Envios</h2>
             <p>Te enviamos tu compra</p>
-            <p> <b>sin cargo</b></p>
-            <p> a cualquier parte del país !</p>    
-            <p> En caso de estar buscado para otra zona</p>    
-            <p> Podes comunicarte a nuestro correo</p>    
-            <p> Para coordinar con nosotros!</p>    
+            <p> <b>SIN CARGO!!</b></p>
+            <p> a cualquier parte del país !</p> 
+             <br></br>  
+            <p> En caso de estar buscado para otra</p>
+            <p> zona, podes comunicarte a nuestro</p>
+            <p> correo para coordinar con nosotros!</p>    
         </div>
         </div>
         </>
