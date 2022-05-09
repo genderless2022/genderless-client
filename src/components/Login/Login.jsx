@@ -5,6 +5,8 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../../redux/actions/userActions';
+import  ConnectGoogle  from '../ConnectGoogle/ConnectGoogle'
+import Cookies from 'universal-cookie';
 
 const formSchema = Yup.object().shape({
     email: Yup.string()
@@ -19,6 +21,7 @@ const formSchema = Yup.object().shape({
 const formOptions = { resolver: yupResolver(formSchema) };
 
 const Login = () => {
+    let cookie = new Cookies()
     const nav = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm(formOptions);
     let dispatch = useDispatch();
@@ -84,6 +87,9 @@ const Login = () => {
                         <button className='register-btn' onClick={handleRegister}>
                             Registrarse
                         </button>
+                        <div className='googleButtonContainer'>
+                            <ConnectGoogle login = {true} redirect = {true}></ConnectGoogle>
+                        </div>
                     </div>
                 </div>
             </form>

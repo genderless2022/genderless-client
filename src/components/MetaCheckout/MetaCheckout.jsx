@@ -39,14 +39,14 @@ function MetaCheckout() {
                     <div className="metaTransaction">
                         <EthPrice currencyCode = {currencyCode}></EthPrice>
                         <div className="metaPaymentButtonContainer">
-                            <ConnectMetamask type = 'transaction' eth = {eth}></ConnectMetamask>
+                            <ConnectMetamask type = 'transaction' eth = {eth} showLastTx = {true}></ConnectMetamask>
                             <div className="feeDialog">*Metamask may charge a fee transaction</div>
                         </div>
                     </div>
                     :
                     // Si no hay wallet te muestra el botón de login
                     <div className="metaLoginCheckout">
-                        <ConnectMetamask type = 'login' loginTextButton = 'Conectá tu Wallet'></ConnectMetamask>
+                        <ConnectMetamask type = 'login' loginTextButton = 'Conectá tu Wallet' showLastTx = {false}></ConnectMetamask>
                     </div>
                 }
             </div>
