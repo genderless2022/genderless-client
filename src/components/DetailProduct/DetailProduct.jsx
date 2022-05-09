@@ -18,17 +18,18 @@ const DetailProduct = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const product = useSelector( (state) => state.productReducer.producto)
-    const user = useSelector( (state) => state.userReducer.user)
+    // const user = useSelector( (state) => state.userReducer.user)
     const [show, setShow] = useState("")
     const [sizeSelect, setSizeSelect] = useState(null)
     const [favorite, setFavorite] = useState(false)
     const cookies = new Cookies();
-
+    const user = cookies.get('user').user
+    console.log(user)
     
     const productsFavorites = useSelector( state => state.favoriteReducer.favorites)
     const productInFavorites = productsFavorites.filter(p=> p.id == id)
 
-    let cookie = new Cookies();
+    // let cookie = new Cookies();
 
     useEffect(() => {
         dispatch(getFavorites({ email : user?.email })) 
@@ -38,9 +39,11 @@ const DetailProduct = () => {
     const addShoppingCart = () => { 
         dispatch(addProduct({ email: user?.email, productId: Number(id), size:sizeSelect }))
         setShow("Añadido al carrito")
-    }
 
-    console.log('productInFavorites', productInFavorites)
+    }
+    // console.log(user.email, '<-')
+    // console.log('productInFavorites', productInFavorites)
+    // console.log(Number(id), '<-')
 
     const addFavorites = () => { 
         setFavorite(!favorite)

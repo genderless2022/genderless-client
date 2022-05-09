@@ -26,6 +26,7 @@ console.log('pathname', pathname)
   const nav = useNavigate()
   const logout = () => {
     dispatch(userLogout(cookies.get('user')?.tokenSession))
+    nav('/')
   }
   console.log(user.tokenSession, 'token')
 
