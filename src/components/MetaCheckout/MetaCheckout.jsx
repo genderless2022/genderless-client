@@ -5,7 +5,7 @@ import EthPrice from "../EthPrice/EthPrice";
 import './MetaCheckout.css';
 import EthLogo from '../../assets/EthLogo.png'
 let metaCover = 'https://www.bitdegree.org/crypto/storage/media/images/metamask-wallet-review-logo-big.o.png'
-let eth_test = 0.002
+let eth_test = 0.00001
 
 
 
