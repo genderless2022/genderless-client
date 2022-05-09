@@ -254,6 +254,24 @@
     transition: all 0.5s;
 }
 
+button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .star{
+    padding: 12px;
+    font-size: 22px;
+  }
+  .on {
+    color: #000;
+  }
+  .off {
+    color: #ccc;
+  }
+
 .producto_sinagregar {
     border-radius: 25px;
     padding: 0px;

@@ -163,12 +163,11 @@ export const updatePassword = ({
 //Habilitada
 export const userLogin = ({ email, password}) => async (dispatch) => {
 const cookies = new Cookies();
-  
   axios.post('http://localhost:3001/usuario/login',{
       email,
       password,
   }).then( response => {
-    cookies.set('user', response.data.user, { path: '/' });
+    cookies.set('user', response.data, { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
     console.log(cookies.get('user')); // Pacman
       dispatch({
           type: USER_LOGIN,

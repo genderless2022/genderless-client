@@ -27,7 +27,7 @@ function NavigationBar() {
   const logout = () => {
     dispatch(userLogout(cookies.get('user')?.tokenSession))
   }
-  console.log(cookies.get('user')?.tokenSession, 'token')
+  console.log(user.tokenSession, 'token')
 
   // Pesadilla de Tomi:
   let [state, setState] = useState({
@@ -79,7 +79,7 @@ function NavigationBar() {
         <Nav.Link href="/home" style={{ maxHeight: '100px', color: 'white' }}>Catalogo</Nav.Link>
         {
           cookies.get('user') ?
-          <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user').user?.name}</span>}id="basic-nav-dropdown">
+          <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user')?.name}</span>}id="basic-nav-dropdown">
           <NavDropdown.Item>  <BiUser/><Link to="/user/profile" className="input-profile"> Mi perfil</Link></NavDropdown.Item>
           <NavDropdown.Item>  <AiOutlineShopping/> Mis compras</NavDropdown.Item>
           <NavDropdown.Divider />

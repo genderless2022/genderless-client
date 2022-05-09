@@ -3,11 +3,18 @@ import React, { useEffect, useState } from 'react';
 import './Landing.css';
 
 import { Link, useNavigate } from 'react-router-dom';
-import {  Button, Card, Carousel, Col, Container, ListGroup, ListGroupItem, Nav, Navbar, Row } from 'react-bootstrap';
+import {  Button, Card, Carousel, Col, Container, ListGroup, ListGroupItem, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, getProductsbyCategory } from '../../redux/actions/productActions';
 import { CgShoppingCart } from 'react-icons/cg';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import Cookies from 'universal-cookie';
+import { BiUser } from 'react-icons/bi';
+import { RiUserUnfollowLine } from 'react-icons/ri';
+import { AiOutlineShopping } from 'react-icons/ai';
+import { FiShoppingCart } from 'react-icons/fi';
+import { FaRegHeart } from 'react-icons/fa';
+import { userLogout } from '../../redux/actions/userActions';
 
 
 function Landing() {
@@ -34,7 +41,12 @@ function Landing() {
     }
     const user = useSelector( (state) => state.userReducer.usuario)
   
-  
+    const cookies = new Cookies();
+
+
+    const logout = () => {
+      dispatch(userLogout(cookies.get('user')?.tokenSession))
+    }
     return (
       <>
 
@@ -53,12 +65,17 @@ function Landing() {
         <Nav.Link href="/" style={{ maxHeight: '100px', color: 'white' }}>Inicio</Nav.Link>
         <Nav.Link href="/home" style={{ maxHeight: '100px', color: 'white' }}>Catalogo</Nav.Link>
         {
-          user.name ?
-          <Nav.Link href="/carrito" style={{ maxHeight: '100px', color: 'white' }}> {user.name} </Nav.Link>
+          cookies.get('user') ?
+          <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user')?.name}</span>}id="basic-nav-dropdown">
+          <NavDropdown.Item>  <BiUser/><Link to="/user/profile" className="input-profile"> Mi perfil</Link></NavDropdown.Item>
+          <NavDropdown.Item>  <AiOutlineShopping/> Mis compras</NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item  onClick={() => logout()}>  <RiUserUnfollowLine/> Cerrar sesión</NavDropdown.Item>
+          </NavDropdown>
           :
 
         <Nav.Link href="/login" style={{ maxHeight: '100px', color: 'white' }}>Iniciar sesion</Nav.Link>
-        }
+      }
         
       </Nav>
     
