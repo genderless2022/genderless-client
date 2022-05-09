@@ -25,7 +25,7 @@ function Footer() {
         </div>
 
         <div className='footer-container'>
-          <a className='link-footer' style={{ maxHeight: '100px', color: 'black' }}
+          <a className='link-footer' target="_blank" style={{ maxHeight: '100px', color: 'black' }}
             href="https://www.facebook.com/profile.php?id=100081210152105">
             <p>Facebook</p>
             <img src={facebook} alt=" " width={30} />
@@ -33,7 +33,7 @@ function Footer() {
         </div>
 
         <div className='footer-container'>
-          <a className='link-footer' style={{ maxHeight: '100px', color: 'black' }}
+          <a className='link-footer' target="_blank" style={{ maxHeight: '100px', color: 'black' }}
             href="http://www.instagram.com/genderless_ropa"><p>Instagram</p>
             <img src={instagram} alt=" " width={30} />
           </a>
