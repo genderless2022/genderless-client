@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import {updateUser}  from '../../redux/actions/userActions';
 import './index.css';
 import Cookies from "universal-cookie";
+import { TiArrowBack } from 'react-icons/ti';
+import {Link} from 'react-router-dom'
 
 
 
@@ -112,10 +114,15 @@ function handlerOnChange (e){
             
     return (
         <div className="container-register-form">
-            <form onSubmit={onSubmit} >
-                <div className="container-user-edit">
-                    <div className="form-container-edit">
-                        <div className="title">Modificar mis datos</div>
+          <form onSubmit={onSubmit} >
+            <div className="container-user-edit">
+               <div className="form-container-edit">
+                <div>
+                 <Link to='/user/profile' style={{ color: 'white', fontSize: '20px' }}>
+                  <TiArrowBack/>
+                 </Link>
+                </div>
+                     <div className="title">Modificar mis datos</div>
                         <p className="register-subtitle">(* campos requeridos)</p>
                         <div className="form-group-one">
                             <div className="labelAndInput">

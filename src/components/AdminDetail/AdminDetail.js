@@ -86,7 +86,7 @@ export default function AdminDetail() {
                         <div> Codigo Postal: {user?.postal} </div>
                         <div>Telefono: {user?.phone} </div>
 
-                        <Link to="/editar">
+                        <Link to="/admin/editar">
                             <button className="loginbtn">Editar mis Datos</button>
                         </Link>
                         
