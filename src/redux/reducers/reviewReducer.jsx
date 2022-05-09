@@ -3,13 +3,15 @@ import { DELETE_REVIEW_BY_ID, DELETE_USER_REVIEWS, ERROR, GET_PRODUCT_REVIEWS, G
   
   const initialState = {
     status: '',
+    AllReviews: [],
+    reviews: [],
   };
-  function reviewActions( state = initialState, action) {
+  function reviewReducer( state = initialState, action) {
     switch (action.type) {
       case POST_REVIEW:
-        return { ...state, status: action.payload };
+        return { ...state, status: action.payload, reviews: action.payload, AllReviews: action.payload };
       case GET_REVIEWS:
-        return { ...state, status: action.payload };
+        return { ...state, status: action.payload, reviews: action.payload, AllReviews: action.payload };
       case GET_PRODUCT_REVIEWS:
         return { ...state, status: action.payload };
       case DELETE_REVIEW_BY_ID:
@@ -25,5 +27,5 @@ import { DELETE_REVIEW_BY_ID, DELETE_USER_REVIEWS, ERROR, GET_PRODUCT_REVIEWS, G
         return { ...state };
     }
   }
-  export default reviewActions;
+  export default reviewReducer;
   

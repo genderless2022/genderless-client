@@ -10,13 +10,15 @@ export const ERROR = 'ERROR';
 
 // Habilitada
 export const postReview = ({
-    email, productTitle, comment, rating
+    email, productTitle, comment, rating, name, lastname
 }) => async (dispatch) => {
   await axios.post('http://localhost:3001/usuario/review', {
       email,
       productTitle,
       comment,
-      rating
+      rating,
+      name, 
+      lastname
   }).then(
     (response) => {
       dispatch({
