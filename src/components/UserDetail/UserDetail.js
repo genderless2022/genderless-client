@@ -10,7 +10,7 @@ import ConnectGoogle from "../ConnectGoogle/ConnectGoogle";
 export default function UserDetail() {
 
     let cookie = new Cookies();
-    const user = cookie.get('user').user
+    const user = cookie.get('user')
    
 
    
