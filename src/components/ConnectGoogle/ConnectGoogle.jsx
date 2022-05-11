@@ -21,10 +21,13 @@ function ConnectGoogle(props) {
         cookie.set('googleUser', user)
         cookie.set('user', {
             
-            name: user.givenName,
-            lastName: user.familyName,
-            email: user.email,
-            picture: user.imageUrl        
+            user: {
+                name: user.givenName,
+                lastName: user.familyName,
+                email: user.email,
+                picture: user.imageUrl        
+
+            }    
         }
         )
         
