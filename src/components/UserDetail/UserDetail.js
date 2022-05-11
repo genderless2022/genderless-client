@@ -1,17 +1,16 @@
 import React from "react";
 import { Link} from "react-router-dom";
 import './UserDetail.css';
-//import { useState } from "react";
 import Cookies from "universal-cookie";
 import ConnectGoogle from "../ConnectGoogle/ConnectGoogle";
 
 
-
 export default function UserDetail() {
+
 
     let cookie = new Cookies();
     const user = cookie.get('user')
-   
+   console.log('user',user);
 
    
 

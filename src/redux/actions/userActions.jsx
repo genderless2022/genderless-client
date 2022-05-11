@@ -32,8 +32,10 @@ export const getUsers = () => async (dispatch) => {
 
 // Habilitada
 export const getUser = ( email ) => async ( dispatch ) => {
+  const cookies = new Cookies();
   await axios.get(`http://localhost:3001/usuario/email/${email}`).then(
     (response) => {
+      cookies.set('users', response.data, { path: '/'});    
       dispatch({
         type: GET_USER,
         payload: response.data,
