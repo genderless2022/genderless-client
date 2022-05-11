@@ -25,11 +25,13 @@ function Landing() {
     const [input, setInput] = useState("");
     const nav = useNavigate()
     const productos = useSelector((state) => state.productReducer.productos.reverse());
+    const statusNewsletter = useSelector((state) => state.newsletterReducer.status);
     const prodsFinal = productos.filter(p => p.disabled === false);
     useEffect(() => {
       dispatch(getProducts());
     }, []);
 
+    console.log('statusNewsletter', statusNewsletter)
 
     const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
@@ -387,7 +389,7 @@ function Landing() {
           <h2 className="home-newsletter-title">¡RECIBÍ NOVEDADES Y PROMOCIONES EXCLUSIVAS EN TU MAIL!</h2>
           <p className="home-newsletter-p">Además recibí novedades y promociones exclusivas en tu mail.</p>
           <input className="home-newsletter-input" type="text" placeholder="Ingresá tu mail" value={input} onChange={(e)=>handleOnChangeSusbribe(e)} />
-          {/* <p className={msg ? 'newsletter_agregado_landing' : 'producto_sinagregar'}>{msg}</p> */}
+          <p className={statusNewsletter ? 'newsletter_agregado_landing' : 'producto_sinagregar'}>{statusNewsletter}</p>
           <button className="home-newsletter-button" onClick={(e) => handleSusbribe(e)}>Suscribirme</button>
         </div>
       </div>
