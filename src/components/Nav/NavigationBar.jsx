@@ -84,7 +84,7 @@ console.log('pathname', pathname)
           <NavDropdown.Item>  <BiUser/><Link to="/user/profile" className="input-profile"> Mi perfil</Link></NavDropdown.Item>
           <NavDropdown.Item>  <AiOutlineShopping/> Mis compras</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item  onClick={() => logout()}>  <RiUserUnfollowLine/> Cerrar sesión</NavDropdown.Item>
+          { cookies.get('user') && !cookies.get('googleUser') && <NavDropdown.Item  onClick={() => logout()}>  <RiUserUnfollowLine/> Cerrar sesión</NavDropdown.Item>}
           </NavDropdown>
           :
 

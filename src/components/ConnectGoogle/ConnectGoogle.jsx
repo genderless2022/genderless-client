@@ -19,14 +19,14 @@ function ConnectGoogle(props) {
         let user = res.profileObj
         console.log('Login Success:', user);
         cookie.set('googleUser', user)
-        cookie.set('user', { user: {
+        cookie.set('user', {
             
             name: user.givenName,
             lastName: user.familyName,
             email: user.email,
             picture: user.imageUrl        
         }
-        })
+        )
         
 
         
@@ -46,7 +46,8 @@ function ConnectGoogle(props) {
         console.clear();
         setShowloginButton(true);
         setShowlogoutButton(false);
-        cookie.set('user', '')
+        cookie.remove('user')
+        cookie.remove('googleUser')
         !cookie.get('user') && props.redirectLogout && nav('/home')
         // setgoogleUser()
     };
