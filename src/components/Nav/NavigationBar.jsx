@@ -32,10 +32,8 @@ console.log('pathname', pathname)
 
   // Pesadilla de Tomi:
   let [state, setState] = useState({
-    wallet: localStorage.getItem('wallet') || null,
     balance: localStorage.getItem('balance') || null
   })
-  let wallet = state.wallet
   let balance = state.balance
 
   useEffect(() => {
@@ -90,20 +88,7 @@ console.log('pathname', pathname)
 
         <Nav.Link href="/login" style={{ maxHeight: '100px', color: 'white' }}>Iniciar sesion</Nav.Link>
       }
-
-        {/* Agregando Componente de Metamask */}
-        {/* Agregando Widgetmenu Metamask */}
-        { wallet  &&
-          <div className='login-meta-container'>
-            <ConnectMetamask type= {'widget_menu'} ></ConnectMetamask>
-          </div>}
-      
-        {/* Agregando Login Metamask */}
-        { !wallet  &&
-          <div className='login-meta-container'>
-            <ConnectMetamask type= {'login'} ></ConnectMetamask>
-          </div>
-        }
+      { localStorage.getItem('balance') ? Number(localStorage.getItem('balance')).toFixed(5) + ' ETH' : null }
 
       </Nav>
       <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>

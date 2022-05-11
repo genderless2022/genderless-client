@@ -49,6 +49,7 @@ function ConnectGoogle(props) {
         cookie.remove('user')
         cookie.remove('googleUser')
         !cookie.get('user') && props.redirectLogout && nav('/home')
+        localStorage.clear()
         // setgoogleUser()
     };
 

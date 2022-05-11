@@ -223,6 +223,7 @@ export const userLogout = ({
  }).then(
     (response) => {
     cookies.remove('user');
+    localStorage.clear()
     console.log(cookies.get('user')); // Pacman
       dispatch({
         type: USER_LOGOUT,
