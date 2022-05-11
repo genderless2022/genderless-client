@@ -14,6 +14,7 @@ import { FaRegHeart } from 'react-icons/fa';
 import Cookies from 'universal-cookie';
 import { userLogout } from '../../redux/actions/userActions';
 import ConnectGoogle from '../ConnectGoogle/ConnectGoogle';
+import Chatbot from 'react-chatbot-kit';
 
 function NavigationBar() {
 const {pathname} = window.location;
@@ -125,7 +126,9 @@ console.log('pathname', pathname)
   </Container>
   {/* <ConnectGoogle login = {true} logout = {true}></ConnectGoogle> */}
 
-
+    {/* <div className='chatbot'>
+    <Chatbot/>
+    </div> */}
 </Navbar>
 
   )
