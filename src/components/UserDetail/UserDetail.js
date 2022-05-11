@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link} from "react-router-dom";
 import './UserDetail.css';
 import Cookies from "universal-cookie";
 import ConnectGoogle from "../ConnectGoogle/ConnectGoogle";
+import ConnectMetamask from "../ConnectMetamask/ConnectMetamask";
 
 
 export default function UserDetail() {
@@ -11,6 +12,10 @@ export default function UserDetail() {
     let cookie = new Cookies();
     const user = cookie.get('user')
    console.log('user',user);
+   let [state, setState] = useState({
+    wallet: localStorage.getItem('wallet') || null,
+  })
+  let wallet = state.wallet
 
    
 
@@ -38,8 +43,26 @@ export default function UserDetail() {
                         {
                             cookie.get('googleUser') &&
                             <ConnectGoogle login = {true} logout = {true} redirectLogout = {true}></ConnectGoogle>
+                        }  
+                        { !wallet  &&
+                                <div className='login-meta-container'>
+                                    <ConnectMetamask type= {'login'} ></ConnectMetamask>
+                                </div>
                         }
-                       
+
+                        {/* { wallet  &&
+                                <div className='login-meta-container'>
+                                    <ConnectMetamask type= {'widget_menu'} ></ConnectMetamask>
+                                </div>}
+                            
+                              
+                                { !wallet  &&
+                                <div className='login-meta-container'>
+                                    <ConnectMetamask type= {'login'} ></ConnectMetamask>
+                                </div>
+                        }   */}
+                                          
+
                     </div>
                 </div>
                 : <div>No existe</div>

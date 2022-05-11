@@ -13,11 +13,23 @@
     /* background-color: rgb(13, 11, 33); */
     /* margin-left: 10px; */
 }
+
 .metaLoginButton:hover{
     animation-name: metaSelect;
     animation-duration: 0.2s;
     animation-timing-function: linear;
     transform: scale(1.2);
+}
+.logoutMetaButton{
+    color:  rgb(0, 0, 0);
+    background-color: pink;
+    padding: 3px;
+}
+.logoutMetaButton:hover{
+    color:  rgb(0, 0, 0);
+    background-color: rgb(185, 52, 74);
+    padding: 3px;
+    font-weight: 500;
 }
 
 .payMetaButton{
@@ -63,7 +75,7 @@
 
 }
 .dropdown-widget_menu-true{
-    color: black;
+    color: rgb(255, 255, 255)
     
     
     /* position: fixed; */

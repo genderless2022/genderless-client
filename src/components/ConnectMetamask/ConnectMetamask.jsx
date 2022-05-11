@@ -1,8 +1,11 @@
 import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './ConnectMetamask.css';
 // props = { type, eth, loginTextButton }
 function ConnectMetamask(props) {
+
+    let nav = useNavigate()
     let metaLogo = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/1200px-MetaMask_Fox.svg.png'
     let metaMaskXtensionURL = 'https://metamask.io/download/'
     // Estado donde guardamos los datos de metamask del usuario 
@@ -61,7 +64,9 @@ function ConnectMetamask(props) {
     
                             setState({...state, isRequesting: false})
                             // Se actualiza la página para ver los cambios
-                            window.location.reload()
+                            // window.location.reload()
+
+                            nav('/home')
                         })
                     } )
                     
@@ -109,6 +114,7 @@ function ConnectMetamask(props) {
     // Se borran los datos en el localStorage
     function logoutMetamask(){
         localStorage.clear()
+        nav('/')
         window.location.reload()
     }
 
@@ -159,9 +165,9 @@ function ConnectMetamask(props) {
                     ishoverWidget_menu ? 
                     // Esto se muestra en el dropdownn
                     <span className='dropdown-widget_menu-true'>
-                        <li>{walletAddress.slice(0, 5) + '****' + walletAddress.slice(-4) }</li>
-                        <li>{Number.parseFloat(userBalance).toFixed(5)+ ' ETH' }</li>
-                        <li>{ walletAddress && <button className='logoutMetaButton' onClick={ () => logoutMetamask() }>Logout Meta</button> }</li>
+                        <div>{walletAddress.slice(0, 5) + '****' + walletAddress.slice(-4) }</div>
+                        <div>{Number.parseFloat(userBalance).toFixed(5)+ ' ETH' }</div>
+                        <div>{ walletAddress && <button className='logoutMetaButton' onClick={ () => logoutMetamask() }>Logout Meta</button> }</div>
                         {/* Seguir el formato:  */}
                         {/* <li>Objeto 4</li> */}
                     </span>
