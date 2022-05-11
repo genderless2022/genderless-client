@@ -34,7 +34,11 @@ export default function UserDetail() {
                         <Link to="/editar">
                             <button className="loginbtn">Editar mis Datos</button>
                         </Link>
-                        <ConnectGoogle login = {true} logout = {true} redirectLogout = {true}></ConnectGoogle>
+
+                        {
+                            cookie.get('googleUser') &&
+                            <ConnectGoogle login = {true} logout = {true} redirectLogout = {true}></ConnectGoogle>
+                        }
                        
                     </div>
                 </div>
