@@ -40,10 +40,7 @@ export default function UserDetail() {
                             <button className="loginbtn">Editar mis Datos</button>
                         </Link>
 
-                        {
-                            cookie.get('googleUser') &&
-                            <ConnectGoogle login = {true} logout = {true} redirectLogout = {true}></ConnectGoogle>
-                        }  
+
                         { !wallet  &&
                                 <div className='login-meta-container'>
                                     <ConnectMetamask type= {'login'} ></ConnectMetamask>
