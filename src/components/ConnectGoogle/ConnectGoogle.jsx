@@ -31,17 +31,16 @@ function ConnectGoogle(props) {
         // Seteamos las cookies necesarias 9+
         cookie.set('googleUser', user)
 
-        cookie.set('user', {
+        // cookie.set('user', {
             
-            user: {
-                name: user.givenName,
-                lastName: user.familyName,
-                email: user.email,
-                picture: user.imageUrl        
-
-            }    
-        }
-        )
+        //     user: {
+        //         name: user.givenName,
+        //         lastName: user.familyName,
+        //         email: user.email,
+        //         picture: user.imageUrl        
+        //     }    
+        // }
+        // )
         
         
         
@@ -49,8 +48,8 @@ function ConnectGoogle(props) {
         setShowlogoutButton(true);
         
         cookie.get('user') && props.redirect && nav('/home')
-        dispatch(createUser({...cookie.get('user').user, dni: user.googleId, password: user.imageUrl}))
-        dispatch(userLogin({email: user.email, password: user.imageUrl}))
+        dispatch(createUser({name: user?.givenName, dni: user?.googleId, password: user?.imageUrl}))
+        dispatch(userLogin({email: user?.email, password: user?.imageUrl}))
     };
 
     const onLoginFailure = (res) => {
