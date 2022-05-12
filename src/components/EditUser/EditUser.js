@@ -1,7 +1,5 @@
-
-
 import React from 'react'
-import {useState }  from 'react'
+import {useState, useEffect }  from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import {updateUser}  from '../../redux/actions/userActions';
@@ -9,7 +7,7 @@ import './index.css';
 import Cookies from "universal-cookie";
 import { TiArrowBack } from 'react-icons/ti';
 import {Link} from 'react-router-dom'
-
+import { getUser } from "../../redux/actions/userActions";
 
 
 function validate(input){
@@ -47,56 +45,59 @@ function validate(input){
 
 export default function EditUser  () {
     let cookie = new Cookies();
-    const userEdit = cookie.get('user').user
+    const userEdit = useSelector(state => state.userReducer.usuario)
+    const user = cookie.get('user')
     const nav = useNavigate();
     const dispatch = useDispatch();
     const[errors, setErrors] = useState({});
     const[input, setInput] = useState({
-         name: userEdit?.name,
-         lastName: userEdit?.lastName,
-         email: userEdit?.email,
-         dni: userEdit?.dni,
-         address: userEdit?.address,
-         province: userEdit?.province,
-         postal: userEdit?.postal,
-         phone: userEdit?.phone,
+         name: userEdit.user?.name,
+         lastName: userEdit.user?.lastName,
+         email: userEdit.user?.email,
+         dni: userEdit.user?.dni,
+         address: userEdit.user?.address,
+         province: userEdit.user?.province,
+         postal: userEdit.user?.postal,
+         phone: userEdit.user?.phone,
          
      })
 
-
-   //const userEdit = useSelector(state => state.userReducer.status.user);
+  useEffect(() => {
+        dispatch(getUser({ email: user.email}))
+        // dispatch(getUser({ email: user.email, token: tokenUser}))
+    },[])
     
-function handlerOnChange (e){
-                setInput({
-                    ...input,
-                    [e.target.name]:e.target.value
-                })
-                setErrors(validate({
-                    ...input,
-                    [e.target.name]:e.target.value
-                }) )
-            }
+    function handlerOnChange (e){
+        setInput({
+            ...input,
+            [e.target.name]:e.target.value
+        })
+        setErrors(validate({
+            ...input,
+            [e.target.name]:e.target.value
+        }) )
+    }
 
-            function onSubmit(e){
-                e.preventDefault();
-                if(!input.name || !input.lastName || !input.email || !input.dni|| !input.address|| !input.province  || !input.postal|| !input.phone  ){
-                alert("no completo todo el formulario!")}
-                else{
-                dispatch(updateUser(input))
-                alert('Datos actualizados')
-                setInput({
-                    name:'',
-                    lastName: '',
-                    email: '',
-                    dni: '',
-                    phone: '',
-                    address: '',
-                    province: '',
-                    postal: '',
-                })
-             nav('/user/profile')
-            }
-        }
+    function onSubmit(e){
+        e.preventDefault();
+        if(!input.name || !input.lastName || !input.email || !input.dni|| !input.address|| !input.province  || !input.postal|| !input.phone  ){
+        alert("no completo todo el formulario!")}
+        else{
+        dispatch(updateUser(input))
+        alert('Datos actualizados')
+        setInput({
+            name:'',
+            lastName: '',
+            email: '',
+            dni: '',
+            phone: '',
+            address: '',
+            province: '',
+            postal: '',
+        })
+        nav('/user/profile')
+    }
+    }
 
             
     return (

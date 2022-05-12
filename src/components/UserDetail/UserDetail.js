@@ -10,20 +10,18 @@ import { getUser } from "../../redux/actions/userActions";
 
 export default function UserDetail() {
     const dispatch = useDispatch();
-
     let cookie = new Cookies();
-    const user = cookie.get('user')
+    const user = cookie.get('user')?.user
+    const detailUser = useSelector(state => state.userReducer.usuario)
     const tokenUser = cookie.get('user').tokenSession
-    const detailUser = user;
-
     let [state, setState] = useState({
     wallet: localStorage.getItem('wallet') || null,
     })
     let wallet = state.wallet
 
-    console.log('detailUser.user.name', detailUser.user?.name)
-
     useEffect(() => {
+        console.log('tokenUser', tokenUser)
+        console.log('user google', user.email)
         dispatch(getUser({ email: user.email, token: tokenUser}))
     },[])
 
