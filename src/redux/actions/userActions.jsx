@@ -31,8 +31,8 @@ export const getUsers = () => async (dispatch) => {
 };
 
 // Habilitada
-export const getUser = ( email ) => async ( dispatch ) => {
-  await axios.get(`http://localhost:3001/usuario/email/${email}`).then(
+export const getUser = ( {email, token} ) => async ( dispatch ) => {  
+  await axios.get(`http://localhost:3001/usuario/email/${email}`, { headers: {"Authorization" : `Bearer ${token}`} }).then(
     (response) => {
       dispatch({
         type: GET_USER,
@@ -117,6 +117,7 @@ export const updateUser = ({
 export const forgotPassword = ({
   email
 }) => async (dispatch) => {
+  console.log('email', email)
   await axios.post('http://localhost:3001/usuario/forgotpassword', {
     email,
   }).then(
@@ -163,12 +164,11 @@ export const updatePassword = ({
 //Habilitada
 export const userLogin = ({ email, password}) => async (dispatch) => {
 const cookies = new Cookies();
-  
   axios.post('http://localhost:3001/usuario/login',{
       email,
       password,
   }).then( response => {
-    cookies.set('user', response.data.user, { path: '/' });
+    cookies.set('user', response.data, { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
     console.log(cookies.get('user')); // Pacman
       dispatch({
           type: USER_LOGIN,
@@ -221,6 +221,7 @@ export const userLogout = ({
  }).then(
     (response) => {
     cookies.remove('user');
+    localStorage.clear()
     console.log(cookies.get('user')); // Pacman
       dispatch({
         type: USER_LOGOUT,

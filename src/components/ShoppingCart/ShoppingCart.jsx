@@ -15,8 +15,8 @@ export default function ShoppingCart ( ) {
     const status = useSelector( state => state )
 
     let cookie = new Cookies();
-    const user = cookie.get('user')
-
+    const user = cookie.get('user').user
+    console.log(user)
     const dispatch = useDispatch()
     const [select, setSelect] = useState("Retiro por la tienda");
     const shopping = useSelector( state => state.shoppingReducer)
@@ -27,7 +27,7 @@ export default function ShoppingCart ( ) {
     useEffect( ( )=> {
         dispatch(getShopping({ email : user?.email }))
     }, [dispatch])
-    
+    console.log(user.email, '>-')
     const handleSelect = (e) => {
         setSelect(e.target.value);
     }

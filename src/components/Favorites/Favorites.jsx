@@ -11,7 +11,7 @@ import Cookies from "universal-cookie";
 
 export default function Favorites ( ) {
     let cookie = new Cookies();
-    const user = cookie.get('user')
+    const user = cookie.get('user').user
     const productsFavorites = useSelector( state => state.favoriteReducer.favorites)
     const dispatch = useDispatch()
     

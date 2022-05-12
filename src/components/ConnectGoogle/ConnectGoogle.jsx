@@ -30,15 +30,18 @@ function ConnectGoogle(props) {
 
         // Seteamos las cookies necesarias 9+
         cookie.set('googleUser', user)
-        cookie.set('user', { user:  {
+
+        cookie.set('user', {
             
-            // user cookie format
-            name: user.givenName,
-            lastName: user.familyName,
-            email: user.email,
-            picture: user.imageUrl        
+            user: {
+                name: user.givenName,
+                lastName: user.familyName,
+                email: user.email,
+                picture: user.imageUrl        
+
+            }    
         }
-        })
+        )
         
 
         
@@ -60,11 +63,11 @@ function ConnectGoogle(props) {
         setShowloginButton(true);
         setShowlogoutButton(false);
 
-        // cookie erase
         cookie.remove('user')
-
-        // cookie redirect to home
+        cookie.remove('googleUser')
         !cookie.get('user') && props.redirectLogout && nav('/home')
+        localStorage.clear()
+        window.location.reload()
         // setgoogleUser()
     };
 

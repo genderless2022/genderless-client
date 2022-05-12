@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import {updateUser}  from '../../redux/actions/userActions';
 import './index.css';
 import Cookies from "universal-cookie";
+import { TiArrowBack } from 'react-icons/ti';
+import {Link} from 'react-router-dom'
 
 
 
@@ -45,37 +47,24 @@ function validate(input){
 
 export default function EditUser  () {
     let cookie = new Cookies();
-    const userEdit = cookie.get('user')
-
+    const userEdit = cookie.get('user').user
+    const nav = useNavigate();
     const dispatch = useDispatch();
+    const[errors, setErrors] = useState({});
+    const[input, setInput] = useState({
+         name: userEdit?.name,
+         lastName: userEdit?.lastName,
+         email: userEdit?.email,
+         dni: userEdit?.dni,
+         address: userEdit?.address,
+         province: userEdit?.province,
+         postal: userEdit?.postal,
+         phone: userEdit?.phone,
+         
+     })
 
-    
-
-   
-   const nav = useNavigate();
 
    //const userEdit = useSelector(state => state.userReducer.status.user);
-  
-
-   const[errors, setErrors] = useState({});
-
-
-
-    
-    const[input, setInput] = useState({
-        name: userEdit?.name,
-        lastName: userEdit?.lastName,
-        email: userEdit?.email,
-        dni: userEdit?.dni,
-        address: userEdit?.address,
-        province: userEdit?.province,
-        postal: userEdit?.postal,
-        phone: userEdit?.phone,
-        
-    })
-
-
-
     
 function handlerOnChange (e){
                 setInput({
@@ -112,10 +101,15 @@ function handlerOnChange (e){
             
     return (
         <div className="container-register-form">
-            <form onSubmit={onSubmit} >
-                <div className="container-user-edit">
-                    <div className="form-container-edit">
-                        <div className="title">Modificar mis datos</div>
+          <form onSubmit={onSubmit} >
+            <div className="container-user-edit">
+               <div className="form-container-edit">
+                <div>
+                 <Link to='/user/profile' style={{ color: 'white', fontSize: '20px' }}>
+                  <TiArrowBack/>
+                 </Link>
+                </div>
+                     <div className="title">Modificar mis datos</div>
                         <p className="register-subtitle">(* campos requeridos)</p>
                         <div className="form-group-one">
                             <div className="labelAndInput">

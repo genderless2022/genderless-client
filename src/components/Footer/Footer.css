@@ -1,5 +1,5 @@
 .footer {
-  background-color: #E7BF50;
+  background-color: black;
    position: absolute;
    bottom: 0;
    width: 100%;
@@ -34,13 +34,17 @@
 }
 
 .email {
-  border-radius: 100%;
+  border-radius: 50%;
+}
+.otro {
+  border-radius: 90%;
 }
 
 .link-footer{
   color: white;
   text-decoration: none;
-  cursor: pointer;
+  
+  border-radius: 80%;
   
 }
 

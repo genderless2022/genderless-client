@@ -27,15 +27,14 @@ console.log('pathname', pathname)
   const nav = useNavigate()
   const logout = () => {
     dispatch(userLogout(cookies.get('user')?.tokenSession))
+    nav('/')
   }
-  console.log(cookies.get('user')?.tokenSession, 'token')
+  console.log(user.tokenSession, 'token')
 
   // Pesadilla de Tomi:
   let [state, setState] = useState({
-    wallet: localStorage.getItem('wallet') || null,
     balance: localStorage.getItem('balance') || null
   })
-  let wallet = state.wallet
   let balance = state.balance
 
   useEffect(() => {
@@ -80,30 +79,21 @@ console.log('pathname', pathname)
         <Nav.Link href="/home" style={{ maxHeight: '100px', color: 'white' }}>Catalogo</Nav.Link>
         {
           cookies.get('user') ?
-          <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user').user?.name}</span>}id="basic-nav-dropdown">
+          <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user')?.name}</span>}id="basic-nav-dropdown">
           <NavDropdown.Item>  <BiUser/><Link to="/user/profile" className="input-profile"> Mi perfil</Link></NavDropdown.Item>
           <NavDropdown.Item>  <AiOutlineShopping/> Mis compras</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item  onClick={() => logout()}>  <RiUserUnfollowLine/> Cerrar sesión</NavDropdown.Item>
+          {
+            cookies.get('googleUser') &&
+            <ConnectGoogle login = {true} logout = {true} redirectLogout = {true}></ConnectGoogle>
+          }  
+          { cookies.get('user') && !cookies.get('googleUser') && <NavDropdown.Item  onClick={() => logout()}>  <RiUserUnfollowLine/> Cerrar sesión</NavDropdown.Item>}
           </NavDropdown>
           :
 
         <Nav.Link href="/login" style={{ maxHeight: '100px', color: 'white' }}>Iniciar sesion</Nav.Link>
       }
-
-        {/* Agregando Componente de Metamask */}
-        {/* Agregando Widgetmenu Metamask */}
-        { wallet  &&
-          <div className='login-meta-container'>
-            <ConnectMetamask type= {'widget_menu'} ></ConnectMetamask>
-          </div>}
-      
-        {/* Agregando Login Metamask */}
-        { !wallet  &&
-          <div className='login-meta-container'>
-            <ConnectMetamask type= {'login'} ></ConnectMetamask>
-          </div>
-        }
+      { localStorage.getItem('balance') ? Number(localStorage.getItem('balance')).toFixed(5) + ' ETH' : null }
 
       </Nav>
       <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>

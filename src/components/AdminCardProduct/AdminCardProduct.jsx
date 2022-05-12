@@ -5,6 +5,8 @@ import { VscEye } from 'react-icons/vsc';
 import { VscEyeClosed } from 'react-icons/vsc';
 import { useDispatch } from 'react-redux';
 import { editProduct } from '../../redux/actions/productActions';
+import { Link } from "react-router-dom"
+
 
 function AdminCardProduct ( { image, name, stock_by_size, price, disabled, activeDrawer, id, producto , receiveProduct },  ) {
   const dispatch = useDispatch();
@@ -26,7 +28,9 @@ function AdminCardProduct ( { image, name, stock_by_size, price, disabled, activ
   return (
       <div className="card-admin-container-slim">
         <div className="card-admin-container-slim-1">
-          <img className="card-admin-product-img" src={ image } alt="imagen rota"></img>
+          <Link to={`/producto/${id}`} style={{ text_decoration: 'none' }}>
+            <img className="card-admin-product-img" src={ image } alt="imagen rota"></img>
+          </Link>
         </div>
         <div className="card-admin-container-slim-2">
           <div className="card-admin-information">
