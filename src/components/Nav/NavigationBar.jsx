@@ -77,8 +77,8 @@ console.log('pathname', pathname)
         <Nav.Link href="/" style={{ maxHeight: '100px', color: 'white' }}>Inicio</Nav.Link>
         <Nav.Link href="/home" style={{ maxHeight: '100px', color: 'white' }}>Catalogo</Nav.Link>
         {
-          cookies.get('user') ?
-          <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user')?.name}</span>}id="basic-nav-dropdown">
+          cookies.get('user')?.user ?
+          <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user')?.user?.name}</span>}id="basic-nav-dropdown">
           <NavDropdown.Item>  <BiUser/><Link to="/user/profile" className="input-profile"> Mi perfil</Link></NavDropdown.Item>
           <NavDropdown.Item>  <AiOutlineShopping/> Mis compras</NavDropdown.Item>
           <NavDropdown.Divider />
