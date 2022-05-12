@@ -47,37 +47,24 @@ function validate(input){
 
 export default function EditUser  () {
     let cookie = new Cookies();
-    const userEdit = cookie.get('user')
-
+    const userEdit = cookie.get('user').user
+    const nav = useNavigate();
     const dispatch = useDispatch();
+    const[errors, setErrors] = useState({});
+    const[input, setInput] = useState({
+         name: userEdit?.name,
+         lastName: userEdit?.lastName,
+         email: userEdit?.email,
+         dni: userEdit?.dni,
+         address: userEdit?.address,
+         province: userEdit?.province,
+         postal: userEdit?.postal,
+         phone: userEdit?.phone,
+         
+     })
 
-    
-
-   
-   const nav = useNavigate();
 
    //const userEdit = useSelector(state => state.userReducer.status.user);
-  
-
-   const[errors, setErrors] = useState({});
-
-
-
-    
-    const[input, setInput] = useState({
-        name: userEdit?.name,
-        lastName: userEdit?.lastName,
-        email: userEdit?.email,
-        dni: userEdit?.dni,
-        address: userEdit?.address,
-        province: userEdit?.province,
-        postal: userEdit?.postal,
-        phone: userEdit?.phone,
-        
-    })
-
-
-
     
 function handlerOnChange (e){
                 setInput({

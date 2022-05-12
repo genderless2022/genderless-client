@@ -15,7 +15,6 @@ export default function ShoppingCart ( ) {
     const status = useSelector( state => state )
 
     let cookie = new Cookies();
-    // const user = cookie.get('user')
     const user = cookie.get('user').user
     console.log(user)
     const dispatch = useDispatch()

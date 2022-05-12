@@ -31,11 +31,9 @@ export const getUsers = () => async (dispatch) => {
 };
 
 // Habilitada
-export const getUser = ( email ) => async ( dispatch ) => {
-  
-  await axios.get(`http://localhost:3001/usuario/email/${email}`).then(
+export const getUser = ( {email, token} ) => async ( dispatch ) => {  
+  await axios.get(`http://localhost:3001/usuario/email/${email}`, { headers: {"Authorization" : `Bearer ${token}`} }).then(
     (response) => {
-         
       dispatch({
         type: GET_USER,
         payload: response.data,
