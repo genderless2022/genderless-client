@@ -11,7 +11,7 @@ import Cookies from "universal-cookie";
 export default function AdminDetail() {
 
     let cookie = new Cookies();
-    const user = cookie.get('user')
+    const user = cookie.get('user').user
    
 
    
