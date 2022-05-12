@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import './ConnectMetamask.css';
 // props = { type, eth, loginTextButton }
 function ConnectMetamask(props) {
@@ -8,6 +9,7 @@ function ConnectMetamask(props) {
     let nav = useNavigate()
     let metaLogo = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/1200px-MetaMask_Fox.svg.png'
     let metaMaskXtensionURL = 'https://metamask.io/download/'
+    let cookie = new Cookies()
     // Estado donde guardamos los datos de metamask del usuario 
     let [state, setState] = useState({
         walletAddress: localStorage.getItem('wallet'),
@@ -101,6 +103,7 @@ function ConnectMetamask(props) {
                 console.log('Transaction: ' + tx)
                 setState({...state, tx: tx})
                 localStorage.setItem('lastTx', tx.hash)
+                nav(`/success/?payment_id=${tx.hash}&email=${cookie.get('user').user.email}&status=pending&status_detail=pending`)
             }
 
         }
