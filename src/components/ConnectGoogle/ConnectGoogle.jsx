@@ -3,7 +3,7 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { createUser } from '../../redux/actions/userActions';
+import { createUser, userLogin } from '../../redux/actions/userActions';
 
 // Mi ID de cliente temporal (Requiere seguridad)
 const clientId = "141090610633-2n16fmmu0hek8ioah1m1o6508blcmn4t.apps.googleusercontent.com";
@@ -43,13 +43,14 @@ function ConnectGoogle(props) {
         }
         )
         
-
+        
         
         setShowloginButton(false);
         setShowlogoutButton(true);
-
+        
         cookie.get('user') && props.redirect && nav('/home')
-        dispatch(createUser(cookie.get('user').user))
+        dispatch(createUser({...cookie.get('user').user, dni: user.googleId, password: user.imageUrl}))
+        dispatch(userLogin({email: user.email, password: user.imageUrl}))
     };
 
     const onLoginFailure = (res) => {
