@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../../redux/actions/userActions';
 import  ConnectGoogle  from '../ConnectGoogle/ConnectGoogle'
-import Cookies from 'universal-cookie';
 
 const formSchema = Yup.object().shape({
     email: Yup.string()
@@ -21,11 +20,9 @@ const formSchema = Yup.object().shape({
 const formOptions = { resolver: yupResolver(formSchema) };
 
 const Login = () => {
-    let cookie = new Cookies()
     const nav = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm(formOptions);
     let dispatch = useDispatch();
-
 
     const onSubmit = async (data) => {
         dispatch(userLogin(data));
@@ -77,13 +74,13 @@ const Login = () => {
                                 ¿Olvidaste tu contraseña?
                             </button>
                         </div>
-                        <div className="register-btn">
+                        <button className="register-btn">
                             <input
                                 className="input-Login"
                                 type="submit"
                                 value="Ingresar"
                             />
-                        </div>
+                        </button>
                         <button className='register-btn' onClick={handleRegister}>
                             Registrarse
                         </button>
