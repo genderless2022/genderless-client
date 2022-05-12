@@ -12,9 +12,9 @@ export default function UserDetail() {
     const dispatch = useDispatch();
 
     let cookie = new Cookies();
-    const user = cookie.get('user').user
+    const user = cookie.get('user')
     const tokenUser = cookie.get('user').tokenSession
-    const detailUser = useSelector(state => state.userReducer.usuario);
+    const detailUser = user;
 
     let [state, setState] = useState({
     wallet: localStorage.getItem('wallet') || null,
