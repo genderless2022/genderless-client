@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import { Col, Row } from 'react-bootstrap';
 import SocketIOClient  from 'socket.io-client';
 import MessageBox from './MessageBox';
+import Cookies from 'universal-cookie';
 
 let allUsers = [];
 let allMessages = [];
@@ -13,10 +14,12 @@ function ChatSupp(props) {
     const [selectedUser, setSelectedUser] = useState({});
     const [socket, setSocket] = useState(null);
     const msgRef = useRef(null);
-    const [messagesBody, setMessagesBody] = useState('');
+    const [messageBody, setmessageBody] = useState('');
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState([]);
-    const userInfo = props.user;
+    let cookie = new Cookies();
+    const userInfo = cookie.get('user').user;
+    
     console.log(userInfo, '---')
 
     useEffect(() => {
@@ -28,7 +31,7 @@ function ChatSupp(props) {
             });
         }
         if(!socket) {
-            const sk = SocketIOClient(ENDPOINT);
+            const sk = SocketIOClient("http://localhost:3001");
             setSocket(sk);
             sk.emit('connected', {
                 name: userInfo.permission === 'admin' ? 'admin' : userInfo.name + ' ' + userInfo.lastName,
@@ -85,23 +88,23 @@ function ChatSupp(props) {
             );
             setUsers(allUsers);
         }
-        socket.emit('onSelectedUser', user);
+        socket.emit('onUserSelected', user);
     };
 
     const submitHandler = (e) => {
         e.preventDefault();
-        if(messagesBody.trim()) {
+        if(messageBody.trim()) {
             alert ('Error, por favor escriba un mensaje.');
         } else {
             allMessages = [
                 ...allMessages,
-                {body: messagesBody, name : userInfo.permission === 'admin' ? 'admin' : userInfo.name + ' ' + userInfo.lastName}
+                {body: messageBody, name : userInfo.permission === 'admin' ? 'admin' : userInfo.name + ' ' + userInfo.lastName}
             ];
             setMessages(allMessages);
-            setMessagesBody('');
+            setmessageBody('');
             setTimeout(() => {
                 socket.emit('onMessage', {
-                    body: messagesBody,
+                    body: messageBody,
                     name: userInfo.permission === 'admin' ? 'admin' : userInfo.name + ' ' + userInfo.lastName,
                     isAdmin: userInfo.permission === 'admin' ? true : false,
                 })
@@ -172,8 +175,8 @@ function ChatSupp(props) {
                         <div>
                             <form onSubmit={submitHandler}>
                                 <input
-                                    value = 'messagesBody'
-                                    onChange={(e) => setMessagesBody(e.target.value)}
+                                    value = 'messageBody'
+                                    onChange={(e) => setmessageBody(e.target.value)}
                                     type="text"
                                     placeholder="Escriba su mensaje"
                                 />

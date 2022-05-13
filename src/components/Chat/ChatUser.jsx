@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 // import socket from '../Socket';
 import SocketIOClient  from 'socket.io-client';
 import Cookies from "universal-cookie";
+import socketServer from '../Socket';
 
 
 // function Chat() {
@@ -70,7 +71,7 @@ function ChatUser () {
   let ENDPOINT = (process.env.REACT_APP_API || "http://localhost:3001");
   const [socket, setSocket] = useState(null);
   const msgRef = useRef(null);
-  const [messagesBody, setMessagesBody] = useState('');
+  const [messageBody, setmessageBody] = useState('');
   const [messages, setMessages] = useState([{
     name: 'admin', body: 'Hola, puede iniciar su consulta'
   }]);
@@ -96,20 +97,20 @@ function ChatUser () {
   },[messages, userInfo, socket]);
 
   const supportHandler = () => {
-    const sk = SocketIOClient(ENDPOINT);
+    const sk = socketServer
     setSocket(sk);
   }
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if(!messagesBody.trim()){
+    if(!messageBody.trim()){
       alert('Error, por favor escriba un mensaje.');
     } else {
-      setMessages([...messages, {body: messagesBody, name: userInfo.name + ' ' + userInfo.lastName}])
-      setMessagesBody('');
+      setMessages([...messages, {body: messageBody, name: userInfo.name + ' ' + userInfo.lastName}])
+      setmessageBody('');
       setTimeout(() => {
         socket.emit('onMessage', {
-          body: messagesBody,
+          body: messageBody,
           name: userInfo.name + ' ' + userInfo.lastName,
           isAdmin : userInfo.permission === 'admin' ? true : false,
         });
@@ -141,8 +142,8 @@ function ChatUser () {
         <div>
           <form onSubmit={submitHandler} onClick={supportHandler}>
             <input
-              value={messagesBody}
-              onChange= {(e) => setMessagesBody(e.target.value)}
+              value={messageBody}
+              onChange= {(e) => setmessageBody(e.target.value)}
               type="text"
               placeholder="Escriba su mensaje"
             />
