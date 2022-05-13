@@ -2,9 +2,10 @@ import React from 'react'
 import {useState }  from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import {updateUser}  from '../../redux/actions/userActions';
+import {updateUser, getUser}  from '../../redux/actions/userActions';
 import './EditSend.css';
 import Cookies from "universal-cookie";
+import {useEffect} from 'react';
 
 
 
@@ -32,32 +33,24 @@ function validate(input){
 
 export default function EditSend  () {
     let cookie = new Cookies();
-    const userEdit = cookie.get('user').user
-
+    const userEdit = useSelector(state => state.userReducer.usuario)
+    const user = cookie.get('user')
+    const nav = useNavigate();
     const dispatch = useDispatch();
-
-    
-
-   
-   const nav = useNavigate();
-
-   //const userEdit = useSelector(state => state.userReducer.status.user);
-  
-
-   const[errors, setErrors] = useState({});
-
-
-
-    
+    const[errors, setErrors] = useState({});
     const[input, setInput] = useState({
-        email: userEdit?.email,
-        address: userEdit?.address,
-        province: userEdit?.province,
-        postal: userEdit?.postal,
-        phone: userEdit?.phone,
+        email: userEdit?.user.email,
+        address: userEdit?.user.address,
+        province: userEdit?.user.province,
+        postal: userEdit?.user.postal,
+        phone: userEdit?.user.phone,
         
     })
-
+    useEffect(() => {
+        dispatch(getUser({ email: user.email}))
+        // dispatch(getUser({ email: user.email, token: tokenUser}))
+    },[])
+    
 
 
     

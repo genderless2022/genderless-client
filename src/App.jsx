@@ -15,6 +15,7 @@ import { Register } from './components/Register/Register';
 import Footer from './components/Footer/Footer';
 import Terminos from './components/Terminos/Terminos';
 import EditSend from './components/EditSend/EditSend';
+import EditPassword from './components/EditPassword/EditPassword';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
 import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
@@ -28,6 +29,7 @@ import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 import ChatBot from './components/Chatbot/Chatbot';
 import { NewPassword } from './components/NewPassword/NewPassword';
+
 
 
 function App() {
@@ -53,6 +55,7 @@ function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/user/products/send" element={<EditSend></EditSend>} />
         <Route path="/user/profile" element={<UserDetail></UserDetail>} />
+        <Route path="/user/editpassword" element={<EditPassword></EditPassword>} />
         <Route path="/editar" element={<EditUser></EditUser>} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/create" element={<AdminCreate />} />
