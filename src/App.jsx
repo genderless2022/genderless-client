@@ -27,7 +27,8 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 import { NewPassword } from './components/NewPassword/NewPassword';
-import Chat from './components/Chat/Chat';
+import ChatUser from './components/Chat/ChatUser';
+import ChatSupp from './components/Chat/ChatSupp';
 function App() {
 
   const dispatch = useDispatch();
@@ -60,7 +61,8 @@ function App() {
         <Route path='/terminos' element={<Terminos></Terminos>} />
         
         <Route path="/meta/checkout" element={<MetaCheckout />} />
-        <Route path="/chat" element={<Chat/>} />
+        <Route path="/chat" element={<ChatUser/>} />
+        <Route path="/chatadmin" element={<ChatSupp/>} />
       </Routes>
       
       <Footer />

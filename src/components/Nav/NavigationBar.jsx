@@ -6,6 +6,7 @@ import { getProductsbyName } from '../../redux/actions/productActions';
 import ConnectMetamask from '../ConnectMetamask/ConnectMetamask';
 import './NavigationBar.css'
 import { BiUser } from 'react-icons/bi';
+import {BiChat} from 'react-icons/bi';
 import { RiUserUnfollowLine } from 'react-icons/ri';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { FiShoppingCart } from 'react-icons/fi';
@@ -84,6 +85,7 @@ console.log('pathname', pathname)
           <NavDropdown.Item>  <BiUser/><Link to="/user/profile" className="input-profile"> Mi perfil</Link></NavDropdown.Item>
           <NavDropdown.Item>  <AiOutlineShopping/> Mis compras</NavDropdown.Item>
           <NavDropdown.Divider />
+          {/* <NavDropdown.Item> <BiChat/><Link to="/chat" className="input-profile">Soporte técnico</Link></NavDropdown.Item> */}
           <NavDropdown.Item  onClick={() => logout()}>  <RiUserUnfollowLine/> Cerrar sesión</NavDropdown.Item>
           </NavDropdown>
           :
