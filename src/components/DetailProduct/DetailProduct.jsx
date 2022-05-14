@@ -11,7 +11,7 @@ import { TiArrowBack } from 'react-icons/ti';
 import { Button, Card, Container, Form, FormControl, InputGroup } from 'react-bootstrap'
 import axios from 'axios'
 import Cookies from 'universal-cookie';
-import { postReview } from '../../redux/actions/reviewActions'
+import { getReviews, postReview } from '../../redux/actions/reviewActions'
 
 
 const DetailProduct = () => {
@@ -33,7 +33,11 @@ const DetailProduct = () => {
 
     useEffect(() => {
         dispatch(getFavorites({ email : user?.email })) 
+        
+
         dispatch(getProduct(id))
+        dispatch(getReviews())
+
     }, [dispatch, id])
     
     const addShoppingCart = () => { 
@@ -91,12 +95,12 @@ const DetailProduct = () => {
       });
     }
 
-    const reviewsFilter = useSelector( (state) => state.reviewReducer?.reviews?.review)
+    const reviewsFilter = useSelector( (state) => state.reviewReducer.AllReviews.review)
     console.log(reviewsFilter, 'reviews useSelector')
     //const reviesWithName = reviews?.filter(r => r.UserId) 
     //console.log(reviesWithName, 'reviews with name')
-    //const reviewsOfTheProduct = reviewsFilter?.filter(r => r.ProductId === product.id)
-    //console.log(reviewsOfTheProduct, 'reviews of the product')
+    const reviewsOfTheProduct = reviewsFilter?.filter(r => r.ProductId == id)
+    console.log(reviewsOfTheProduct, 'reviews of the product')
 
 
 
@@ -239,7 +243,7 @@ const DetailProduct = () => {
               </div>
 
               <Container style={{ marginTop: "5%" }}>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={ (event) => handleSubmit(event)}>
                   <InputGroup.Text>Escribe tu review</InputGroup.Text>
                   <FormControl
                     as="textarea"
@@ -282,7 +286,9 @@ const DetailProduct = () => {
               </Container>
 
               {
-                [reviewsFilter]?.map((review, i) => {
+                Array.isArray(reviewsOfTheProduct) ? 
+                
+                reviewsOfTheProduct?.map((review, i) => {
                 return (
                   <Container style={{ marginTop: "5%", marginBottom: "5%" }}>
                 <Card>
@@ -305,6 +311,10 @@ const DetailProduct = () => {
               </Container>
                 )
                 })
+                : 
+                <Container style={{ margin: "5% auto"}}>
+                  <h6>No hay reviews para este producto</h6>
+                </Container>
               }
             </>
           ) : (

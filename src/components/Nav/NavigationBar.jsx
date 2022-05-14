@@ -64,7 +64,7 @@ console.log('pathname', pathname)
 
 
         
-        return ((!pathname.includes("admin") && pathname !=="/")  &&
+        return ((!pathname.includes("admin") && pathname !=="/" && !pathname.includes("producto"))  &&
 
 <Navbar bg="dark" expand="lg" >
   <Container fluid >
@@ -77,7 +77,6 @@ console.log('pathname', pathname)
         navbarScroll
       >
         <Nav.Link href="/" style={{ maxHeight: '100px', color: 'white' }}>Inicio</Nav.Link>
-        <Nav.Link href="/home" style={{ maxHeight: '100px', color: 'white' }}>Catalogo</Nav.Link>
         {
           cookies.get('user') ?
           <NavDropdown title={<span style={{ color: 'white' }} >{cookies.get('user')?.name}</span>}id="basic-nav-dropdown">
