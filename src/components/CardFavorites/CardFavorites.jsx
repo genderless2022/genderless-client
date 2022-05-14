@@ -9,7 +9,7 @@ function CardFavorites({ image, name, stock_by_size, price, discount, id }) {
     const dispatch = useDispatch()
     const subtotal = Number(((1-(discount/100))*price).toFixed(2));
     let cookie = new Cookies();
-    const user = cookie.get('user')
+    const user = cookie.get('user').user
 
     const handleDeleteFav = (e) => {
         e.preventDefault();

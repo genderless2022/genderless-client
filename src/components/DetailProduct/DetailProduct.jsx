@@ -31,6 +31,7 @@ const DetailProduct = () => {
 
     // let cookie = new Cookies();
 
+
     useEffect(() => {
         dispatch(getFavorites({ email : user?.email })) 
         
@@ -46,7 +47,8 @@ const DetailProduct = () => {
 
     }
     // console.log(user.email, '<-')
-    // console.log('productInFavorites', productInFavorites)
+    console.log('user', user)
+    console.log('productInFavorites', productInFavorites)
     // console.log(Number(id), '<-')
 
     const addFavorites = () => { 

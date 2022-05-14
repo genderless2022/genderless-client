@@ -46,7 +46,7 @@ function validate(input){
 
 export default function AdminRegisterEdit  () {
     let cookie = new Cookies();
-    const userEdit = cookie.get('user')
+    const userEdit = cookie.get('user').user
 
     const dispatch = useDispatch();
 

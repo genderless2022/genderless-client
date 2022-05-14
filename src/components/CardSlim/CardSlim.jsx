@@ -11,7 +11,7 @@ function CardSlim({ image, name, size, stock, price, index, discount, id }) {
   const [count, setCount] = useState(1);
   const subtotal = Number((((1-(discount/100))*price)*count).toFixed(0));
   let cookie = new Cookies();
-  const user = cookie.get('user')
+  const user = cookie.get('user').user
 
   useEffect(() => {
     dispatch(totalShopping([index, subtotal]))
