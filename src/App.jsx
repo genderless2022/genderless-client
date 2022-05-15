@@ -28,6 +28,7 @@ import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 import ChatBot from './components/Chatbot/Chatbot';
 import { NewPassword } from './components/NewPassword/NewPassword';
+import Success from './components/Success/Success';
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
         
         <Route path="/meta/checkout" element={<MetaCheckout />} />
         <Route path="/chatbot" element={<ChatBot />} />
+        <Route path="/success" element={<Success />} />
 
       </Routes>
       <Footer />
