@@ -27,12 +27,12 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 import { NewPassword } from './components/NewPassword/NewPassword';
-import ChatUser from './components/Chat/ChatUser';
-import ChatSupp from './components/Chat/ChatSupp';
+import Helpcenter from './components/Chat/Helpcenter';
 function App() {
 
   const dispatch = useDispatch();
   const cookies = new Cookies();
+  
   console.log(cookies.get('user'));
   
 
@@ -61,8 +61,7 @@ function App() {
         <Route path='/terminos' element={<Terminos></Terminos>} />
         
         <Route path="/meta/checkout" element={<MetaCheckout />} />
-        <Route path="/chat" element={<ChatUser/>} />
-        <Route path="/chatadmin" element={<ChatSupp/>} />
+        <Route path="/user/chat" element={<Helpcenter/>} />
       </Routes>
       
       <Footer />
