@@ -115,7 +115,7 @@ export default function EditUser  () {
                   <TiArrowBack/>
                  </Link>
                 </div>
-                     <div className="title">Modificar mis datos</div>
+                     <div className="title"> Mis datos</div>
                         <p className="register-subtitle">(* campos requeridos)</p>
                         <div className="form-group-one">
                             <div className="labelAndInput">
@@ -224,7 +224,7 @@ export default function EditUser  () {
                                 <div className="form-submit">
                                 <input
                                 type="submit"
-                                value="EDITAR"
+                                value="Actualizar"
                                 />
                              </div>
                          </div>
