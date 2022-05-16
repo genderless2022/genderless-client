@@ -29,7 +29,7 @@ export default function ShoppingCart ( ) {
 
 
                 useEffect(() => {
-                     dispatch(getUser({ email: user.email}))
+                     dispatch(getUser({ email: user?.email}))
                 },[])
             
 
