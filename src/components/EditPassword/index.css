@@ -24,18 +24,18 @@
   font-size: 8px;
 }
 
-.form-container-edit {
+.form-container-pass {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: 700px;
-  width: 100%;
-  background-color: #0E1428;
-  color: white;
-  padding: 25px 30px;
-  border-radius: 3px;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 390px;
+    width: 80%;
+    background-color: #0E1428;
+    color: white;
+    padding: 25px 30px;
+    border-radius: 3px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 }
 
 .form-container .title {
@@ -229,4 +229,8 @@ form .form-submit input:hover {
 
 .login-button {
   text-decoration: none;
+}
+
+.title-password{
+  position: absolute;
 }

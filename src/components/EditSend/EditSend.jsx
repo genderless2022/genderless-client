@@ -1,17 +1,27 @@
+
+
 import React from 'react'
-import {useState }  from 'react'
+import {useState, useEffect }  from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import {updateUser, getUser}  from '../../redux/actions/userActions';
+import {updateUser}  from '../../redux/actions/userActions';
 import './EditSend.css';
 import Cookies from "universal-cookie";
-import {useEffect} from 'react';
-
+import { TiArrowBack } from 'react-icons/ti';
+import {Link} from 'react-router-dom'
+import { getUser } from "../../redux/actions/userActions";
 
 
 function validate(input){
     let errors = {};
     console.log(errors)
+    if(!/^[a-z A-Z]+$/.test(input.name)||input.name?.length<3 || input.name?.length>30){
+        errors.name = "*Campo requerido";
+    }
+    if(!/^[a-z A-Z]+$/.test(input.lastName)||input.lastName?.length<3 || input.lastName?.length>30){
+        errors.lastName = "*Campo requerido";
+    }
+    
     
     if(!/[A-Za-z0-9]+/g.test(input.address)||input.address?.length<3 || input.address?.length>25){
         errors.address ="*Campo requerido";
@@ -24,81 +34,112 @@ function validate(input){
     }
     if(!input.phone){
         errors.phone = "*Campo requerido";
-    }
+   }
     
     return errors;
 
 }
 
 
-export default function EditSend  () {
+export default function EditUser  () {
     let cookie = new Cookies();
     const userEdit = useSelector(state => state.userReducer.usuario)
+    console.log('reducer', userEdit)
     const user = cookie.get('user')
+    console.log('cookie', user)
     const nav = useNavigate();
     const dispatch = useDispatch();
     const[errors, setErrors] = useState({});
     const[input, setInput] = useState({
-        email: userEdit?.user.email,
-        address: userEdit?.user.address,
-        province: userEdit?.user.province,
-        postal: userEdit?.user.postal,
-        phone: userEdit?.user.phone,
+        email: userEdit.user?.email,
+   
+         
+         name: userEdit.user?.sendAddress?.name,
+         lastName: userEdit.user?.sendAddress?.lastName,
+         address: userEdit.user?.sendAddress?.address,
+         province: userEdit.user?.sendAddress?.province,
+         postal: userEdit.user?.sendAddress?.postal,
+         phone: userEdit.user?.sendAddress?.phone,
         
-    })
-    useEffect(() => {
+     })
+
+  useEffect(() => {
         dispatch(getUser({ email: user.email}))
         // dispatch(getUser({ email: user.email, token: tokenUser}))
     },[])
     
+    function handlerOnChange (e){
+        setInput({
+            ...input,
+            [e.target.name]:e.target.value
+        })
+        setErrors(validate({
+            ...input,
+            [e.target.name]:e.target.value
+        }) )
+    }
 
-
-    
-function handlerOnChange (e){
-                setInput({
-                    ...input,
-                    [e.target.name]:e.target.value
-                })
-                setErrors(validate({
-                    ...input,
-                    [e.target.name]:e.target.value
-                }) )
-            }
-
-            function onSubmit(e){
-                e.preventDefault();
-                if(!input.email ||!input.address|| !input.province  || !input.postal|| !input.phone  ){
-                alert("no completo todo el formulario!")}
-                else{
-                dispatch(updateUser(input))
-                alert('Datos actualizados')
-                setInput({
-                   
-                    email: '',
-                    phone: '',
-                    address: '',
-                    province: '',
-                    postal: '',
-                })
-             nav('/shoppingcart')
-            }
-        }
+    function onSubmit(e){
+        e.preventDefault();
+        if(!input.name || !input.lastName || !input.email ||!input.address|| !input.province  || !input.postal|| !input.phone  ){
+        alert("no completo todo el formulario!")}
+        else{
+            console.log('input',input)
+        dispatch(updateUser({sendAddress:input,email: userEdit.user?.email}))
+        alert('Datos actualizados')
+        setInput({
+            name:'',
+            lastName: '',
+            email: '',
+            phone: '',
+            address: '',
+            province: '',
+            postal: '',
+        })
+        nav('/shoppingcart')
+    }
+    }
 
             
     return (
         <div className="container-register-form">
-            <form onSubmit={onSubmit} >
-                <div className="container-user-edit">
-                    <div className="form-container-edit">
-                        <div className="title">Modificar mis datos</div>
+          <form onSubmit={onSubmit} >
+            <div className="container-user-edit">
+               <div className="form-container-edit">
+                <div>
+                 <Link to='/user/profile' style={{ color: 'white', fontSize: '20px' }}>
+                  <TiArrowBack/>
+                 </Link>
+                </div>
+                     <div className="title">Modificar datos de envio</div>
                         <p className="register-subtitle">(* campos requeridos)</p>
                         <div className="form-group-one">
-                            
-                                
+                            <div className="labelAndInput">
+                                <label className="input-label">*Nombre: </label>
+                                <input onChange={(e)=>handlerOnChange(e)}
+                                    className="input-register"
+                                    type="text"
+                                    name="name"
+                                    value={input.name}
+                                    placeholder= {userEdit?.name} 
+                                    /> 
+                                      {errors.name && <p className="form-register-errors">{errors.name}</p>}
+                                </div>
+                                <div className="labelAndInput">
+                                <label className="input-label">*Apellido: </label>
+                                <input onChange={(e)=>handlerOnChange(e)}
+                                    className="input-register"
+                                    type="text"
+                                    name="lastName"
+                                    value={input.lastName}
+                                    placeholder= {userEdit?.lastName} 
+                                    /> 
+                                {errors.lastName && <p className="form-register-errors">{errors.lastName}</p>}
+                                </div>
                                 <div className="labelAndInput">
                                 <label className="input-label">*Email: </label>
                                 <input
-                                    readOnly
+                                     readOnly
                                     onChange={(e)=>handlerOnChange(e)}
                                     className="input-register"
                                     type="text"

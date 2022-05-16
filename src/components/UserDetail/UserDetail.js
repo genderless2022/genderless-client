@@ -45,6 +45,9 @@ export default function UserDetail() {
                         <Link to="/editar">
                             <button className="loginbtn">Editar mis Datos</button>
                         </Link>
+                        <Link to="/user/editPassword">
+                            <button className="loginbtn">Cambiar mi Contraseña</button>
+                        </Link>
 
 
                         { !wallet  &&

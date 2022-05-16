@@ -46,7 +46,9 @@ function validate(input){
 export default function EditUser  () {
     let cookie = new Cookies();
     const userEdit = useSelector(state => state.userReducer.usuario)
+    console.log('reducer', userEdit)
     const user = cookie.get('user')
+    console.log('cookie', user)
     const nav = useNavigate();
     const dispatch = useDispatch();
     const[errors, setErrors] = useState({});
@@ -60,6 +62,7 @@ export default function EditUser  () {
          province: userEdit.user?.province,
          postal: userEdit.user?.postal,
          phone: userEdit.user?.phone,
+         sendAddress: userEdit.user?.sendAddress,
          
      })
 
@@ -161,6 +164,7 @@ export default function EditUser  () {
                                     /> 
                                       {errors.born && <p className="form-register-errors">{errors.born}</p>}
                                 </div>
+                            
                                 <div className="labelAndInput">
                                 <label className="input-label">*DNI: </label>
                                 <input onChange={(e)=>handlerOnChange(e)}

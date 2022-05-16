@@ -77,7 +77,7 @@ export default function EditPassword  () {
         <div className="container-register-form">
           <form onSubmit={onSubmit} >
             <div className="container-pass-edit">
-               <div className="form-container-edit">
+               <div className="form-container-pass">
                 <div>
                  <Link to='/user/profile' style={{ color: 'white', fontSize: '20px' }}>
                   <TiArrowBack/>
