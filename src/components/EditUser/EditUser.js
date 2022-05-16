@@ -19,9 +19,9 @@ function validate(input){
     if(!/^[a-z A-Z]+$/.test(input.lastName)||input.lastName?.length<3 || input.lastName?.length>30){
         errors.lastName = "*Campo requerido";
     }
-    // if(!/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(input.email)){
-    //     errors.email = "*Campo requerido";
-    // }
+    if(!/^(\d{4})-(\d{2})-(\d{2})$/g.test(input.born)){
+        errors.born = "*Campo requerido";
+     }
     if(!/^[0-9]{8}$/.test(input.dni)){
         errors.dni = "*Campo requerido";
     }
@@ -46,7 +46,9 @@ function validate(input){
 export default function EditUser  () {
     let cookie = new Cookies();
     const userEdit = useSelector(state => state.userReducer.usuario)
+    console.log('reducer', userEdit)
     const user = cookie.get('user')
+    console.log('cookie', user)
     const nav = useNavigate();
     const dispatch = useDispatch();
     const[errors, setErrors] = useState({});
@@ -54,11 +56,13 @@ export default function EditUser  () {
          name: userEdit.user?.name,
          lastName: userEdit.user?.lastName,
          email: userEdit.user?.email,
+         born: userEdit.user?.born,
          dni: userEdit.user?.dni,
          address: userEdit.user?.address,
          province: userEdit.user?.province,
          postal: userEdit.user?.postal,
          phone: userEdit.user?.phone,
+         sendAddress: userEdit.user?.sendAddress,
          
      })
 
@@ -91,6 +95,7 @@ export default function EditUser  () {
             email: '',
             dni: '',
             phone: '',
+            born: '',
             address: '',
             province: '',
             postal: '',
@@ -148,6 +153,18 @@ export default function EditUser  () {
                                    />
                                 {errors.email && <p className="form-register-errors">{errors.email}</p>}
                                 </div>
+                                <div className="labelAndInput">
+                                <label className="input-label">*Fecha de Nacimiento: </label>
+                                <input onChange={(e)=>handlerOnChange(e)}
+                                    className="input-register"
+                                    type="date"
+                                    name="born"
+                                    value={input.born}
+                                    placeholder= {userEdit?.born} 
+                                    /> 
+                                      {errors.born && <p className="form-register-errors">{errors.born}</p>}
+                                </div>
+                            
                                 <div className="labelAndInput">
                                 <label className="input-label">*DNI: </label>
                                 <input onChange={(e)=>handlerOnChange(e)}
