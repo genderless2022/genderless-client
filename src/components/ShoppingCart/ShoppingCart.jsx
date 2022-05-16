@@ -154,6 +154,10 @@ export default function ShoppingCart ( ) {
                     </div>
                 :
                 <div className="shopping-cart-container">El carrito se encuentra vacío</div>
+                
             }    
+            {/* Se setean cookies de carrito */}
+            {/* { !cookie.get('shoppingList') && cookie.set('shoppingList', shopping?.products)  }
+            { cookie.get('shoppingList') && JSON.stringify(cookie.get('shoppingList') ) } */}
     </div>)
 }
