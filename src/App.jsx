@@ -29,6 +29,7 @@ import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 import ChatBot from './components/Chatbot/Chatbot';
 import { NewPassword } from './components/NewPassword/NewPassword';
+import Success from './components/Success/Success';
 import Helpcenter from './components/Chat/Helpcenter';
 import Collapse from 'react-bootstrap/Collapse'
 import {BiChat} from 'react-icons/bi';
@@ -71,7 +72,11 @@ function App() {
         <Route path='/terminos' element={<Terminos></Terminos>} />
         
         <Route path="/meta/checkout" element={<MetaCheckout />} />
-        
+
+        <Route path="/chatbot" element={<ChatBot />} />
+        <Route path="/success" element={<Success />} />
+
+
       </Routes>
       {user === undefined ? null :
       <button
