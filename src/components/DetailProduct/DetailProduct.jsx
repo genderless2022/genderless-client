@@ -10,7 +10,7 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { TiArrowBack } from 'react-icons/ti';
 import { Button, Card, Container, Form, FormControl, InputGroup } from 'react-bootstrap'
 import Cookies from 'universal-cookie';
-import { postReview } from '../../redux/actions/reviewActions'
+import { getReviews, postReview } from '../../redux/actions/reviewActions'
 
 
 const DetailProduct = () => {
@@ -30,6 +30,7 @@ const DetailProduct = () => {
 
   useEffect(() => {
     dispatch(getFavorites({ email : user?.email })) 
+    dispatch(getReviews())
     dispatch(getProduct(id))
     return function deleteProduct(){
       dispatch(deleteProductAction())
@@ -38,6 +39,7 @@ const DetailProduct = () => {
     useEffect(() => {
       (productInFavorites.length || productInFavoritesCookies.length) && setFavorite(true) 
     }, [productsFavorites, favoriteCookie])
+    
     
   if(shoppingCookie === undefined) {
     cookies.set('shopping', [], { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
@@ -125,7 +127,14 @@ const DetailProduct = () => {
       });
     }
 
-    const reviewsFilter = useSelector( (state) => state.reviewReducer?.reviews?.review)
+    const reviewsFilter = useSelector( (state) => state.reviewReducer.AllReviews.review)
+    console.log(reviewsFilter, 'reviews useSelector')
+    //const reviesWithName = reviews?.filter(r => r.UserId) 
+    //console.log(reviesWithName, 'reviews with name')
+    const reviewsOfTheProduct = reviewsFilter?.filter(r => r.ProductId == id)
+    console.log(reviewsOfTheProduct, 'reviews of the product')
+
+
 
     return (
       <>
@@ -264,50 +273,13 @@ const DetailProduct = () => {
               </div>
 
               <Container style={{ marginTop: "5%" }}>
-                <Form onSubmit={handleSubmit}>
-                  <InputGroup.Text>Escribe tu review</InputGroup.Text>
-                  <FormControl
-                    as="textarea"
-                    aria-label="With textarea"
-                    placeholder="Escribe tu review"
-                    name="description"
-                    value={input.description}
-                    onChange={(event) => handleChange(event)}
-                  />
-
-                  <div className="star-rating">
-                    {[...Array(5)].map((star, index) => {
-                      index += 1;
-                      return (
-                        <button
-                          type="button"
-                          key={index}
-                          className={index <= (hover || rating) ? "on" : "off"}
-                          value={input.rating}
-                          name="rating"
-                          onChange={(event) => handleChange(event, setRating(index))}
-                          onClick={() => setRating(index)}
-                          onMouseEnter={() => setHover(index)}
-                          onMouseLeave={() => setHover(rating)}
-                        >
-                          <span className="star">&#9733;</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    style={{ marginTop: "2%" }}
-                  >
-                    Enviar
-                  </Button>
-                </Form>
+                
               </Container>
 
               {
-                [reviewsFilter]?.map((review, i) => {
+                Array.isArray(reviewsOfTheProduct) ? 
+                
+                reviewsOfTheProduct?.map((review, i) => {
                 return (
                   <Container style={{ marginTop: "5%", marginBottom: "5%" }}>
                 <Card>
@@ -330,6 +302,10 @@ const DetailProduct = () => {
               </Container>
                 )
                 })
+                : 
+                <Container style={{ margin: "5% auto"}}>
+                  <h6>No hay reviews para este producto</h6>
+                </Container>
               }
             </>
           ) : (
