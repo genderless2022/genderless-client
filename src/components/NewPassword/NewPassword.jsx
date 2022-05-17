@@ -1,13 +1,12 @@
 // import './Login.css';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux"
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { userLogin } from '../../redux/actions/userActions';
-import  ConnectGoogle  from '../ConnectGoogle/ConnectGoogle'
-import Cookies from 'universal-cookie';
-import { forgotPassword } from '../../redux/actions/userActions'
+import { forgotPassword, getUsers } from '../../redux/actions/userActions'
+
 
 const formSchema = Yup.object().shape({
     email: Yup.string()
@@ -15,33 +14,46 @@ const formSchema = Yup.object().shape({
         .max(50, "Máximo 50 carácteres")
         .min(8, "Mínimo 8 carácteres")
         .matches(RegExp(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/), "El email no es válido"),
-    // password: Yup.string()
-    //     .required("Este campo es requerido")
     });
 
 const formOptions = { resolver: yupResolver(formSchema) };
 
 const NewPassword = () => {
-    let cookie = new Cookies()
     const nav = useNavigate();
-    const { register, formState: { errors }, handleSubmit } = useForm(formOptions);
+    const { register, formState: { errors }, handleSubmit, reset} = useForm(formOptions);
     let dispatch = useDispatch();
-
+    const [msg, setMsg] = useState("")
+    const usuarios = useSelector(state => state.userReducer.usuarios)
 
     const onSubmit = async (data) => {
-        console.log('data.email', data.email)
-        dispatch(forgotPassword({email: data.email}))
-        nav('/login');
-        // nav('/home');
+        const findUser = usuarios.find(e => e.email === data.email)
+        reset();
+        if(findUser){
+            dispatch(forgotPassword({email: data.email}))
+            setMsg("Te recomendamos que al usar la contraseña, la cambies para mayor seguridad!")
+        }else {
+            setMsg("El email ingresado no existe")
+        }
     };
 
-    // const handleRecovery = () => {
-    // }
+    useEffect(() => {
+        dispatch(getUsers());
+    },[])
 
-    // const handleRegister = () => {
-    //     nav('/register');
-    // }
-    
+    useEffect(() => {
+        if(msg === "El email ingresado no existe"){
+            const timer = setTimeout(() => {
+                setMsg("");
+            }, 5000)
+            return () => clearTimeout(timer);
+        }else if(msg === "Te recomendamos que al usar la contraseña, la cambies para mayor seguridad!"){
+            const timer = setTimeout(() => {
+                nav('/login');
+                setMsg("");
+            }, 5000)
+            return () => clearTimeout(timer);
+        } 
+    }, [msg])
 
     return (
         <>
@@ -53,32 +65,16 @@ const NewPassword = () => {
                         </div>
                         <div className="form-group-login">
                             <div className="login-labelAndInput">
-                                {/* <label className="input-label-login">Email: </label> */}
                                 <input
                                     className="input-login"
                                     type="text"
                                     name="email"
                                     {...register('email')}
                                 />
+                                <p className={msg ? 'newsletter_agregado_landing' : 'producto_sinagregar'}>{msg}</p>
                                 {<div className="form-register-errors">{errors.email?.message}</div>}
                             </div>
-                            {/* <div className="login-labelAndInput">
-                                <label className="input-label-login">Contraseña: </label>
-                                <input
-                                    autoComplete="on"
-                                    className="input-login"
-                                    type="password"
-                                    name="password"
-                                    {...register('password')}
-                                />
-                                {<div className="form-register-errors">{errors.password?.message}</div>}
-                            </div> */}
                         </div>
-                        {/* <div className="recover-pwd">
-                            <button className="button-password-recovery" onClick={handleRecovery}>
-                                ¿Olvidaste tu contraseña?
-                            </button>
-                        </div> */}
                         <div className="register-btn">
                             <input
                                 className="input-Login"
@@ -86,12 +82,6 @@ const NewPassword = () => {
                                 value="Enviar nueva contraseña"
                             />
                         </div>
-                        {/* <button className='register-btn' onClick={handleRecovery}>
-                            Enviar
-                        </button> */}
-                        {/* <div className='googleButtonContainer'>
-                            <ConnectGoogle login = {true} redirect = {true}></ConnectGoogle>
-                        </div> */}
                     </div>
                 </div>
             </form>

@@ -3,65 +3,101 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
 import { getProduct } from "../../redux/actions/productActions"
-import { addfavProduct, deletefavProduct, getFavorites } from '../../redux/actions/favoritesActions';
+import { addfavProduct, deletefavProduct, getFavorites, deleteProductAction } from '../../redux/actions/favoritesActions';
 import { addProduct } from '../../redux/actions/shoppingActions';
 import { BsSuitHeartFill } from 'react-icons/bs';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { TiArrowBack } from 'react-icons/ti';
 import { Button, Card, Container, Form, FormControl, InputGroup } from 'react-bootstrap'
-import axios from 'axios'
 import Cookies from 'universal-cookie';
 import { postReview } from '../../redux/actions/reviewActions'
 
 
 const DetailProduct = () => {
-    const { id } = useParams()
-    const dispatch = useDispatch()
-    const product = useSelector( (state) => state.productReducer.producto)
-    // const user = useSelector( (state) => state.userReducer.user)
-    const [show, setShow] = useState("")
-    const [sizeSelect, setSizeSelect] = useState(null)
-    const [favorite, setFavorite] = useState(false)
-    const cookies = new Cookies();
-    const user = cookies.get('user')?.user
-    console.log(user)
+  const { id } = useParams()
+  const dispatch = useDispatch()
+  const product = useSelector( (state) => state.productReducer.producto)
+  const [show, setShow] = useState("")
+  const [sizeSelect, setSizeSelect] = useState(null)
+  const cookies = new Cookies();
+  const user = cookies.get('user')?.user
+  const shoppingCookie = cookies.get('shopping')
+  const favoriteCookie = cookies.get('favorite')
+  const productsFavorites = useSelector( state => state.favoriteReducer.favorites)
+  const productInFavorites = productsFavorites?.filter(p=> p.id == id)
+  const productInFavoritesCookies = favoriteCookie?.filter(p=> p.id == id)
+  const [favorite, setFavorite] = useState(false)
+
+  useEffect(() => {
+    dispatch(getFavorites({ email : user?.email })) 
+    dispatch(getProduct(id))
+    return function deleteProduct(){
+      dispatch(deleteProductAction())
+    }    }, [dispatch, id])
     
-    const productsFavorites = useSelector( state => state.favoriteReducer.favorites)
-    const productInFavorites = productsFavorites.filter(p=> p.id == id)
-
-    // let cookie = new Cookies();
-
-
     useEffect(() => {
-        dispatch(getFavorites({ email : user?.email })) 
-        dispatch(getProduct(id))
-    }, [dispatch, id])
+      (productInFavorites.length || productInFavoritesCookies.length) && setFavorite(true) 
+    }, [productsFavorites, favoriteCookie])
     
-    const addShoppingCart = () => { 
-        dispatch(addProduct({ email: user?.email, productId: Number(id), size:sizeSelect }))
-        setShow("Añadido al carrito")
-
+  if(shoppingCookie === undefined) {
+    cookies.set('shopping', [], { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
+    cookies.set('totalShopping', [], { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
     }
-    // console.log(user.email, '<-')
-    console.log('user', user)
-    console.log('productInFavorites', productInFavorites)
-    // console.log(Number(id), '<-')
+  if(favoriteCookie === undefined) {
+    cookies.set('favorite', [], { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
+    }
+  const addShoppingCart = () => {
+    if(!sizeSelect) return setShow("Seleccionar size para añadir")
+    if(!user){
+      const item = {...product, UserProduct: {id: product.id, size: sizeSelect} }
+      const addProductShopping = [...shoppingCookie, item]
+      cookies.set('shopping', 
+        addProductShopping
+      , { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
+      setShow("Añadido al carrito")
+    }
+    if(user){
+      dispatch(addProduct({ email: user?.email, productId: Number(id), productSize: sizeSelect }))
+      setShow("Añadido al carrito")
+    }
+  }
 
-    const addFavorites = () => { 
-        setFavorite(!favorite)
-        // console.log('favorite', favorite)
-        if(!favorite) {
-            dispatch(addfavProduct({ email: user?.email, productId: Number(id) }))
-            setShow("Añadido a favoritos")
-        }else {
-            dispatch(deletefavProduct({ email: user?.email, productId: Number(id) }))
-            setShow("Eliminado de favoritos")
+  const addFavorites = () => { 
+      setFavorite(!favorite)
+      if(!favorite) {
+        if(!user){
+          const addProductFavorite = [...favoriteCookie, product]
+          cookies.set('favorite', 
+            addProductFavorite
+          , { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
+          setShow("Añadido a favoritos")
         }
-    }
+        if(user){      
+          dispatch(addfavProduct({ email: user?.email, productId: Number(id) }))
+          setShow("Añadido a favoritos")
+        }
+      }else {        
+        if(user){
+          dispatch(deletefavProduct({ email: user?.email, productId: Number(id) }))
+          setShow("Eliminado de favoritos")
+        }
+        if(!user){  
+          const deleteFavCookie = favoriteCookie.find(e => e.name === product.name) 
+          const indexOf = favoriteCookie.indexOf(deleteFavCookie)
+          const copyFavoritesCookie = favoriteCookie
+          copyFavoritesCookie.splice(indexOf, 1)
+          cookies.set('favorite', 
+            copyFavoritesCookie
+          , { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
+          setShow("Eliminado de favoritos")
+        }
+      }
+  }
 
-    const handleSize = (sizes) => {
-        setSizeSelect(sizes);
-    }
+  const handleSize = (sizes) => {
+    if(sizes === sizeSelect) return setSizeSelect(null)
+      setSizeSelect(sizes);
+  }
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -72,9 +108,6 @@ const DetailProduct = () => {
 
     function handleSubmit(event) {
       event.preventDefault();
-      console.log(input, "submit");
-      console.log(rating, "submit");
-      console.log(cookies.get('user'), "cookies submit");
       
       dispatch(postReview({comment: input.description, rating: rating, productTitle: product.name, email: cookies.get('user')?.email, name: cookies.get('user')?.name, lastname: cookies.get('user')?.user?.lastName}))
 
@@ -85,7 +118,6 @@ const DetailProduct = () => {
       })
     }
 
-
     function handleChange(event) {
       setInput({
         ...input,
@@ -94,13 +126,6 @@ const DetailProduct = () => {
     }
 
     const reviewsFilter = useSelector( (state) => state.reviewReducer?.reviews?.review)
-    console.log(reviewsFilter, 'reviews useSelector')
-    //const reviesWithName = reviews?.filter(r => r.UserId) 
-    //console.log(reviesWithName, 'reviews with name')
-    //const reviewsOfTheProduct = reviewsFilter?.filter(r => r.ProductId === product.id)
-    //console.log(reviewsOfTheProduct, 'reviews of the product')
-
-
 
     return (
       <>
@@ -190,16 +215,14 @@ const DetailProduct = () => {
                           show ? "producto_agregado" : "producto_sinagregar"
                         }
                       >
-                        {show === "carrito"
-                          ? "🟢 El producto fue agregado al carrito"
-                          : "🟢 El producto fue agregado a favoritos"}{" "}
+                          {show}
                       </p>
                       <div className="detail-one-buttons">
                         <button
                           disabled={product.disabled}
                           onClick={() => addShoppingCart()}
                           className={
-                            product.disabled
+                            (product.disabled || !sizeSelect)
                               ? "detail-button-buy-disabled"
                               : "detail-button-buy"
                           }

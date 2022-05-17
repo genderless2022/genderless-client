@@ -11,7 +11,8 @@ import sobre from '../../assets/sobre.png'
 function Footer() {
   const {pathname} = window.location;
 
-  return (!pathname.includes("admin")  &&
+  return (
+    // !pathname.includes("admin")  &&
     <div className="footer">
       <div className="footer-container">
       

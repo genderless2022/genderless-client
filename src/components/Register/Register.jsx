@@ -5,6 +5,7 @@ import { createUser } from '../../redux/actions/userActions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { userLogin } from '../../redux/actions/userActions';
 
 const formSchema = Yup.object().shape({
     name: Yup.string()
@@ -71,9 +72,9 @@ const Register = () => {
         var mensaje = window.confirm("Al registrarse acepta nuestros términos y condiciones")
         if(mensaje) {
             dispatch(createUser(data));
-            console.log(data, 'data');
             alert("Gracias por registrarse!")
             nav('/home')
+            dispatch(userLogin({email: data.email, password: data.password}));
         }else {
             alert("El registro ha sido rechazado")
             return nav('/home')

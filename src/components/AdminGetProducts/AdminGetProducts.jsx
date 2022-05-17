@@ -67,7 +67,7 @@ export default function AdminGetProducts ({activeDrawer, receiveProduct}) {
                     ?   <div>
                             {searchProductViews.length 
                                 ?   <div>
-                                        {searchProductViews?.map( (producto, i) => 
+                                        {searchProductViews.reverse()?.map( (producto, i) => 
                                             <AdminCardProduct 
                                                 key = {i}
                                                 image= {producto.image}

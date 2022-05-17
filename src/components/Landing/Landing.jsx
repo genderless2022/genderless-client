@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import './Landing.css';
-
+import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
 import {  Button, Card, Carousel, Col, Container, ListGroup, ListGroupItem, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,21 +15,22 @@ import { AiOutlineShopping } from 'react-icons/ai';
 import { FiShoppingCart } from 'react-icons/fi';
 import { FaRegHeart } from 'react-icons/fa';
 import { userLogout } from '../../redux/actions/userActions';
-import { subscribeNewsletter } from '../../redux/actions/newsletterActions';
 
 
 function Landing() {
 
+    const cookies = new Cookies();
     const dispatch = useDispatch()
     const [index, setIndex] = useState(0);
     const [input, setInput] = useState("");
     const nav = useNavigate()
     const productos = useSelector((state) => state.productReducer.productos.reverse());
+    const [msg, setMsg] = useState("");
     const prodsFinal = productos.filter(p => p.disabled === false);
+
     useEffect(() => {
       dispatch(getProducts());
     }, []);
-
 
     const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
@@ -47,12 +48,26 @@ function Landing() {
       setInput(e.target.value)
     }
 
-    const handleSusbribe = (e) => {
-      dispatch(subscribeNewsletter({email: input}))
+    const handleSusbribe = async () => {
+      await axios.post('http://localhost:3001/usuario/newsletter', {
+            // email
+            "email": input
+        }).then( response => {
+          const msg = response.data.msg;
+          setMsg(msg);
+        },
+        (error) => {
+          setMsg("Email no válido");
+        })
+        setInput("")
     }
-  
-    const cookies = new Cookies();
 
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setMsg("");
+      }, 5000)
+      return () => clearTimeout(timer);
+    }, [msg])
 
     const logout = () => {
       dispatch(userLogout(cookies.get('user')?.tokenSession))
@@ -356,7 +371,6 @@ function Landing() {
                   style={{ textDecoration: "none", color: "black" }}
                 >
                   <Card.Img variant="top" src={producto.image} style={{ height: "350px"}}/>
-                 
                 {
                   producto.discount > 0 ? 
                   <>
@@ -374,7 +388,7 @@ function Landing() {
                   <Card.Title style={{ height: "55px", marginTop: "15%", fontWeight: '200', fontSize: "1.1rem" }}>
                     {producto.name}
                   </Card.Title>
-
+                
                 </Link>
                 
 
@@ -382,12 +396,12 @@ function Landing() {
               </div>
             ))}
         </Container>
-         <div className="home-newsletter">
+          <div className="home-newsletter">
           <div className="home-newsletter-container-landing">
           <h2 className="home-newsletter-title">¡RECIBÍ NOVEDADES Y PROMOCIONES EXCLUSIVAS EN TU MAIL!</h2>
-          <p className="home-newsletter-p">Además recibí novedades y promociones exclusivas en tu mail.</p>
-          <input className="home-newsletter-input" type="text" placeholder="Ingresá tu mail" value={input} onChange={(e)=>handleOnChangeSusbribe(e)} />
-          {/* <p className={msg ? 'newsletter_agregado_landing' : 'producto_sinagregar'}>{msg}</p> */}
+          <p className="home-newsletter-p">No te pierdas la oportunidad de tener promos exclusivas en tu email.</p>
+          <input className="home-newsletter-input" type="text" placeholder="Ingresá tu email" value={input} onChange={(e)=>handleOnChangeSusbribe(e)} />
+          <p className={msg ? 'newsletter_agregado_landing' : 'producto_sinagregar'}>{msg}</p>
           <button className="home-newsletter-button" onClick={(e) => handleSusbribe(e)}>Suscribirme</button>
         </div>
       </div>

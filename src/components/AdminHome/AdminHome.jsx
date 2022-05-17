@@ -5,9 +5,9 @@ import AdminGetProducts from '../AdminGetProducts/AdminGetProducts';
 import AdminGetProductsDisabled from '../AdminGetProductDisabled/AdminGetProductDisabled';
 import { AdminCreate } from '../AdminCreate/AdminCreate';
 import AdminDetail from '../AdminDetail/AdminDetail';
+import AdminRoles from '../AdminRoles/AdminRoles';
 import AdminOrders from '../AdminOrders/AdminOrders';
 import AdminView from '../AdminView/AdminView';
-
 
 function AdminHome() {
   const [drawerActive, setDraweActive] = useState(false)
@@ -52,7 +52,7 @@ function AdminHome() {
       <div className="admin-drawer">
         {/* <Link to= '/admin/create' className="link-home"><p>Crear producto</p></Link> */}
         <button className="link-home" onClick={() => handleView("crear")}><p>Crear producto</p></button>
-        <button className="link-home" onClick={() => handleHome("")}><p>Home</p></button>
+        <button className="link-home" onClick={() => handleHome("")}><p>Productos</p></button>
         <button className="link-home" onClick={() => handleView("ordenes")}><p>Órdenes</p></button>
         <button className="link-home" onClick={() => handleView("usuarios")}><p>Usuarios</p></button>
         <button className="link-home" onClick={() => handleView("mi cuenta")}><p>Mi cuenta</p></button>
@@ -67,6 +67,7 @@ function AdminHome() {
           : state === "crear" ? <AdminCreate handleHome={handleHome} />
           : state === "desactivados" ? <AdminGetProductsDisabled />
           : state === "mi cuenta" ? <AdminDetail />
+          : state === "usuarios" ? <AdminRoles />
           : null
         }
       </div>
