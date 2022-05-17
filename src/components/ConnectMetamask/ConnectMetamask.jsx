@@ -112,7 +112,8 @@ function ConnectMetamask(props) {
                 productList: cookie.get('productList') || [{title: 'test product'}, {title: 'test product 2'}],
                 status: 'pending',
                 status_detail: 'pending',
-                total: cookie.get('shoppingTotal')  || 1000
+                total: cookie.get('shoppingTotal')  || 1000,
+                sendAddress: cookie.get('user')?.user?.sendAddress || null
             }))
                 nav(`/success/?payment_id=${tx.hash}&email=${cookie.get('user').user.email}&status=pending&status_detail=pending`)
             }
