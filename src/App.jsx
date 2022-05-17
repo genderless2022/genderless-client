@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { AdminCreate } from './components/AdminCreate/AdminCreate';
 import AdminHome from './components/AdminHome/AdminHome';
@@ -15,6 +15,7 @@ import { Register } from './components/Register/Register';
 import Footer from './components/Footer/Footer';
 import Terminos from './components/Terminos/Terminos';
 import EditSend from './components/EditSend/EditSend';
+import EditPassword from './components/EditPassword/EditPassword';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Nav/NavigationBar';
 import ConnectMetamask from './components/ConnectMetamask/ConnectMetamask';
@@ -28,9 +29,13 @@ import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 import ChatBot from './components/Chatbot/Chatbot';
 import { NewPassword } from './components/NewPassword/NewPassword';
-import { getSuccess } from './redux/actions/mercadopagoActions';
 import Success from './components/Success/Success';
+import Helpcenter from './components/Chat/Helpcenter';
+import Collapse from 'react-bootstrap/Collapse'
+import {BiChat} from 'react-icons/bi';
 import MisCompras from './components/MisCompras/MisCompras';
+
+
 
 
 function App() {
@@ -39,6 +44,9 @@ function App() {
   console.log(cookies.get('user'));
 
   
+ const user = cookies.get('user');
+  console.log(cookies.get('user'));
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="App">
@@ -58,6 +66,7 @@ function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/user/products/send" element={<EditSend></EditSend>} />
         <Route path="/user/profile" element={<UserDetail></UserDetail>} />
+        <Route path="/user/editpassword" element={<EditPassword></EditPassword>} />
         <Route path="/editar" element={<EditUser></EditUser>} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/create" element={<AdminCreate />} />
@@ -67,9 +76,27 @@ function App() {
         <Route path='/terminos' element={<Terminos></Terminos>} />
         
         <Route path="/meta/checkout" element={<MetaCheckout />} />
+
         <Route path="/chatbot" element={<ChatBot />} />
+        <Route path="/success" element={<Success />} />
+
 
       </Routes>
+      {user === undefined ? null :
+      <button
+      onClick={() => setOpen(!open)}
+      aria-controls="example-collapse-text"
+      aria-expanded={open}
+      >
+        <BiChat/>
+        Soporte
+      </button>
+      }
+      <Collapse in={open}>
+        <div id="example-collapse-text">
+      {user === undefined ? null : <Helpcenter/>}
+      </div>
+      </Collapse>
       <Footer />
 
     </div>
