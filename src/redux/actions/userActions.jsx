@@ -178,7 +178,7 @@ const cookies = new Cookies();
   (error) => {
       dispatch({
           type: ERROR,
-          payload: error.error
+          payload: "Usuario o contraseña incorrecta"
       })
   }
   )

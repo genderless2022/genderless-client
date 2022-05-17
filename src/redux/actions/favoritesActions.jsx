@@ -4,6 +4,8 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const GET_FAVORITES = 'GET_FAVORITES'
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 export const ERROR = 'ERROR';
+export const DELETE_PRODUCT_ID = 'DELETE_PRODUCT_ID';
+
 
 // Habilitada
 export const addfavProduct = ( {email, productId} ) => async (dispatch) => {
@@ -59,3 +61,12 @@ export const deletefavProduct = ( {email, productId} ) => async (dispatch) => {
   );
 };
 
+
+export const deleteProductAction = () => {
+    return function (dispatch){
+        dispatch({ 
+            type: DELETE_PRODUCT_ID,
+            payload: null
+        })
+    }
+}

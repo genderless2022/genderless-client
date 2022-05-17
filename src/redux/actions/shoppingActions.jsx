@@ -9,8 +9,26 @@ export const TOTAL_DELETE_SHOPPING = 'TOTAL_DELETE_SHOPPING'
 export const ERROR = 'ERROR';
 
 // Habilitada
-export const addProduct = ( {email, productId} ) => async (dispatch) => {
-  await axios.post('http://localhost:3001/usuario/shoppingcart', { email, productId }).then(
+export const addProduct = ( {email, productId, productSize, productQuantity} ) => async (dispatch) => {
+  await axios.post('http://localhost:3001/usuario/shoppingcart', { email, productId, productSize, productQuantity }).then(
+    (response) => {
+      dispatch({
+        type: ADD_PRODUCT,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
+
+// Habilitada
+export const putProduct = ( {email, productId, productQuantity} ) => async (dispatch) => {
+  await axios.put('http://localhost:3001/usuario/shoppingcart', { email, productId, productQuantity }).then(
     (response) => {
       dispatch({
         type: ADD_PRODUCT,
