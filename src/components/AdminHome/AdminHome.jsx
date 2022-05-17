@@ -5,11 +5,15 @@ import AdminGetProducts from '../AdminGetProducts/AdminGetProducts';
 import AdminGetProductsDisabled from '../AdminGetProductDisabled/AdminGetProductDisabled';
 import { AdminCreate } from '../AdminCreate/AdminCreate';
 import AdminDetail from '../AdminDetail/AdminDetail';
+import AdminOrders from '../AdminOrders/AdminOrders';
+import AdminView from '../AdminView/AdminView';
+
 
 function AdminHome() {
   const [drawerActive, setDraweActive] = useState(false)
   const [state, setState] = useState("")
   const [productSend, setProductSend] = useState(null)
+  const [order, setOrder] = useState("")
   // const [disabled, setDisabled] = useState(false)
   const activeDrawer = () => {
       setDraweActive(!drawerActive)
@@ -18,6 +22,10 @@ function AdminHome() {
   const receiveProduct = (product) => {
     setProductSend(product)
     setState("orders")
+  }
+  const viewOrder = (order) =>{
+    setOrder(order)
+    setState("view")
   }
   const handleHome = () => {
     setState("")
@@ -45,8 +53,8 @@ function AdminHome() {
         {/* <Link to= '/admin/create' className="link-home"><p>Crear producto</p></Link> */}
         <button className="link-home" onClick={() => handleView("crear")}><p>Crear producto</p></button>
         <button className="link-home" onClick={() => handleHome("")}><p>Home</p></button>
-        <button className="link-home" onClick={() => handleView("")}><p>Órdenes</p></button>
-        <button className="link-home" onClick={() => handleView("")}><p>Usuarios</p></button>
+        <button className="link-home" onClick={() => handleView("ordenes")}><p>Órdenes</p></button>
+        <button className="link-home" onClick={() => handleView("usuarios")}><p>Usuarios</p></button>
         <button className="link-home" onClick={() => handleView("mi cuenta")}><p>Mi cuenta</p></button>
         <button className="link-home" onClick={() => handleView("desactivados")}><p>Desactivados</p></button>
       </div>
@@ -54,6 +62,8 @@ function AdminHome() {
         {
           state === "" ? <AdminGetProducts receiveProduct={receiveProduct} activeDrawer={activeDrawer} />
           : state === "orders" ? <AdminEdit product={productSend} handleHome={handleHome} activeDrawer={activeDrawer} /> 
+          : state === "ordenes" ? <AdminOrders viewOrder={viewOrder}/>
+          : state === "view" ? <AdminView id={order}/>
           : state === "crear" ? <AdminCreate handleHome={handleHome} />
           : state === "desactivados" ? <AdminGetProductsDisabled />
           : state === "mi cuenta" ? <AdminDetail />

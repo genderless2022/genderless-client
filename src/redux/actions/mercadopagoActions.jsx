@@ -6,14 +6,33 @@ export const GET_PAYMENTS = 'GET_PAYMENTS';
 export const GET_USER_PAYMENTS = 'GET_USER_PAYMENTS';
 export const GET_QUANTITY_SOLD = 'GET_QUANTITY_SOLD';
 export const GET_AMOUNT_SOLD = 'GET_AMOUNT_SOLD';
+export const GET_INFO_VIEW = 'GET_INFO_VIEW';
 
 export const ERROR = 'ERROR';
+
+export const infoView = ({id}) => async (dispatch) => {
+  
+  await axios.get(`http://localhost:3001/mercado/view/${id}`).then(
+    (response) => {
+      dispatch({
+        type: GET_INFO_VIEW,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+}
 
 // Habilitada
 export const mercadoCheckout = ({
     name, picture_url, size, price, quantity
 }) => async (dispatch) => {
-  console.log('name,picture_url, size, price, quantity', name,picture_url, size, price, quantity)
+  
   await axios.post('http://localhost:3001/mercado/checkout', {
       name,
       picture_url,
@@ -38,12 +57,12 @@ export const mercadoCheckout = ({
 
 
 // Habilitada
-export const changeOrderState = ({
-    id, state
-}) => async (dispatch) => {
+export const changeOrderState = (
+    data
+) => async (dispatch) => {
+  console.log(data);
   await axios.put('http://localhost:3001/mercado/state', {
-      id,
-      state
+      data
   }).then(
     (response) => {
       dispatch({

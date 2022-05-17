@@ -1,0 +1,28 @@
+.container-articulos {
+  background-color: #0E1428;
+  padding: 5%;
+  margin: 0 5%;
+}
+
+.container_stats{
+  margin-bottom: 20px;
+  width: 100%;
+  display: inline-flex;
+}
+.container_productos {
+  width: 480px;
+  height: 120px;
+  background-color: #191c24;
+  border-radius: 5px;
+  color: aliceblue;
+  font-size: 20px;
+}
+.container_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.icon {
+  font-size: 5rem;
+}
+  
