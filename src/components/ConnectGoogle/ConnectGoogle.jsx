@@ -47,7 +47,7 @@ function ConnectGoogle(props) {
         setShowloginButton(false);
         setShowlogoutButton(true);
         
-        dispatch(createUser({name: user?.givenName, dni: user?.googleId, password: user?.imageUrl}))
+        dispatch(createUser({name: user?.givenName, email: user?.email, dni: user?.googleId, password: user?.imageUrl, sendAddress: null}))
         dispatch(userLogin({email: user?.email, password: user?.imageUrl}))
         cookie.get('user') && props.redirect && nav('/home')
     };

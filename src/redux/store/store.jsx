@@ -7,6 +7,7 @@ import userReducer from '../reducers/userReducer';
 import shoppingReducer from '../reducers/shoppingReducer';
 import favoriteReducer from '../reducers/favoriteReducer';
 import mercadoReducer from '../reducers/mercadoReducer';
+import metamaskReducer from '../reducers/metamaskReducer';
 import reviewReducer from '../reducers/reviewReducer';
 import newsletterReducer from '../reducers/newsletterReducer';
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   shoppingReducer,
   favoriteReducer,
   mercadoReducer,
+  metamaskReducer,
   reviewReducer,
   newsletterReducer
 });

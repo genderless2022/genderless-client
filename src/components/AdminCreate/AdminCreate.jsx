@@ -84,7 +84,7 @@ const AdminCreate = ({ handleHome }) => {
         ...addSizes,
             {"size": size, "stock": Number(quantity)}
         ])
-        const filterSize = sizesState.filter(e => e !== size)
+        const filterSize = sizeShoes.filter(e => e !== size)
         setSizeShoes(filterSize)
         setDisabled(true)
         setQuantity("")
