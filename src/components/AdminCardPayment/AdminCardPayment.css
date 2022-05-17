@@ -45,7 +45,9 @@
     align-items: flex-start;
     flex-direction: column;
 }
-
+.p_info_admin{
+    height: 10px;
+}
 .card_info {
    display: flex;
 }
@@ -70,17 +72,27 @@
 
 } */
 
-.button_cancel_order{
+.button_change_order{
+    text-align: center;
     width: 120px;
     cursor: pointer;
     border-radius: 5px;
     background-color: rgb(207, 190, 190);
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
-/* .button_cancel_order:hover{
+.button_cancel_order{
+    text-align: center;
+    width: 120px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(207, 190, 190);
+    margin-bottom: 10px;
+}
+
+.button_cancel_order:hover{
     background-color: rgb(216, 41, 41);
-} */
+}
 
 @media (max-width: 584px) {
     .card-admin-container-slim-1 {

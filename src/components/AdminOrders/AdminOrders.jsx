@@ -8,7 +8,7 @@ import {
 } from "../../redux/actions/mercadopagoActions";
 import AdminCardPayment from "../AdminCardPayment/AdminCardPayment";
 
-export default function AdminOrders({viewOrder}) {
+export default function AdminOrders({ viewOrder }) {
   const dispatch = useDispatch();
   const payments = useSelector((state) => state.mercadoReducer.pagos);
   const price = useSelector((state) => state.mercadoReducer.price);
@@ -42,12 +42,9 @@ export default function AdminOrders({viewOrder}) {
                     <AdminCardPayment
                       viewOrder={viewOrder}
                       key={i}
-                      
-                     
-                      
+                      status_delivery={producto.status_delivery}
                       email={producto.email}
                       total_paid_amount={producto.total_paid_amount}
-                     
                       order_id={producto.order_id}
                     />
                   )

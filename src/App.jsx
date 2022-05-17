@@ -32,7 +32,7 @@ import Success from './components/Success/Success';
 import Helpcenter from './components/Chat/Helpcenter';
 import Collapse from 'react-bootstrap/Collapse'
 import {BiChat} from 'react-icons/bi';
-
+import Succes from './components/Succes/Succes';
 
 
 

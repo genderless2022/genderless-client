@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changeOrderState } from "../../redux/actions/mercadopagoActions";
 import "./AdminCardPayment.css";
@@ -6,10 +7,11 @@ function AdminCardPayment({
   email,
   order_id,
   total_paid_amount,
-  viewOrder
+  viewOrder,
+  status_delivery
 }) {
   const dispatch = useDispatch();
-
+  const [delivery, setDelivery] = useState(status_delivery);
   /* function changeOrder(e) {
     let data = {
       id: id,
@@ -28,13 +30,17 @@ function AdminCardPayment({
     console.log(e);
     viewOrder(order_id)
   }
-  function cancelOrder() {
+  function changeOrder(e) {
     let data = {
       id: order_id,
-      state: "Cancelada",
+      state: e.target.value,
     };
-    if (data) {
-      console.log("entramos");
+    if (delivery === "Cancelada") {
+      setDelivery("Cancelada");
+    } else {
+      setDelivery(e.target.value);
+    }
+    if (data.id) {
       dispatch(changeOrderState(data));
     }
   }
@@ -42,17 +48,25 @@ function AdminCardPayment({
     <div className="card_admin_slim">
       <div className="card_admin_slim2">
         <div className="card_admin_information">
-          <p>Orden N˚{order_id}</p>
-          <p>Total: ${total_paid_amount}</p>
-          <p>{email}</p>
+          <p className="p_info_admin">Orden N˚{order_id}</p>
+          <p className="p_info_admin">Total: ${total_paid_amount}</p>
+          <p className="p_info_admin">Status Delivery: {delivery}</p>
+          <p className="p_info_admin">{email}</p>
         </div>
 
         <div className="card_admin_slim3">
           <div className="container_buttons">
-            <button className="button_cancel_order" onClick={goToOrder}>
+          <select className="button_change_order" onChange={changeOrder}>
+              <option value="Creada">Creada</option>
+              <option value="Procesando">Procesando</option>
+              <option value="Completa">Completa</option>
+              <option value="Enviado">Enviado</option>
+              <option value="Cancelada">Cancelada</option>
+            </select>
+            <button className="button_change_order" onClick={goToOrder}>
               Ver Orden
             </button>
-            <button className="button_cancel_order" onClick={cancelOrder}>
+            <button className="button_cancel_order" onClick={changeOrder}>
               Cancelar
             </button>
           </div>
