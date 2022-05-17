@@ -12,8 +12,9 @@ export default function UserDetail() {
     const dispatch = useDispatch();
     let cookie = new Cookies();
     const user = cookie.get('user')?.user
+    console.log('usuario', user)
     const detailUser = useSelector(state => state.userReducer.usuario)
-    const tokenUser = cookie.get('user').tokenSession
+    const tokenUser = cookie.get('user')?.tokenSession
     let [state, setState] = useState({
     wallet: localStorage.getItem('wallet') || null,
     })
@@ -21,8 +22,8 @@ export default function UserDetail() {
 
     useEffect(() => {
         console.log('tokenUser', tokenUser)
-        console.log('user google', user.email)
-        dispatch(getUser({ email: user.email, token: tokenUser}))
+        console.log('user google', user?.email)
+        dispatch(getUser({ email: user?.email, token: tokenUser}))
     },[])
 
     return (
@@ -34,7 +35,7 @@ export default function UserDetail() {
                         <img className="userImgOnprofile" alt='img user' src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL3-fxYXhHbPLtDz72SAnRopI8b22xxS-SHCNTp8VpPP8GuOD4Ix3kxB3OokobuqGctVE&usqp=CAU"}></img>
                         { detailUser.user?.lastName && <div>Nombre: {detailUser.user?.name} {detailUser.user?.lastName} </div>}
                         { detailUser.user?.email && <div>Email: {detailUser.user?.email} </div>}
-                        { detailUser.user?.born && <div>Fecha de Nac.: {detailUser.user?.born} </div>}
+                        { detailUser.user?.born && <div>Fecha de Nac.: {detailUser.user?.born.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1')} </div>}
                         { detailUser.user?.dni && <div>Dni: {detailUser.user?.dni} </div>}
                         { detailUser.user?.address && <div>Direccion: {detailUser.user?.address} </div>}
                         { detailUser.user?.province && <div>Provincia: {detailUser.user?.province} </div>}
@@ -43,6 +44,9 @@ export default function UserDetail() {
 
                         <Link to="/editar">
                             <button className="loginbtn">Editar mis Datos</button>
+                        </Link>
+                        <Link to="/user/editPassword">
+                            <button className="loginbtn">Cambiar mi Contraseña</button>
                         </Link>
 
 
@@ -71,3 +75,5 @@ export default function UserDetail() {
             }
         </div>);
 }
+
+//.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1')

@@ -50,7 +50,7 @@ export const getUser = ( {email, token} ) => async ( dispatch ) => {
 
 // Habilitada
 export const createUser = ({
-  name, lastName, picture, born, dni, email, address, province, phone, postal, password, permission = 'user',
+  name, lastName, picture, born, dni, email, address, province, phone, postal, password,sendAddress, permission = 'user',
 }) => async (dispatch) => {
   await axios.post('http://localhost:3001/usuario', {
     name,
@@ -64,6 +64,7 @@ export const createUser = ({
     phone,
     postal,
     password,
+    sendAddress,
     permission,
   }).then(
     (response) => {
@@ -83,8 +84,9 @@ export const createUser = ({
 
 //Habilitada
 export const updateUser = ({
-  name, lastName, picture, born, dni, email, address, province, phone, postal 
+  name, lastName, picture, born, dni, email, address, province, phone, postal,sendAddress 
 }) => async (dispatch) => {
+  console.log('address',sendAddress)
   await axios.put('http://localhost:3001/usuario', {
     name,
     lastName,
@@ -96,6 +98,7 @@ export const updateUser = ({
     province,
     phone,
     postal,
+    sendAddress,
 
   }).then(
     (response) => {
@@ -140,7 +143,8 @@ export const forgotPassword = ({
 export const updatePassword = ({
   email, password 
 }) => async (dispatch) => {
-  await axios.put('http://localhost:3001/usuario', {
+  console.log('password', password)
+  await axios.put('http://localhost:3001/usuario/password', {
     email,
     password
   }).then(
