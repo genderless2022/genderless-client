@@ -1,13 +1,13 @@
-
 import React from 'react'
-import {useState }  from 'react'
+import {useState, useEffect }  from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import {updateUser}  from '../../redux/actions/userActions';
 import './index.css';
 import Cookies from "universal-cookie";
-import {Link} from 'react-router-dom';
 import { TiArrowBack } from 'react-icons/ti';
+import {Link} from 'react-router-dom'
+import { getUser } from "../../redux/actions/userActions";
 
 
 
@@ -20,9 +20,9 @@ function validate(input){
     if(!/^[a-z A-Z]+$/.test(input.lastName)||input.lastName?.length<3 || input.lastName?.length>30){
         errors.lastName = "*Campo requerido";
     }
-    // if(!/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(input.email)){
-    //     errors.email = "*Campo requerido";
-    // }
+    if(!/^(\d{4})-(\d{2})-(\d{2})$/g.test(input.born)){
+        errors.born = "*Campo requerido";
+     }
     if(!/^[0-9]{8}$/.test(input.dni)){
         errors.dni = "*Campo requerido";
     }
@@ -42,7 +42,6 @@ function validate(input){
     return errors;
 
 }
-
 
 export default function AdminRegisterEdit  () {
     let cookie = new Cookies();
@@ -68,6 +67,7 @@ export default function AdminRegisterEdit  () {
         lastName: userEdit?.lastName,
         email: userEdit?.email,
         dni: userEdit?.dni,
+        born: userEdit?.born,
         address: userEdit?.address,
         province: userEdit?.province,
         postal: userEdit?.postal,
@@ -101,6 +101,7 @@ function handlerOnChange (e){
                     lastName: '',
                     email: '',
                     dni: '',
+                    born: '',
                     phone: '',
                     address: '',
                     province: '',
@@ -158,6 +159,17 @@ function handlerOnChange (e){
                                     placeholder= {userEdit?.email}
                                    />
                                 {errors.email && <p className="form-register-errors">{errors.email}</p>}
+                                </div>
+                                <div className="labelAndInput">
+                                <label className="input-label">*Fecha de Nacimiento: </label>
+                                <input onChange={(e)=>handlerOnChange(e)}
+                                    className="input-register"
+                                    type="date"
+                                    name="born"
+                                    value={input.born}
+                                    placeholder= {userEdit?.born} 
+                                    /> 
+                                      {errors.born && <p className="form-register-errors">{errors.born}</p>}
                                 </div>
                                 <div className="labelAndInput">
                                 <label className="input-label">*DNI: </label>

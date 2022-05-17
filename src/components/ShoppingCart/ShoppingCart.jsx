@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 // import {getShoppingList} from '../../redux/actions/shoppingCartActions'
 import { getShopping } from '../../redux/actions/shoppingActions'
+import { getUser } from '../../redux/actions/userActions'
 import CardSlim from "../../components/CardSlim/CardSlim"
 import { Link } from "react-router-dom"
 import Cookies from "universal-cookie";
@@ -16,7 +17,9 @@ export default function ShoppingCart ( ) {
 
     let cookie = new Cookies();
     const user = cookie.get('user')?.user
-    console.log(user)
+    console.log('userSend',user)
+    const userEdit = useSelector(state => state.userReducer.usuario)
+    console.log('cambio', userEdit)
     const dispatch = useDispatch()
     const [select, setSelect] = useState("Retiro por la tienda");
     const shopping = useSelector( state => state.shoppingReducer)
@@ -24,8 +27,16 @@ export default function ShoppingCart ( ) {
                 ? shopping.totalShopping?.reduce((a,b) => a + b).toFixed(2)
                 : 0;
 
+
+                useEffect(() => {
+                     dispatch(getUser({ email: user?.email}))
+                },[])
+            
+
+
     useEffect( ( )=> {
         dispatch(getShopping({ email : user?.email }))
+        
     }, [dispatch])
     console.log(user?.email, '>-')
     const handleSelect = (e) => {
@@ -56,7 +67,7 @@ export default function ShoppingCart ( ) {
         // price: [1234,12123, 23123],
         // quantity: [1, 3, 3]
     }
-
+    console.log('user.address', user)
     return (<div>
             {
                 shopping.products.length
@@ -84,9 +95,13 @@ export default function ShoppingCart ( ) {
                                     </div>
                                     <div className="cart-slim-information">
                                     <div className="name-size">
-                                        <p>Direccion: CALLE FALSA 123</p>
-                                        <p>CP: 1415 - CABA </p>
-                                        <p>OSCAR GARCIA - 1512323324</p>
+                                
+                                           
+                                        <p>Direccion: {userEdit?.user?.sendAddress?.address?userEdit?.user?.sendAddress?.address:userEdit?.user?.address}</p>
+                                        <p>CP: {userEdit?.user?.sendAddress?.postal?userEdit?.user?.sendAddress?.postal:userEdit?.user?.postal} - {userEdit?.user?.sendAddress?.province?userEdit?.user?.sendAddress?.province:userEdit?.user?.province} </p>
+                                    <p>{userEdit?.user?.sendAddress?.name?userEdit?.user?.sendAddress?.name:userEdit?.user?.name} {userEdit?.user?.sendAddress?.lastName?userEdit?.user?.sendAddress?.lastName:userEdit?.user?.lastName} - {userEdit?.user?.sendAddress?.phone?userEdit?.user?.sendAddress?.phone:userEdit?.user?.phone}</p>
+                                         
+
                                     </div>
                                     </div>
                                     <div className="cart-edit">
