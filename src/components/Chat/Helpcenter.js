@@ -5,12 +5,14 @@ import ChatBox from './ChatUser.jsx';
 import './chat.css';
 
 
+
+
 function Helpcenter() {
   let cookie = new Cookies();
   const user= cookie.get('user').user;
 
     return (
-      <div className='account'>
+      <div className='account-chat'>
         {user.permission === 'admin'?'Soporte Administrador':'Soporte Técnico'}
           {user.permission === 'admin'?
           (<SupportScreen

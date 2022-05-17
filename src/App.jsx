@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { AdminCreate } from './components/AdminCreate/AdminCreate';
@@ -28,13 +28,18 @@ import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 import { NewPassword } from './components/NewPassword/NewPassword';
 import Helpcenter from './components/Chat/Helpcenter';
+import Collapse from 'react-bootstrap/Collapse'
+import {BiChat} from 'react-icons/bi';
+
+
 function App() {
 
   const dispatch = useDispatch();
   const cookies = new Cookies();
   
+ const user = cookies.get('user');
   console.log(cookies.get('user'));
-  
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="App">
@@ -63,7 +68,21 @@ function App() {
         <Route path="/meta/checkout" element={<MetaCheckout />} />
         <Route path="/user/chat" element={<Helpcenter/>} />
       </Routes>
-      
+      {user === undefined ? null :
+      <button
+      onClick={() => setOpen(!open)}
+      aria-controls="example-collapse-text"
+      aria-expanded={open}
+      >
+        <BiChat/>
+        Soporte
+      </button>
+      }
+      <Collapse in={open}>
+        <div id="example-collapse-text">
+      {user === undefined ? null : <Helpcenter/>}
+      </div>
+      </Collapse>
       <Footer />
     </div>
   );
