@@ -18,9 +18,7 @@ import Chatbot from 'react-chatbot-kit';
 
 function NavigationBar() {
 const {pathname} = window.location;
-console.log('pathname', pathname)
   const cookies = new Cookies();
-  console.log(cookies.get('user'));
   const user = useSelector( (state) => state.userReducer.usuario)
   const productos = useSelector((state) => state.productReducer.productos);
 
@@ -29,7 +27,6 @@ console.log('pathname', pathname)
     dispatch(userLogout(cookies.get('user')?.tokenSession))
     nav('/')
   }
-  console.log(user.tokenSession, 'token')
 
   // Pesadilla de Tomi:
   let [state, setState] = useState({

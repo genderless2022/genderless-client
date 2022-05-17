@@ -2,7 +2,6 @@ import './ShoppingCart.css'
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-// import {getShoppingList} from '../../redux/actions/shoppingCartActions'
 import { getShopping } from '../../redux/actions/shoppingActions'
 import { getUser } from '../../redux/actions/userActions'
 import CardSlim from "../../components/CardSlim/CardSlim"
@@ -10,13 +9,10 @@ import { Link } from "react-router-dom"
 import Cookies from "universal-cookie";
 
 export default function ShoppingCart ( ) {
-
-    
     let nav = useNavigate()
-    const status = useSelector( state => state )
-
     let cookie = new Cookies();
     const user = cookie.get('user')?.user
+    const shoppingCookie = cookie.get('shopping')
     console.log('userSend',user)
     const userEdit = useSelector(state => state.userReducer.usuario)
     console.log('cambio', userEdit)
@@ -27,50 +23,40 @@ export default function ShoppingCart ( ) {
                 ? shopping.totalShopping?.reduce((a,b) => a + b).toFixed(2)
                 : 0;
 
+    const [refreshCardSlim, setRefreshCardSlim] = useState(false)
 
-                useEffect(() => {
-                     dispatch(getUser({ email: user?.email}))
-                },[])
-            
-
+    const deleteProductShopping = () => {
+        setRefreshCardSlim(!refreshCardSlim)
+    }
 
     useEffect( ( )=> {
         dispatch(getShopping({ email : user?.email }))
-        
-    }, [dispatch])
-    console.log(user?.email, '>-')
+    }, [dispatch, refreshCardSlim])
+
+
+    useEffect(() => {
+        dispatch(getUser({ email: user?.email}))
+    },[])
+            
     const handleSelect = (e) => {
         setSelect(e.target.value);
     }
 
-    const handleMercadoPago = () => {
-        console.log('CONTINUAR')
-        // http://localhost:3001/mercado/checkout
-    }
-
     const handleEthereum = () => {
-        console.log('CONTINUAR')
         nav('/meta/checkout')
     }
 
-    // console.log('shopping.totalShopping', shopping?.totalShopping)
-    //falta el size y quantity, pasar al reducer y manejarlo? si reinicio se pierde... 
     const data = {
-        name: shopping.products.map((e) => e.name),
-        picture_url: shopping.products.map((e) => e.image),
-        size: ["S", "XXL", "L"],
+        name: shopping?.products.map((e) => e.name),
+        picture_url: shopping?.products.map((e) => e.image),
+        size: shopping?.products.map((e) => e.UserProduct?.size),
         price: total,
-        quantity: [1, 3, 3]
-        // name: ["remera azul", "remera roja", "remera gris"],
-        // picture_url: ['https://www.cristobalcolon.com/fullaccess/item21385foto95276.jpg,https://www.cristobalcolon.com/fullaccess/item21405foto95345.jpg','https://www.cristobalcolon.com/fullaccess/item21385foto95276.jpg,https://www.cristobalcolon.com/fullaccess/item21405foto95345.jpg'],
-        // size: ["S", "XXL", "L"],
-        // price: [1234,12123, 23123],
-        // quantity: [1, 3, 3]
+        quantity: shopping?.products.map((e) => e.UserProduct?.quantity)
     }
-    console.log('user.address', user)
-    return (<div>
+
+return (<div>
             {
-                shopping.products.length
+                shopping?.products.length || shoppingCookie?.length
                 ? 
                     <div className="shopping-cart-container">
                         <div className="into-container">
@@ -116,22 +102,39 @@ export default function ShoppingCart ( ) {
                                     
                                     }
                                 </div>
-                                    { shopping.products && shopping.products?.map((product, i) => {
-                                    const stock = product?.stock_by_size.map((a)=> a.stock).reduce((a,b) => a + b, 0)
-
-                                    return <CardSlim 
-                                    key= { i }
-                                    id= { product?.id }
-                                    index= { i }
-                                    image= { product?.image }
-                                    name= { product?.name }
-                                    size= { product?.size }
-                                    color= { product?.color }
-                                    stock= { stock }
-                                    discount= { product?.discount }
-                                    price= { product?.price }
-                                    />
-                                })}
+                                    { shopping.products.length 
+                                        ? shopping.products?.map((product, i) => {
+                                        const stock = product?.stock_by_size.map((a)=> a.stock).reduce((a,b) => a + b, 0)
+                                            return <CardSlim 
+                                            key= { i }
+                                            id= { product?.id }
+                                            index= { i }
+                                            image= { product?.image }
+                                            name= { product?.name }
+                                            size= { product?.UserProduct.size }
+                                            quantity= {product?.UserProduct.quantity}
+                                            stock= { stock }
+                                            discount= { product?.discount }
+                                            price= { product?.price }
+                                            />
+                                        })
+                                        : shoppingCookie?.map((product, i) => {
+                                        const stock = product.stock_by_size?.map((a)=> a.stock).reduce((a,b) => a + b, 0)
+                                            return <CardSlim 
+                                            key= { i }
+                                            id= { product?.id }
+                                            index= { i }
+                                            image= { product?.image }
+                                            name= { product?.name }
+                                            size= { product?.UserProduct.size }
+                                            quantity= {product?.UserProduct.quantity}
+                                            stock= { stock }
+                                            discount= { product?.discount }
+                                            price= { product?.price }
+                                            deleteProductShopping= {deleteProductShopping}
+                                            />
+                                        })
+                                    }
                                 </div>
                                 <div className="resume-count">
                                     <div className="cart-container-2">
@@ -155,12 +158,12 @@ export default function ShoppingCart ( ) {
                                             <input type='hidden' name='size' value={data.size} ></input>
                                             <input type='hidden' name='price' value={data.price} ></input>
                                             <input type='hidden' name='quantity' value={data.quantity} ></input>
-                                        <button className="mpButton" type="submit" onClick={() => handleMercadoPago()}>
+                                        <button className="mpButton" type="submit" onClick={!user ? () => nav('/login') : null }>
                                             {<img className="img-mp-cart" src={"https://www.lentesplus.com/media/wysiwyg/landings/metodos-de-pago/ico_mercadoPago.png"} alt="" />}
                                         </button>
                                         </form>
 
-                                        <button className="mpButton" onClick={() => handleEthereum()}>
+                                        <button className="mpButton" onClick={ user ? () => handleEthereum() : () => nav('/login')}>
                                             {<img className="img-mp-cart" src={"https://pngset.com/images/ethereum-logo-ethereum-triangle-transparent-png-1170181.png"} alt="" />}
                                         </button>
                                     </div>
@@ -168,8 +171,12 @@ export default function ShoppingCart ( ) {
                         </div>
                     </div>
                 :
-                <div className="shopping-cart-container">El carrito se encuentra vacío</div>
-                
+                <div className="shopping-cart-empty">
+                    <p>El carrito se encuentra vacío</p>
+                    <button className='register-btn' onClick={() => nav('/home')}>
+                            Volver al catalogo
+                    </button>                
+                </div>
             }    
             {/* Se setean cookies de carrito */}
             {/* { !cookie.get('shoppingList') && cookie.set('shoppingList', shopping?.products)  }

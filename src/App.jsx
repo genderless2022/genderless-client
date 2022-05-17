@@ -25,11 +25,11 @@ import MapTienda from './components/MapTienda/MapTienda';
 import Cookies from 'universal-cookie';
 import { userLogin } from './redux/actions/userActions';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 import ChatBot from './components/Chatbot/Chatbot';
 import { NewPassword } from './components/NewPassword/NewPassword';
-import Success from './components/Success/Success';
+import Succes from './components/Succes/Succes';
+import Success from './components/Success/Success'; //cual es?
 import Helpcenter from './components/Chat/Helpcenter';
 import Collapse from 'react-bootstrap/Collapse'
 import {BiChat} from 'react-icons/bi';
@@ -74,6 +74,7 @@ function App() {
         <Route path="/admin/editar" element={<AdminRegisterEdit></AdminRegisterEdit>} />
         <Route path='/mapa' element={<MapTienda></MapTienda>} />
         <Route path='/terminos' element={<Terminos></Terminos>} />
+        <Route path='/succes' element={<Succes />} />
         
         <Route path="/meta/checkout" element={<MetaCheckout />} />
 

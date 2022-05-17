@@ -84,10 +84,11 @@ const AdminCreate = ({ handleHome }) => {
         ...addSizes,
             {"size": size, "stock": Number(quantity)}
         ])
-        const filterSize = sizeShoes.filter(e => e !== size).sort()
+        const filterSize = sizeShoes.filter(e => e !== size)
         setSizeShoes(filterSize)
         setDisabled(true)
         setQuantity("")
+        setSize(null)
     }
 
     const handleSelectSize = (e) => {
@@ -251,7 +252,8 @@ const AdminCreate = ({ handleHome }) => {
                                 <button className={!disabled || quantity === 0 ? "button-create-stock" : "button-create-stock-disabled"} disabled={disabled} onClick={(e)=> handleSize(e)}>Agregar talle</button>
                             </div>
                             <div className= "container-stock-selectAndInput">
-                                <select className="select-create-stock" onChange={(e)=> handleSelectSize(e)}>
+                                <select className="select-create-stock" onClick={(e)=> handleSelectSize(e)}>
+                                    <option defaultValues="-">-</option>
                                     {
                                         sizeShoes?.map((e, i) => {
                                             return(

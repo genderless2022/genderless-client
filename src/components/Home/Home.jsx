@@ -16,7 +16,6 @@ function Home({alert, setAlert}) {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
-  console.log(productos);
 
   
   /**
@@ -28,7 +27,6 @@ function Home({alert, setAlert}) {
   const firstIndexProd = lastIndexProd - prodPerPage;
   const currentProds = productos.slice(firstIndexProd, lastIndexProd);
   const prodsFinal = currentProds.filter(p => p.disabled === false);
-  console.log(currentProds);
   const Page = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0);

@@ -18,7 +18,6 @@ function Paged({prodsLength, prodPerPage, Page, currentPage, prodsFinal, setCurr
         }
     }
 
-    console.log(prodsLength, 'prodsLength')
 
     const prev = () => {
         Page(currentPage - 1);
@@ -32,8 +31,6 @@ function Paged({prodsLength, prodPerPage, Page, currentPage, prodsFinal, setCurr
         pageNumber.push(i + 1);
     }
     delete pageNumber[0];
-    console.log(pageNumber)
-    console.log(currentPage, 'currentPage')
     return (
         <div className="PagedDiv">
 
