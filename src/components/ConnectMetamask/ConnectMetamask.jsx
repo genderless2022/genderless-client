@@ -1,11 +1,13 @@
 import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { addMetaOrder } from '../../redux/actions/metamaskActions';
 import './ConnectMetamask.css';
 // props = { type, eth, loginTextButton }
 function ConnectMetamask(props) {
-
+    let dispatch = useDispatch()
     let nav = useNavigate()
     let metaLogo = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/1200px-MetaMask_Fox.svg.png'
     let metaMaskXtensionURL = 'https://metamask.io/download/'
@@ -103,6 +105,15 @@ function ConnectMetamask(props) {
                 console.log('Transaction: ' + tx)
                 setState({...state, tx: tx})
                 localStorage.setItem('lastTx', tx.hash)
+                dispatch(addMetaOrder({
+                
+                payment_id: tx.hash, 
+                email: cookie.get('user').user.email,
+                productList: cookie.get('productList') || [{title: 'test product'}, {title: 'test product 2'}],
+                status: 'pending',
+                status_detail: 'pending',
+                total: 1000
+            }))
                 nav(`/success/?payment_id=${tx.hash}&email=${cookie.get('user').user.email}&status=pending&status_detail=pending`)
             }
 
