@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
 import './App.css';
 import { AdminCreate } from './components/AdminCreate/AdminCreate';
 import AdminHome from './components/AdminHome/AdminHome';
@@ -28,13 +28,16 @@ import axios from 'axios';
 import MetaCheckout from './components/MetaCheckout/MetaCheckout';
 import ChatBot from './components/Chatbot/Chatbot';
 import { NewPassword } from './components/NewPassword/NewPassword';
+import { getSuccess } from './redux/actions/mercadopagoActions';
+import Success from './components/Success/Success';
+import MisCompras from './components/MisCompras/MisCompras';
 
 
 function App() {
 
-  const dispatch = useDispatch();
   const cookies = new Cookies();
   console.log(cookies.get('user'));
+
   
 
   return (
@@ -45,6 +48,8 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />}/>
 
+        <Route path="/miscompras" element={<MisCompras />} />
+        <Route path="/:email/success" element={<Success />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/user/newpassword" element={<NewPassword />} />

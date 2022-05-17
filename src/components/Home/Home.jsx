@@ -46,9 +46,15 @@ function Home({alert, setAlert}) {
     dispatch(getDiscounts(format));
   };
   
+  
+  const prodsss = productos.map(p => p.CategoryName);
+  console.log(prodsss, 'prodsss')
 
-
-
+  function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
+  }
+  var unique = prodsss.filter( onlyUnique ); // devuelve array sin repetidos
+  console.info(unique)
 
   return (
     <>
@@ -57,23 +63,18 @@ function Home({alert, setAlert}) {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-
               <NavDropdown title="Categorias" id="basic-nav-dropdown">
                 <NavDropdown.Item  onClick={() => dispatch(getProducts())}>Todos</NavDropdown.Item>
-                <NavDropdown.Item  onClick={() => filterCategory('Buzo')}>
-                  Buzos
-                </NavDropdown.Item>
-                <NavDropdown.Item  onClick={() => filterCategory('Remera')}>
-                  Remeras
-                </NavDropdown.Item>
-                <NavDropdown.Item  onClick={() => filterCategory('Campera')}>
-                  Camperas
-                </NavDropdown.Item>
-                <NavDropdown.Item  onClick={() => filterCategory('Pantalon')}>
-                  Pantalones
-                </NavDropdown.Item>
+              {unique.map(p => (
+                  <NavDropdown.Item  onClick={() => filterCategory(p)}>
+                    {p}
+                  </NavDropdown.Item>
+              ))
+              
+            }
+            </NavDropdown>
 
-              </NavDropdown>
+             
 
 
 

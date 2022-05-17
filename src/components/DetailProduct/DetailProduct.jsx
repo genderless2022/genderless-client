@@ -245,46 +245,7 @@ const DetailProduct = () => {
               </div>
 
               <Container style={{ marginTop: "5%" }}>
-                <Form onSubmit={ (event) => handleSubmit(event)}>
-                  <InputGroup.Text>Escribe tu review</InputGroup.Text>
-                  <FormControl
-                    as="textarea"
-                    aria-label="With textarea"
-                    placeholder="Escribe tu review"
-                    name="description"
-                    value={input.description}
-                    onChange={(event) => handleChange(event)}
-                  />
-
-                  <div className="star-rating">
-                    {[...Array(5)].map((star, index) => {
-                      index += 1;
-                      return (
-                        <button
-                          type="button"
-                          key={index}
-                          className={index <= (hover || rating) ? "on" : "off"}
-                          value={input.rating}
-                          name="rating"
-                          onChange={(event) => handleChange(event, setRating(index))}
-                          onClick={() => setRating(index)}
-                          onMouseEnter={() => setHover(index)}
-                          onMouseLeave={() => setHover(rating)}
-                        >
-                          <span className="star">&#9733;</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    style={{ marginTop: "2%" }}
-                  >
-                    Enviar
-                  </Button>
-                </Form>
+                
               </Container>
 
               {
