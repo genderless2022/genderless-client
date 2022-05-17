@@ -72,7 +72,6 @@ function Landing() {
         style={{ maxHeight: '100px', color: 'white' }}
         navbarScroll
       >
-        <Nav.Link href="/" style={{ maxHeight: '100px', color: 'white' }}>Inicio</Nav.Link>
         <Nav.Link href="/home" style={{ maxHeight: '100px', color: 'white' }}>Catalogo</Nav.Link>
         {
           cookies.get('user') ?

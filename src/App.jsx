@@ -33,14 +33,16 @@ import Success from './components/Success/Success';
 import Helpcenter from './components/Chat/Helpcenter';
 import Collapse from 'react-bootstrap/Collapse'
 import {BiChat} from 'react-icons/bi';
+import MisCompras from './components/MisCompras/MisCompras';
 
 
 
 
 function App() {
 
-  const dispatch = useDispatch();
   const cookies = new Cookies();
+  console.log(cookies.get('user'));
+
   
  const user = cookies.get('user');
   console.log(cookies.get('user'));
@@ -54,6 +56,8 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />}/>
 
+        <Route path="/miscompras" element={<MisCompras />} />
+        <Route path="/:email/success" element={<Success />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/user/newpassword" element={<NewPassword />} />
