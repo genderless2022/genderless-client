@@ -48,7 +48,8 @@ export const getProduct = (id) => async (dispatch) => {
 };
 
 // Habilitada
-export const createProduct = ({ name, description, stock_by_size, price, discount, image, brand, disabled, category,}) => async (dispatch) => {
+export const createProduct = ({ name, description, stock_by_size, price, discount, image, brand, disabled, category}) => async (dispatch) => {
+  // console.log(token, '<<action crear producto')
   await axios.post('http://localhost:3001/productos', {
     name,
     description,

@@ -141,13 +141,17 @@ export const forgotPassword = ({
 
 //Habilitada
 export const updatePassword = ({
-  email, password 
+  email, password, token 
 }) => async (dispatch) => {
-  console.log('password', password)
+  // console.log(token, '<<action')
+  // console.log('acton', password)
   await axios.put('http://localhost:3001/usuario/password', {
     email,
     password
-  }).then(
+  },
+  {headers: {'Authorization': 'Bearer ' + token}}
+  // { headers: {"Authorization" : `Bearer ${token}`} }
+  ).then(
     (response) => {
       dispatch({
         type: UPDATE_PASSWORD,
