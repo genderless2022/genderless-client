@@ -65,7 +65,7 @@ export default function EditUser  () {
          sendAddress: userEdit.user?.sendAddress,
          
      })
-    const tokenUser = cookie.get('user').tokenSession;
+    const tokenUser = cookie.get('user')?.tokenSession;
     console.log('editarusuario', tokenUser)
 
   useEffect(() => {

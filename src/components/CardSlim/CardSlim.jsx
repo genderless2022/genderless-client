@@ -25,14 +25,15 @@ function CardSlim({ image, name, size, stock, price, index, discount, id, quanti
       const itemQuantity = {...shoppingCookie[index]?.UserProduct, quantity: count}
       const productIndex = {...shoppingCookie[index], UserProduct: itemQuantity }
       const copyShopping = shoppingCookie
-      copyShopping.splice(index, 1, productIndex)
+      copyShopping?.splice(index, 1, productIndex)
 
       cookie.set('shopping', 
         copyShopping
       , { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
 
       const totalCart = totalShoppingCookie
-      totalCart.splice(index, 1, subtotal)
+      console.log('totalShoppingCookie', totalShoppingCookie)
+      console.log('totalCart', totalCart)
       deleteProductShopping()
     }
   },[dispatch, count]);

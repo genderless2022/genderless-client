@@ -80,9 +80,6 @@ export default function Favorites ( ) {
                                     }) 
                             }
                             <p className={msg ? 'newsletter_agregado_favorites' : 'producto_sinagregar'}>{msg}</p>
-                        <div className="fav-newsletter-btn">
-                            <button onClick={(e) => handleNewsletter(e)} className="btn-newsletter-fav">Agregar a Newsletter mis favoritos</button>
-                        </div>
                         </div>
 
                 </div>

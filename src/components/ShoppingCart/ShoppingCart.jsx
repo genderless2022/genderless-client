@@ -2,7 +2,7 @@ import './ShoppingCart.css'
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { getShopping } from '../../redux/actions/shoppingActions'
+import { getShopping, emptyShopping } from '../../redux/actions/shoppingActions'
 import { getUser } from '../../redux/actions/userActions'
 import CardSlim from "../../components/CardSlim/CardSlim"
 import { Link } from "react-router-dom"
@@ -29,6 +29,10 @@ export default function ShoppingCart ( ) {
         setRefreshCardSlim(!refreshCardSlim)
     }
 
+    useEffect(() => {
+        cookie.set('totalShopping', total, { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))})
+    },[total])
+
     useEffect( ( )=> {
         dispatch(getShopping({ email : user?.email }))
     }, [dispatch, refreshCardSlim])
@@ -46,6 +50,36 @@ export default function ShoppingCart ( ) {
         nav('/meta/checkout')
     }
 
+    const handleMercadoPago = () => {
+        cookie.set('sendShopping', 
+        shopping?.products
+        , { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
+    }
+
+    function messageConfirm() {
+        var mensaje = window.confirm("Esta seguro que quiere elimar todo de su carrito de compras?")
+        if(!user){
+            if(mensaje) {
+                cookie.remove('shopping')
+                deleteProductShopping();
+                alert("El carrito se elimino correctamente!")
+            }else {
+                alert("El carrito continuará lleno")
+            }
+        }else{
+            if(mensaje) {
+                dispatch(emptyShopping({ email: user?.email}));
+                alert("El carrito se elimino correctamente!")
+            }else {
+                alert("El carrito continuará lleno")
+            }
+        }
+    }
+
+    const handleDeleteAllCart = () => {
+        messageConfirm();
+    }
+
     const data = {
         name: shopping?.products.map((e) => e.name),
         picture_url: shopping?.products.map((e) => e.image),
@@ -53,7 +87,7 @@ export default function ShoppingCart ( ) {
         price: total,
         quantity: shopping?.products.map((e) => e.UserProduct?.quantity)
     }
-
+    console.log('data', data)
 return (<div>
             {
                 shopping?.products.length || shoppingCookie?.length
@@ -135,6 +169,9 @@ return (<div>
                                             />
                                         })
                                     }
+                                    <div className="fav-newsletter-btn">
+                            <button onClick={(e) => handleDeleteAllCart()} className="btn-newsletter-fav">Eliminar todos los artículos del carrito</button>
+                        </div>
                                 </div>
                                 <div className="resume-count">
                                     <div className="cart-container-2">
@@ -158,7 +195,7 @@ return (<div>
                                             <input type='hidden' name='size' value={data.size} ></input>
                                             <input type='hidden' name='price' value={data.price} ></input>
                                             <input type='hidden' name='quantity' value={data.quantity} ></input>
-                                        <button className="mpButton" type="submit" onClick={!user ? () => nav('/login') : null }>
+                                        <button className="mpButton" type="submit" onClick={!user ? () => nav('/login') : handleMercadoPago() }>
                                             {<img className="img-mp-cart" src={"https://www.lentesplus.com/media/wysiwyg/landings/metodos-de-pago/ico_mercadoPago.png"} alt="" />}
                                         </button>
                                         </form>

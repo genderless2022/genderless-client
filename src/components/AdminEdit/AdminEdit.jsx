@@ -59,7 +59,7 @@ const AdminEdit = ({activeDrawer, handleHome, product}) => {
     const [selectCategory, setSelectCategory] = useState( product ? product.CategoryName : '')
     const [error, setError] = useState("");
     let cookie = new Cookies();
-    const tokenUser = cookie.get('user').tokenSession
+    const tokenUser = cookie.get('user')?.tokenSession
     console.log(tokenUser,'en edit product')
 
     for(let i = 0; i < addSizes?.length ; i++) {

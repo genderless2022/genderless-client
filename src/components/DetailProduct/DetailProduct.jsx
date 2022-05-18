@@ -21,7 +21,7 @@ const DetailProduct = () => {
   const [sizeSelect, setSizeSelect] = useState(null)
   const cookies = new Cookies();
   const user = cookies.get('user')?.user
-  const tokenUser = cookies.get('user').tokenSession;
+  const tokenUser = cookies.get('user')?.tokenSession;
   const shoppingCookie = cookies.get('shopping')
   const favoriteCookie = cookies.get('favorite')
   const productsFavorites = useSelector( state => state.favoriteReducer.favorites)
@@ -60,7 +60,7 @@ const DetailProduct = () => {
       setShow("Añadido al carrito")
     }
     if(user){
-      dispatch(addProduct({ email: user?.email, productId: Number(id), productSize: sizeSelect }))
+      dispatch(addProduct({ email: user?.email, productId: Number(id), productSize: sizeSelect, productQuantity: 1 }))
       setShow("Añadido al carrito")
     }
   }

@@ -34,9 +34,7 @@ import Helpcenter from './components/Chat/Helpcenter';
 import Collapse from 'react-bootstrap/Collapse'
 import {BiChat} from 'react-icons/bi';
 import MisCompras from './components/MisCompras/MisCompras';
-
-
-
+import AdminDashboard from './components/AdminDashboard/AdminDashboard';
 
 function App() {
 
@@ -74,12 +72,13 @@ function App() {
         <Route path="/admin/editar" element={<AdminRegisterEdit></AdminRegisterEdit>} />
         <Route path='/mapa' element={<MapTienda></MapTienda>} />
         <Route path='/terminos' element={<Terminos></Terminos>} />
-        <Route path='/succes' element={<Succes />} />
+        <Route path='/success' element={<Succes />} />
+        <Route path='/admindash' element={<AdminDashboard />} />
         
         <Route path="/meta/checkout" element={<MetaCheckout />} />
 
         <Route path="/chatbot" element={<ChatBot />} />
-        <Route path="/success" element={<Success />} />
+        {/* <Route path="/success" element={<Success />} /> */}
 
 
       </Routes>

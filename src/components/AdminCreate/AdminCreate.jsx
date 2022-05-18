@@ -55,7 +55,7 @@ const AdminCreate = ({ handleHome }) => {
     const [selectCategory, setSelectCategory] = useState('')
     const [error, setError] = useState("");
     let cookie = new Cookies();
-    const tokenUser = cookie.get('user').tokenSession
+    const tokenUser = cookie.get('user')?.tokenSession
 
 
     useEffect(()=>{

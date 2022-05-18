@@ -15,7 +15,7 @@ export default function AdminDetail() {
     let cookie = new Cookies();
     const user = cookie.get('user')?.user
     const detailUser = useSelector(state => state.userReducer.usuario)
-    const tokenUser = cookie.get('user').tokenSession
+    const tokenUser = cookie.get('user')?.tokenSession
     
 
     useEffect(() => {
