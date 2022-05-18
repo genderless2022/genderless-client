@@ -6,6 +6,9 @@ class MessageParser {
   
     parse(message) {
       console.log(message)
+      if (message.includes('help')){
+        console.log('ayudita');
+      }
     }
   }
   
