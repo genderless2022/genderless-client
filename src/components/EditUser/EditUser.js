@@ -46,9 +46,9 @@ function validate(input){
 export default function EditUser  () {
     let cookie = new Cookies();
     const userEdit = useSelector(state => state.userReducer.usuario)
-    console.log('reducer', userEdit)
+    // console.log('reducer', userEdit)
     const user = cookie.get('user')
-    console.log('cookie', user)
+    // console.log('cookie', user)
     const nav = useNavigate();
     const dispatch = useDispatch();
     const[errors, setErrors] = useState({});
@@ -65,9 +65,11 @@ export default function EditUser  () {
          sendAddress: userEdit.user?.sendAddress,
          
      })
+    const tokenUser = cookie.get('user').tokenSession;
+    console.log('editarusuario', tokenUser)
 
   useEffect(() => {
-        dispatch(getUser({ email: user.email}))
+        dispatch(getUser({ email: user.email, token:tokenUser}))
         // dispatch(getUser({ email: user.email, token: tokenUser}))
     },[])
     
@@ -87,7 +89,7 @@ export default function EditUser  () {
         if(!input.name || !input.lastName || !input.email || !input.dni|| !input.address|| !input.province  || !input.postal|| !input.phone  ){
         alert("no completo todo el formulario!")}
         else{
-        dispatch(updateUser(input))
+        dispatch(updateUser({...input, token: tokenUser}))
         alert('Datos actualizados')
         setInput({
             name:'',

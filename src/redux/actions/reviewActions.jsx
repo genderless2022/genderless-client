@@ -10,7 +10,7 @@ export const ERROR = 'ERROR';
 
 // Habilitada
 export const postReview = ({
-    email, productTitle, comment, rating, name, lastname
+    email, productTitle, comment, rating, name, lastname, token
 }) => async (dispatch) => {
   await axios.post('http://localhost:3001/usuario/review', {
       email,
@@ -19,7 +19,7 @@ export const postReview = ({
       rating,
       name, 
       lastname
-  }).then(
+  }, {headers: {'Authorization': 'Bearer ' + token}}).then(
     (response) => {
       dispatch({
         type: POST_REVIEW,
@@ -36,8 +36,8 @@ export const postReview = ({
 };
 
 // Habilitada
-export const getReviews = () => async (dispatch) => {
-  await axios.get('http://localhost:3001/usuario/reviews').then(
+export const getReviews = ({token}) => async (dispatch) => {
+  await axios.get('http://localhost:3001/usuario/reviews', {headers: {'Authorization': 'Bearer ' + token}}).then(
     (response) => {
       dispatch({
         type: GET_REVIEWS,
