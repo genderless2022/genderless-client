@@ -10,7 +10,7 @@ function AdminRoles() {
     const [permission, setPermission] = useState('');
     const users = useSelector(state => state.userReducer.usuarios)
     let cookie = new Cookies();
-    const tokenUser = cookie.get('user').tokenSession
+    const tokenUser = cookie.get('user')?.tokenSession
 
     console.log('users', users)
 

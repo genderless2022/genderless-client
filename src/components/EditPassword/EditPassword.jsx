@@ -30,7 +30,7 @@ export default function EditPassword  () {
     // console.log('useselector',userEdit)
     const user = cookie.get('user')
     // console.log('cookie',user)
-    const tokenUser = cookie.get('user').tokenSession
+    const tokenUser = cookie.get('user')?.tokenSession
 
     const nav = useNavigate();
     const dispatch = useDispatch();

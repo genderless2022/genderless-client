@@ -21,7 +21,7 @@ const DetailProduct = () => {
   const [sizeSelect, setSizeSelect] = useState(null)
   const cookies = new Cookies();
   const user = cookies.get('user')?.user
-  const tokenUser = cookies.get('user').tokenSession;
+  const tokenUser = cookies.get('user')?.tokenSession;
   const shoppingCookie = cookies.get('shopping')
   const favoriteCookie = cookies.get('favorite')
   const productsFavorites = useSelector( state => state.favoriteReducer.favorites)

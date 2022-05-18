@@ -19,8 +19,9 @@ function Succes() {
     console.log('totalShopping', totalShopping)
 
     useEffect(() => {
+        cookies.remove('shopping')
         dispatch(emptyShopping({ email: user?.email}));
-        dispatch(addMetaOrder({ payment_id: payment_id, email: user?.email, status: status, productList: productList, total: Number(totalShopping) }));
+        dispatch(addMetaOrder({ payment_id: payment_id, email: user?.email, status: status, productList: productList, total: Number(totalShopping), sendAddress: {} }));
     },[])
 
     return (
