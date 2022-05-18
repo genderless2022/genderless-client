@@ -58,7 +58,7 @@ const formSchema = Yup.object().shape({
         .required("Este campo es requerido")
         .max(20, "Máximo 20 carácteres")
         .min(8, "Mínimo 8 carácteres"),
-    picture: Yup.string(),
+    // picture: Yup.string(),
 });
 
 const formOptions = { resolver: yupResolver(formSchema) };
@@ -216,7 +216,7 @@ const Register = () => {
                                 {<div className="form-register-errors">{errors.phone?.message}</div>}
                             </div>
                         </div>
-                        <div className="labelAndInput">
+                        {/* <div className="labelAndInput">
                             <label className="input-label">Link de foto de perfil: </label>
                             <input
                                 className="input-register"
@@ -224,7 +224,7 @@ const Register = () => {
                                 name="picture"
                                 {...register('picture')}
                             />
-                        </div>
+                        </div> */}
                         <div className="TyC">
                             Al crear su cuenta se aceptan términos y condiciones.
                         </div>

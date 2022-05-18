@@ -59,7 +59,7 @@ const DetailProduct = () => {
       setShow("Añadido al carrito")
     }
     if(user){
-      dispatch(addProduct({ email: user?.email, productId: Number(id), productSize: sizeSelect }))
+      dispatch(addProduct({ email: user?.email, productId: Number(id), productSize: sizeSelect, productQuantity: 1 }))
       setShow("Añadido al carrito")
     }
   }
