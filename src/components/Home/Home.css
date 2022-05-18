@@ -1,0 +1,57 @@
+.containerCardsHome  {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 95%;
+    gap: 2%;
+    margin: 5% auto;
+}
+
+.cardsProductsButtons {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.cardsProductsButtons .cardsProductsButton {
+    font-size: 1.7rem;
+}
+
+.PagedHome {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+}
+
+.alertFalse {
+    display: none;
+}
+
+.alertTrue, .spinnerFalse {
+    display: block;
+}
+
+.card-container {
+    position: relative;
+    text-align: center;
+}
+
+.top-left {
+    position: absolute;
+    top: -30px !important;
+    left: 10px;
+    background-color: rgb(211, 71, 71);
+    border-radius: 15px 1px 15px 1px;
+    padding: 2px 15px; 
+}
+
+.precioTachado {
+    text-decoration: line-through;
+    color: #ccc;
+}
+
+.precioFinal {
+    display: block;
+    font-weight: 500;
+}

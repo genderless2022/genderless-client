@@ -1,0 +1,15 @@
+.labelAndInput-stock-finally button {
+    background-color: #a2a2ac;
+    border: black;
+    border-radius: 4px;
+    margin-left: 2px;
+    font-weight: bold;
+    height: 25px;
+}
+
+@media (max-width: 584px) {
+    .input-create-stock {
+        width: 65px;
+        padding: 3;
+    }
+}
