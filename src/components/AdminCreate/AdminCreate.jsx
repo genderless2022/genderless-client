@@ -56,7 +56,7 @@ const AdminCreate = ({ handleHome }) => {
     const [error, setError] = useState("");
     let cookie = new Cookies();
     const tokenUser = cookie.get('user').tokenSession
-    console.log(tokenUser, 'en crear producto')
+
 
     useEffect(()=>{
         dispatch(getProducts())
@@ -78,7 +78,9 @@ const AdminCreate = ({ handleHome }) => {
             "price": Number(data.price),
             "category": selectCategory,
         }
-        dispatch(createProduct({sendData})); 
+
+        dispatch(createProduct({...sendData, token: tokenUser})); 
+
         setSelectCategory('')
         handleHome();
     };

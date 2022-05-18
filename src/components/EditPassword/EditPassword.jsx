@@ -31,7 +31,7 @@ export default function EditPassword  () {
     const user = cookie.get('user')
     // console.log('cookie',user)
     const tokenUser = cookie.get('user').tokenSession
-    // console.log(tokenUser, 'token')
+
     const nav = useNavigate();
     const dispatch = useDispatch();
     const[errors, setErrors] = useState({});

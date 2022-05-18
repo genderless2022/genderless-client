@@ -5,6 +5,8 @@ import { editProduct, getProducts } from "../../redux/actions/productActions"
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import Cookies from "universal-cookie";
+
 
 const formSchema = Yup.object().shape({
     name: Yup.string()
@@ -56,6 +58,9 @@ const AdminEdit = ({activeDrawer, handleHome, product}) => {
     const arrayCategories = [...categories]
     const [selectCategory, setSelectCategory] = useState( product ? product.CategoryName : '')
     const [error, setError] = useState("");
+    let cookie = new Cookies();
+    const tokenUser = cookie.get('user').tokenSession
+    console.log(tokenUser,'en edit product')
 
     for(let i = 0; i < addSizes?.length ; i++) {
         for(let j = 0; j < sizesState.length; j++) {
@@ -73,12 +78,12 @@ const AdminEdit = ({activeDrawer, handleHome, product}) => {
         const sendData = {...data ,
             "stock_by_size" : addSizes,
             "discount": Number(data.discount),
-            "id": product?.id,
+            "id": product.id,
             "price": data.price,
             "disabled": false,
             "category": selectCategory
         }
-        dispatch(editProduct(sendData)); 
+        dispatch(editProduct({sendData, token: tokenUser})); 
         handleHome();
         activeDrawer();
     };

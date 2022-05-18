@@ -48,8 +48,10 @@ export const getProduct = (id) => async (dispatch) => {
 };
 
 // Habilitada
-export const createProduct = ({ name, description, stock_by_size, price, discount, image, brand, disabled, category}) => async (dispatch) => {
-  // console.log(token, '<<action crear producto')
+
+export const createProduct = ({ name, description, stock_by_size, price, discount, image, brand, disabled, category, token}) => async (dispatch) => {
+  // console.log(token, '<<action token')
+
   await axios.post('http://localhost:3001/productos', {
     name,
     description,
@@ -60,7 +62,12 @@ export const createProduct = ({ name, description, stock_by_size, price, discoun
     brand,
     disabled,
     category,
-  }).then((response) => {
+    
+  },
+  {headers: {
+    'Authorization': 'Bearer ' + token
+  }}
+  ).then((response) => {
     dispatch({
       type: CREATE_PRODUCT,
       payload: response.data,
@@ -88,13 +95,17 @@ export const deleteProduct = (id) => async (dispatch) => {
 };
 
 // Habilitada
-export const editProduct = (sendData) => async (dispatch) => {
-  await axios.put('http://localhost:3001/productos/putproduct', sendData).then(
+export const editProduct = ({sendData, token}) => async (dispatch) => {
+  // console.log(sendData, '<<action>>')
+  await axios.put('http://localhost:3001/productos/putproduct', sendData,{headers: {
+    'Authorization': 'Bearer ' + token
+  }}).then(
       (response) => {
         dispatch({
           type: EDIT_PRODUCT,
           payload: response.data,
         });
+        
       },
       (error) => {
         dispatch({

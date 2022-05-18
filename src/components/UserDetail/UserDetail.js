@@ -21,8 +21,8 @@ export default function UserDetail() {
     let wallet = state.wallet
 
     useEffect(() => {
-        console.log('tokenUser', tokenUser)
-        console.log('user google', user?.email)
+        // console.log('tokenUser', tokenUser)
+        // console.log('user google', user?.email)
         dispatch(getUser({ email: user?.email, token: tokenUser}))
     },[])
 
