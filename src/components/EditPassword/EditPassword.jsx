@@ -22,15 +22,16 @@ function validate(input){
 
 }
 
+//! Ruta ya protegida que se le pasa el token
 
 export default function EditPassword  () {
     let cookie = new Cookies();
     const userEdit = useSelector(state => state.userReducer.usuario)
-    console.log('useselector',userEdit)
+    // console.log('useselector',userEdit)
     const user = cookie.get('user')
     // console.log('cookie',user)
     const tokenUser = cookie.get('user').tokenSession
-    // console.log('userToken',userToken)
+
     const nav = useNavigate();
     const dispatch = useDispatch();
     const[errors, setErrors] = useState({});
@@ -43,9 +44,9 @@ export default function EditPassword  () {
      })
 
   useEffect(() => {
-        dispatch(getUser({ email: user.email, password: user.password }))
+        dispatch(getUser({ email: user.email, password: user.password, token:tokenUser }))
         // dispatch(getUser({ email: user.email, token: tokenUser}))
-    },[dispatch, user.email, user.password])
+    },[dispatch, user.email, user.password, tokenUser])
     
     function handlerOnChange (e){
         setInput({

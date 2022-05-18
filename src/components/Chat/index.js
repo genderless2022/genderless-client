@@ -115,7 +115,7 @@ function ChatSupp(props) {
             {users.filter((x) => x.id !== userInfo.id).length === 0 ? (
               <MessageBox>No hay usuarios Online</MessageBox>
             ):(<div className="chatlist-heading">
-                <h5> Seleccione un usuario </h5>
+                <h5 className='chatlist-h5'> Seleccione un usuario </h5>
               </div>)
             }
             <ul className="chatlist-items">

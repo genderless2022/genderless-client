@@ -1,3 +1,15 @@
+@media (max-width: 584px) {
+  .succes-container-inside {
+      width: 100%;
+  }
+
+  .chatlist-h5 {
+    font-size: 15px;
+  }
+  
+
+  
+}
 .support-container {
     margin: auto;
     background-color: #ebebeb;
@@ -24,6 +36,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    
+  }
+
+  .chatlist-h5 {
+    font-size: 20px;
   }
   
   .support-users span {
@@ -111,7 +129,9 @@
   .chatcontent {
     flex-grow: 1;
     width: 70%;
+    font-size: 12px;
   }
+
   .content-header {
     padding-bottom: 15px;
     border-bottom: 1px solid #e7bf50;
