@@ -9,7 +9,7 @@ export const ERROR = 'ERROR';
 
 // Habilitada
 export const addMetaOrder = (
-    { payment_id, email, productList, status, status_detail, total }
+    { payment_id, email, productList, status, status_detail, total, sendAddress }
 ) => async (dispatch) => {
   await axios.post('http://localhost:3001/metamask/order', {
       payment_id,
@@ -17,7 +17,8 @@ export const addMetaOrder = (
       productList,
       status,
       status_detail,
-      total
+      total,
+      sendAddress
   }).then(
     (response) => {
       dispatch({

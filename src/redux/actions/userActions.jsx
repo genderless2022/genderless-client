@@ -13,8 +13,9 @@ export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const ERROR = 'ERROR';
 
 // Habilitada
-export const getUsers = () => async (dispatch) => {
-  await axios.get('http://localhost:3001/usuarios').then(
+export const getUsers = ({token}) => async (dispatch) => {
+  console.log(token, 'action')
+  await axios.get('http://localhost:3001/usuarios', {headers: {'Authorization': 'Bearer ' + token}}).then(
     (response) => {
       dispatch({
         type: GET_USERS,
@@ -84,9 +85,9 @@ export const createUser = ({
 
 //Habilitada
 export const updateUser = ({
-  name, lastName, picture, born, dni, email, address, province, phone, postal,sendAddress 
+  name, lastName, picture, born, dni, email, address, province, phone, postal,sendAddress, token 
 }) => async (dispatch) => {
-  console.log('address',sendAddress)
+  // console.log(token, '>>action>>')
   await axios.put('http://localhost:3001/usuario', {
     name,
     lastName,
@@ -100,7 +101,9 @@ export const updateUser = ({
     postal,
     sendAddress,
 
-  }).then(
+  },
+  {headers: {'Authorization': 'Bearer ' + token}}
+  ).then(
     (response) => {
       dispatch({
         type: UPDATE_USER,
@@ -141,13 +144,17 @@ export const forgotPassword = ({
 
 //Habilitada
 export const updatePassword = ({
-  email, password 
+  email, password, token 
 }) => async (dispatch) => {
-  console.log('password', password)
+  // console.log(token, '<<action')
+  // console.log('acton', password)
   await axios.put('http://localhost:3001/usuario/password', {
     email,
     password
-  }).then(
+  },
+  {headers: {'Authorization': 'Bearer ' + token}}
+  // { headers: {"Authorization" : `Bearer ${token}`} }
+  ).then(
     (response) => {
       dispatch({
         type: UPDATE_PASSWORD,
@@ -162,6 +169,7 @@ export const updatePassword = ({
     },
   );
 };
+
 
 
 

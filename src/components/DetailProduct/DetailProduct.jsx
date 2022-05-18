@@ -21,6 +21,7 @@ const DetailProduct = () => {
   const [sizeSelect, setSizeSelect] = useState(null)
   const cookies = new Cookies();
   const user = cookies.get('user')?.user
+  const tokenUser = cookies.get('user').tokenSession;
   const shoppingCookie = cookies.get('shopping')
   const favoriteCookie = cookies.get('favorite')
   const productsFavorites = useSelector( state => state.favoriteReducer.favorites)
@@ -30,7 +31,7 @@ const DetailProduct = () => {
 
   useEffect(() => {
     dispatch(getFavorites({ email : user?.email })) 
-    dispatch(getReviews())
+    dispatch(getReviews({token: tokenUser}))
     dispatch(getProduct(id))
     return function deleteProduct(){
       dispatch(deleteProductAction())
@@ -111,7 +112,7 @@ const DetailProduct = () => {
     function handleSubmit(event) {
       event.preventDefault();
       
-      dispatch(postReview({comment: input.description, rating: rating, productTitle: product.name, email: cookies.get('user')?.email, name: cookies.get('user')?.name, lastname: cookies.get('user')?.user?.lastName}))
+      dispatch(postReview({comment: input.description, rating: rating, productTitle: product.name, email: cookies.get('user')?.email, name: cookies.get('user')?.name, lastname: cookies.get('user')?.user?.lastName, token: tokenUser}))
 
       setRating(0);
       setHover(0);

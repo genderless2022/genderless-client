@@ -15,7 +15,7 @@ function AdminRoles() {
     console.log('users', users)
 
     useEffect(() => {
-        dispatch(getUsers());
+        dispatch(getUsers({token: tokenUser}));
     },[])
 
     const handleSubmit = (e) => { 

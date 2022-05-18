@@ -6,6 +6,8 @@ import { createProduct } from "../../redux/actions/productActions";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import Cookies from "universal-cookie";
+
 
 const formSchema = Yup.object().shape({
     name: Yup.string()
@@ -52,6 +54,9 @@ const AdminCreate = ({ handleHome }) => {
     const arrayCategories = [...categories]
     const [selectCategory, setSelectCategory] = useState('')
     const [error, setError] = useState("");
+    let cookie = new Cookies();
+    const tokenUser = cookie.get('user').tokenSession
+
 
     useEffect(()=>{
         dispatch(getProducts())
@@ -73,7 +78,9 @@ const AdminCreate = ({ handleHome }) => {
             "price": Number(data.price),
             "category": selectCategory,
         }
-        dispatch(createProduct(sendData)); 
+
+        dispatch(createProduct({...sendData, token: tokenUser})); 
+
         setSelectCategory('')
         handleHome();
     };

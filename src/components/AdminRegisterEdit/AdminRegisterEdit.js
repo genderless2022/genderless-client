@@ -46,7 +46,7 @@ function validate(input){
 export default function AdminRegisterEdit  () {
     let cookie = new Cookies();
     const userEdit = cookie.get('user').user
-
+    const tokenUser = cookie.get('user').tokenSession
     const dispatch = useDispatch();
 
     
@@ -94,7 +94,7 @@ function handlerOnChange (e){
                 if(!input.name || !input.lastName || !input.email || !input.dni|| !input.address|| !input.province  || !input.postal|| !input.phone  ){
                 alert("no completo todo el formulario!")}
                 else{
-                dispatch(updateUser(input))
+                dispatch(updateUser({...input, token: tokenUser}))
                 alert('Datos actualizados')
                 setInput({
                     name:'',
