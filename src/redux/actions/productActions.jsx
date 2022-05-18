@@ -6,6 +6,7 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const ERROR = 'ERROR';
+export const GET_MOST_SELL = 'GET_MOST_SELL';
 /*****
  * FILTROS
  *****/
@@ -200,6 +201,24 @@ export const getDiscounts = () => async (dispatch) => {
     (response) => {
       dispatch({
         type: GET_PRODUCTS,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
+
+// Usando...
+export const getMostSell = (cateory) => async (dispatch) => {
+  await axios.get(`http://localhost:3001/productos/sell`).then(
+    (response) => {
+      dispatch({
+        type: GET_MOST_SELL,
         payload: response.data,
       });
     },

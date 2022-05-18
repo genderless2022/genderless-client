@@ -7,14 +7,17 @@ import {
   getAmountSold,
 } from "../../redux/actions/mercadopagoActions";
 import AdminCardPayment from "../AdminCardPayment/AdminCardPayment";
+import { getMostSell } from "../../redux/actions/productActions";
 
 export default function AdminOrders({ viewOrder }) {
   const dispatch = useDispatch();
   const payments = useSelector((state) => state.mercadoReducer.pagos);
   const price = useSelector((state) => state.mercadoReducer.price);
   const amount = useSelector((state) => state.mercadoReducer.amount);
-
+  const sell = useSelector((state) => state.productReducer.productosTop);
+  console.log(sell);
   useEffect(() => {
+    dispatch(getMostSell());
     dispatch(getPayments());
     dispatch(getQuantitySold());
     dispatch(getAmountSold());
@@ -31,6 +34,15 @@ export default function AdminOrders({ viewOrder }) {
           <p>Pruductos Vendidos</p>
           <h1>{amount?.amount}</h1>
         </div>
+      </div>
+      <div className="trabajo">
+        {sell?.map((producto, i) => {
+          return (
+            <div className="matematicas">
+              <p>{producto.name}</p>
+            </div>
+          );
+        })}
       </div>
       <div>
         {payments.length ? (
