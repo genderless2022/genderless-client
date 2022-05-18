@@ -34,7 +34,7 @@ export default function EthPrice (props) {
     return (
     <>
     
-    <select onChange={ (e) => changeCurrency(e)}>
+    <select className="selectCurrency" onChange={ (e) => changeCurrency(e)}>
                         <option value={'USD'}>USD</option>
                         <option value={'ARS'}>ARS</option>
                         <option value={'MXN'}>MXN</option>
