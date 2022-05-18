@@ -74,12 +74,12 @@ function App() {
         <Route path="/admin/editar" element={<AdminRegisterEdit></AdminRegisterEdit>} />
         <Route path='/mapa' element={<MapTienda></MapTienda>} />
         <Route path='/terminos' element={<Terminos></Terminos>} />
-        <Route path='/succes' element={<Succes />} />
+        <Route path='/success' element={<Succes />} />
         
         <Route path="/meta/checkout" element={<MetaCheckout />} />
 
         <Route path="/chatbot" element={<ChatBot />} />
-        <Route path="/success" element={<Success />} />
+        {/* <Route path="/success" element={<Success />} /> */}
 
 
       </Routes>
