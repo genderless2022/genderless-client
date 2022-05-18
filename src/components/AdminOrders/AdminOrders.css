@@ -6,7 +6,14 @@
 }
 
 .matematicas{
-  
+  width: 200px;
+  color: black;
+  font-weight: 600;
+}
+
+.imagen_top{
+  height: 170px;
+  width: 150px;
 }
 
 /* parte de las ordenes*/

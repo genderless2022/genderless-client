@@ -35,11 +35,13 @@ export default function AdminOrders({ viewOrder }) {
           <h1>{amount?.amount}</h1>
         </div>
       </div>
+        <h2>Top productos mas vendidos</h2>
       <div className="trabajo">
         {sell?.map((producto, i) => {
           return (
             <div className="matematicas">
-              <p>{producto.name}</p>
+              <img src={producto.image} alt="none" className="imagen_top"/>
+              <p>#{i+1}: {producto.name}</p>
             </div>
           );
         })}
