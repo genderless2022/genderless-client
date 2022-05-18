@@ -12,10 +12,10 @@ export default function ShoppingCart ( ) {
     let nav = useNavigate()
     let cookie = new Cookies();
     const user = cookie.get('user')?.user
+    const shoppingCookie = cookie.get('shopping')
     console.log('userSend',user)
     const userEdit = useSelector(state => state.userReducer.usuario)
     console.log('cambio', userEdit)
-    const shoppingCookie = cookie.get('shopping')
     const dispatch = useDispatch()
     const [select, setSelect] = useState("Retiro por la tienda");
     const shopping = useSelector( state => state.shoppingReducer)
@@ -33,6 +33,11 @@ export default function ShoppingCart ( ) {
         dispatch(getShopping({ email : user?.email }))
     }, [dispatch, refreshCardSlim])
 
+
+    useEffect(() => {
+        dispatch(getUser({ email: user?.email}))
+    },[])
+            
     const handleSelect = (e) => {
         setSelect(e.target.value);
     }

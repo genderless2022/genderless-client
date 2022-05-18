@@ -9,7 +9,7 @@ import { DELETE_REVIEW_BY_ID, DELETE_USER_REVIEWS, ERROR, GET_PRODUCT_REVIEWS, G
   function reviewReducer( state = initialState, action) {
     switch (action.type) {
       case POST_REVIEW:
-        return { ...state, status: action.payload, reviews: action.payload, AllReviews: action.payload };
+        return { ...state, status: action.payload, reviews: action.payload };
       case GET_REVIEWS:
         return { ...state, status: action.payload, reviews: action.payload, AllReviews: action.payload };
       case GET_PRODUCT_REVIEWS:

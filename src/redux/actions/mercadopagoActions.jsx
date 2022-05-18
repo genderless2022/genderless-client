@@ -6,6 +6,8 @@ export const GET_PAYMENTS = 'GET_PAYMENTS';
 export const GET_USER_PAYMENTS = 'GET_USER_PAYMENTS';
 export const GET_QUANTITY_SOLD = 'GET_QUANTITY_SOLD';
 export const GET_AMOUNT_SOLD = 'GET_AMOUNT_SOLD';
+export const GET_SUCCESS = 'GET_SUCCESS';
+export const SUCCESS = 'SUCCESS';
 export const GET_INFO_VIEW = 'GET_INFO_VIEW';
 
 export const ERROR = 'ERROR';
@@ -96,11 +98,27 @@ export const getPayments = () => async (dispatch) => {
     },
   );
 };
+export const successMP = ({
+  payment_id, email
+}) => async (dispatch) => {
+  await axios.get(`http://localhost:3001/mercado/success?payment_id=${payment_id}&email=${email}`).then(
+    (response) => {
+      dispatch({
+        type: SUCCESS,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
 
 // Habilitada
-export const getUserPayments = ({
-  email
-}) => async (dispatch) => {
+export const getUserPayments = (email) => async (dispatch) => {
   await axios.get(`http://localhost:3001/mercado/history/${email}`).then(
     (response) => {
       dispatch({
@@ -141,6 +159,23 @@ export const getAmountSold = () => async (dispatch) => {
     (response) => {
       dispatch({
         type: GET_AMOUNT_SOLD,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
+
+export const getSuccess = (payment_id) => async (dispatch) => {
+  await axios.get(`http://localhost:3001/mercado/success?payment_id=${payment_id}`).then(
+    (response) => {
+      dispatch({
+        type: GET_SUCCESS,
         payload: response.data,
       });
     },
