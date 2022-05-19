@@ -1,69 +1,97 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import "./AdminOrders.css";
-import {
-  getPayments,
-  getQuantitySold,
-  getAmountSold,
-} from "../../redux/actions/mercadopagoActions";
 import AdminCardPayment from "../AdminCardPayment/AdminCardPayment";
 import { getMostSell } from "../../redux/actions/productActions";
+import { Link } from "react-router-dom";
+import { getMetaOrders } from "../../redux/actions/metamaskActions";
 
-export default function AdminOrders({ viewOrder }) {
+export default function AdminOrders({ viewOrder, metaOrder }) {
   const dispatch = useDispatch();
-  const payments = useSelector((state) => state.mercadoReducer.pagos);
-  const price = useSelector((state) => state.mercadoReducer.price);
-  const amount = useSelector((state) => state.mercadoReducer.amount);
+  /* const payments = useSelector((state) => state.mercadoReducer.pagos); */
+  /* const price = useSelector((state) => state.mercadoReducer.price); */
+  /* const amount = useSelector((state) => state.mercadoReducer.amount); */
   const sell = useSelector((state) => state.productReducer.productosTop);
-  console.log(sell);
+  const meta = useSelector((state) => state.metamaskReducer.status);
   useEffect(() => {
+    dispatch(getMetaOrders());
     dispatch(getMostSell());
-    dispatch(getPayments());
-    dispatch(getQuantitySold());
-    dispatch(getAmountSold());
   }, [dispatch]);
 
+  const totalVentas = meta
+    ? meta?.map((a) =>
+        a.productList
+          .map((a) => a.UserProduct.quantity)
+          .reduce((a, b) => {
+            return a + b;
+          }, 0)
+      )
+    : "hola";
   return (
     <div className="container-articulos">
       <div className="container_stats">
         <div className="container_productos">
           <p>Total Ventas</p>
-          {<h1>${price?.order}</h1>}
+          <h1>
+            {meta ? (
+              meta?.reduce((a, b) => {
+                /* console.log(b?.productList.map(a => a.UserProduct.quantity).reduce((a,b)=>{ return a + b}), "hola") */
+                return a + b.total;
+              }, 0)
+            ) : (
+              <p className="text-no-products">Loading...</p>
+            )}
+          </h1>
         </div>
         <div className="container_productos">
-          <p>Pruductos Vendidos</p>
-          <h1>{amount?.amount}</h1>
+          <p>Productos Vendidos</p>
+          <h1>
+            {meta ? (
+              totalVentas?.reduce((a, b) => {
+                return a + b;
+              })
+            ) : (
+              <p className="text-no-products">Loading...</p>
+            )}
+          </h1>
         </div>
       </div>
-        <h2>Top productos mas vendidos</h2>
+      <h2 className="top_h2">Top productos mas vendidos</h2>
       <div className="trabajo">
         {sell?.map((producto, i) => {
           return (
             <div className="matematicas">
-              <img src={producto.image} alt="none" className="imagen_top"/>
-              <p>#{i+1}: {producto.name}</p>
+              <Link
+                to={`/producto/${producto.id}`}
+                style={{ text_decoration: "none" }}
+              >
+                <img src={producto.image} alt="none" className="imagen_top" />
+              </Link>
+              <p>
+                #{i + 1}: {producto.name}
+              </p>
             </div>
           );
         })}
       </div>
       <div>
-        {payments.length ? (
+        {meta ? (
           <div>
-            {payments.length ? (
+            {meta ? (
               <div>
-                {payments?.map(
-                  (producto, i) => (
-                    <AdminCardPayment
-                      viewOrder={viewOrder}
-                      key={i}
-                      status_delivery={producto.status_delivery}
-                      email={producto.email}
-                      total_paid_amount={producto.total_paid_amount}
-                      order_id={producto.order_id}
-                    />
-                  )
-                  /* picture, name, price, quantity, size, */
-                )}
+                {meta?.map((metap, i) => (
+                  <AdminCardPayment
+                    key={i}
+                    metaOrder={metaOrder}
+                    email={metap.email}
+                    order_id={metap.payment_id}
+                    total={metap.total}
+                    status={metap.status}
+                    status_detail={metap.status_detail}
+                    array={metap.productList}
+                    sendAddress={metap.sendAddress}
+                  />
+                ))}
               </div>
             ) : (
               <p className="text-no-products">

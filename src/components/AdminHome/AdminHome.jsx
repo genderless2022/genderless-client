@@ -7,13 +7,15 @@ import { AdminCreate } from '../AdminCreate/AdminCreate';
 import AdminDetail from '../AdminDetail/AdminDetail';
 import AdminRoles from '../AdminRoles/AdminRoles';
 import AdminOrders from '../AdminOrders/AdminOrders';
-import AdminView from '../AdminView/AdminView';
+import AdminMetaOrder from '../AdminMetaOrder/AdminMetaOrder';
 
 function AdminHome() {
   const [drawerActive, setDraweActive] = useState(false)
   const [state, setState] = useState("")
   const [productSend, setProductSend] = useState(null)
-  const [order, setOrder] = useState("")
+  /* const [order, setOrder] = useState("") */
+  const [producto, setProduct] = useState(null)
+  const [user, setUser] = useState(null)
   // const [disabled, setDisabled] = useState(false)
   const activeDrawer = () => {
       setDraweActive(!drawerActive)
@@ -23,13 +25,22 @@ function AdminHome() {
     setProductSend(product)
     setState("orders")
   }
-  const viewOrder = (order) =>{
+ /*  const viewOrder = (order) =>{
     setOrder(order)
     setState("view")
+  } */
+  const metaOrder = (array, sendAddress, status, delivery, total) => {
+    /* console.log(array, sendAddress); */
+    setUser({sendAddress, status, delivery, total})
+    setProduct(array)
+    setState("meta")
   }
   const handleHome = () => {
     setState("")
     // setDisabled(false)
+  }
+  const backState = () => {
+    setState("ordenes")
   }
 
   // const DrawerContents = () => (
@@ -62,8 +73,9 @@ function AdminHome() {
         {
           state === "" ? <AdminGetProducts receiveProduct={receiveProduct} activeDrawer={activeDrawer} />
           : state === "orders" ? <AdminEdit product={productSend} handleHome={handleHome} activeDrawer={activeDrawer} /> 
-          : state === "ordenes" ? <AdminOrders viewOrder={viewOrder}/>
-          : state === "view" ? <AdminView id={order}/>
+          : state === "ordenes" ? <AdminOrders /* viewOrder={viewOrder} */ metaOrder={metaOrder}/>
+          /* : state === "view" ? <AdminView id={order} back={backState}/> */
+          : state === "meta" ? <AdminMetaOrder producto={producto} back={backState} sendAddress={user}/>
           : state === "crear" ? <AdminCreate handleHome={handleHome} />
           : state === "desactivados" ? <AdminGetProductsDisabled />
           : state === "mi cuenta" ? <AdminDetail />
