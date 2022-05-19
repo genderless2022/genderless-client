@@ -92,16 +92,20 @@
     transition: all 0.3s ease;
 }
 
-.form-submit-login{
-    height: 100%;
-    width: 30%;
+.register-btn-admin-roles {
+    margin: 5px;
+    padding: 5px;
+    height: 31px;
+    width: 16rem;
     background-color: #E7BF50;
     color: #0E1428;
-    border-radius: 3px;
-    font-weight: 1000;
-    padding: 5px;
     border: none;
-    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+.register-btn-admin-roles:hover {
+    background-color: #0E1428;
+    color: #EBEBEB;
 }

@@ -36,7 +36,6 @@ function AdminRoles() {
     
     const handleSubmit = (e) => { 
         e.preventDefault();
-        console.log('findUser', findUser)
         if(permission !== '') {
             if(findUser) {
                 dispatch(updateRol({email: email, permission: permission, token: tokenUser}));
