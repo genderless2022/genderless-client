@@ -68,7 +68,8 @@ const AdminEdit = ({activeDrawer, handleHome, product}) => {
             }
         }
     }
-
+//         return ((!pathname.includes("admin") && pathname !=="/")  &&
+// !pathname.includes("producto") &&
     useEffect(()=>{
         dispatch(getProducts())
     },[dispatch])
@@ -82,7 +83,7 @@ const AdminEdit = ({activeDrawer, handleHome, product}) => {
             "disabled": false,
             "category": selectCategory
         }
-        dispatch(editProduct({sendData, token: tokenUser})); 
+            dispatch(editProduct(sendData));        
         handleHome();
         activeDrawer();
     };

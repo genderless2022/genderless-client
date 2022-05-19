@@ -6,7 +6,7 @@ import { ADD_META_ORDER, ERROR, GET_META_ORDERS, GET_META_USER_ORDERS, PUT_META_
     status: '',
   };
   function metamaskReducer( state = initialState, action) {
-    console.log('metaAction', action.payload)
+    /* console.log('metaAction', action.payload) */
     switch (action.type) {
       case ADD_META_ORDER:
         return { ...state, order: action.payload };
@@ -15,7 +15,7 @@ import { ADD_META_ORDER, ERROR, GET_META_ORDERS, GET_META_USER_ORDERS, PUT_META_
       case GET_META_USER_ORDERS:
         return { ...state, ordersUser: action.payload };
       case PUT_META_ORDER:
-        return { ...state, status: action.payload };
+        return { ...state };
     
 
       case ERROR:
@@ -26,4 +26,3 @@ import { ADD_META_ORDER, ERROR, GET_META_ORDERS, GET_META_USER_ORDERS, PUT_META_
     }
   }
   export default metamaskReducer;
-  

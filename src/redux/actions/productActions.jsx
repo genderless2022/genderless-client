@@ -6,6 +6,7 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const ERROR = 'ERROR';
+export const GET_MOST_SELL = 'GET_MOST_SELL';
 /*****
  * FILTROS
  *****/
@@ -94,10 +95,9 @@ export const deleteProduct = (id) => async (dispatch) => {
 };
 
 // Habilitada
-export const editProduct = ({sendData, token}) => async (dispatch) => {
-  await axios.put('http://localhost:3001/productos/putproduct', sendData,{headers: {
-    'Authorization': 'Bearer ' + token
-  }}).then(
+export const editProduct = (sendData) => async (dispatch) => {
+  console.log(sendData, '<<action>>')
+  await axios.put('http://localhost:3001/productos/putproduct', sendData).then(
       (response) => {
         dispatch({
           type: EDIT_PRODUCT,
@@ -209,6 +209,24 @@ export const getDiscounts = () => async (dispatch) => {
     (response) => {
       dispatch({
         type: GET_PRODUCTS,
+        payload: response.data,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: ERROR,
+        payload: error.error,
+      });
+    },
+  );
+};
+
+// Usando...
+export const getMostSell = (cateory) => async (dispatch) => {
+  await axios.get(`http://localhost:3001/productos/sell`).then(
+    (response) => {
+      dispatch({
+        type: GET_MOST_SELL,
         payload: response.data,
       });
     },

@@ -77,10 +77,10 @@ function Home({alert, setAlert}) {
               <NavDropdown title="Precio" id="basic-nav-dropdown">
                 <NavDropdown.Item  onClick={() => dispatch(getProducts())}>Todos</NavDropdown.Item>
                 <NavDropdown.Item  onClick={() => filterPrice('ASC')}>
-                Menor a mayor
+                Mayor a menor
                 </NavDropdown.Item>
                 <NavDropdown.Item  onClick={() => filterPrice('DESC')}>
-                Mayor a menor
+                Menor a mayor                
                 </NavDropdown.Item>
                 <NavDropdown.Item  onClick={() => filterDiscounts()}>
                 Descuentos
