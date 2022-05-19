@@ -15,7 +15,17 @@ function CardSlim({ image, name, size, stock, price, index, discount, id, quanti
   const user = cookie.get('user')?.user
   const shoppingCookie = cookie.get('shopping')
   const totalShoppingCookie = cookie.get('totalShopping')
-  
+  const [modal, setModal] = useState("")
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const modalDelete = (value) => {
+    setModal(value)
+    handleShow()
+  }
+
   useEffect(() => {
     dispatch(totalShopping([index, subtotal]))
     if(user) {
@@ -53,10 +63,7 @@ function CardSlim({ image, name, size, stock, price, index, discount, id, quanti
     }
   }
 
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+ 
 
   return (
     <div className="card-slim-container">
@@ -105,11 +112,8 @@ function CardSlim({ image, name, size, stock, price, index, discount, id, quanti
           </div>
       </div>
       <div className="card-slim-2">
-        
-      <Button variant="primary" onClick={handleShow} className="btn-delete-cart">
-        {!stock ? "Eliminar de Favoritos" : "Eliminar del carrito"}
-      </Button>
-
+      <button onClick={() => modalDelete("Está seguro de eliminar este producto?")} className="btn-delete-cart"  >{!stock ? "Eliminar de Favoritos" : "Eliminar del carrito"}</button>
+      </div>
       <Modal
         show={show}
         onHide={handleClose}
@@ -120,18 +124,15 @@ function CardSlim({ image, name, size, stock, price, index, discount, id, quanti
           <Modal.Title>Advertencia</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          seguro que queres borrar?
+          {modal}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Cerrar
+            No
           </Button>
           <Button variant="primary" onClick={() => handleDelete()} >Si</Button>
         </Modal.Footer>
       </Modal>
-          
-      
-      </div>
     </div>
   )
 }
