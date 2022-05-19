@@ -12,7 +12,6 @@ import { getUser } from "../../redux/actions/userActions";
 
 function validate(input){
     let errors = {};
-    console.log(errors)
     
     if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(input.password)){
         errors.password = "*Campo requerido";
@@ -27,9 +26,7 @@ function validate(input){
 export default function EditPassword  () {
     let cookie = new Cookies();
     const userEdit = useSelector(state => state.userReducer.usuario)
-    // console.log('useselector',userEdit)
     const user = cookie.get('user')
-    // console.log('cookie',user)
     const tokenUser = cookie.get('user')?.tokenSession
 
     const nav = useNavigate();

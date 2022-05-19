@@ -13,7 +13,6 @@ import { getUser } from "../../redux/actions/userActions";
 
 function validate(input){
     let errors = {};
-    console.log(errors)
     if(!/^[a-z A-Z]+$/.test(input.name)||input.name?.length<3 || input.name?.length>30){
         errors.name = "*Campo requerido";
     }

@@ -36,7 +36,6 @@ function productReducer( state = initialState, action) {
     case FILTER_BY_NAME:
       const TodoslosProds = state.productosFilter
       const filterProdsName = TodoslosProds.filter(el => el.name.toLowerCase().includes(action.payload)) 
-      console.log(filterProdsName)
       return {
           ...state,
           productos: filterProdsName

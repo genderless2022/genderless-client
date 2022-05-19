@@ -12,7 +12,6 @@ import { getUser } from "../../redux/actions/userActions";
 
 function validate(input){
     let errors = {};
-    console.log(errors)
     if(!/^[a-z A-Z]+$/.test(input.name)||input.name?.length<3 || input.name?.length>30){
         errors.name = "*Campo requerido";
     }
@@ -46,9 +45,7 @@ function validate(input){
 export default function EditUser  () {
     let cookie = new Cookies();
     const userEdit = useSelector(state => state.userReducer.usuario)
-    // console.log('reducer', userEdit)
     const user = cookie.get('user')
-    // console.log('cookie', user)
     const nav = useNavigate();
     const dispatch = useDispatch();
     const[errors, setErrors] = useState({});
@@ -66,7 +63,6 @@ export default function EditUser  () {
          
      })
     const tokenUser = cookie.get('user')?.tokenSession;
-    console.log('editarusuario', tokenUser)
 
   useEffect(() => {
         dispatch(getUser({ email: user.email, token:tokenUser}))

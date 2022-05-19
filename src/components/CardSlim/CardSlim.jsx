@@ -31,8 +31,6 @@ function CardSlim({ image, name, size, stock, price, index, discount, id, quanti
       , { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
 
       const totalCart = totalShoppingCookie
-      console.log('totalShoppingCookie', totalShoppingCookie)
-      console.log('totalCart', totalCart)
       deleteProductShopping()
     }
   },[dispatch, count]);

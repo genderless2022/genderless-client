@@ -46,13 +46,11 @@ function Home({alert, setAlert}) {
   
   
   const prodsss = productos.map(p => p.CategoryName);
-  console.log(prodsss, 'prodsss')
 
   function onlyUnique(value, index, self) { 
     return self.indexOf(value) === index;
   }
   var unique = prodsss.filter( onlyUnique ); // devuelve array sin repetidos
-  console.info(unique)
 
   return (
     <>
@@ -63,8 +61,8 @@ function Home({alert, setAlert}) {
             <Nav className="me-auto">
               <NavDropdown title="Categorias" id="basic-nav-dropdown">
                 <NavDropdown.Item  onClick={() => dispatch(getProducts())}>Todos</NavDropdown.Item>
-              {unique.map(p => (
-                  <NavDropdown.Item  onClick={() => filterCategory(p)}>
+              {unique.map((p, i) => (
+                  <NavDropdown.Item  key={i} onClick={() => filterCategory(p)}>
                     {p}
                   </NavDropdown.Item>
               ))
@@ -101,11 +99,11 @@ function Home({alert, setAlert}) {
 
       <div className="containerCardsHome">
         {productos.length !== 0 ? (
-          prodsFinal.map((producto) => (
-            <>
+          prodsFinal.map((producto, i) => (
+            <div key={i}>
               <Card
                 style={{ width: "18rem", marginBottom: "2%", height: "30rem" }}
-                key={producto.id}
+                
               >
                 <Link
                   to={"/producto/" + producto.id}
@@ -135,7 +133,7 @@ function Home({alert, setAlert}) {
                 
 
               </Card>
-            </>
+            </div>
           ))
         ) : 
         

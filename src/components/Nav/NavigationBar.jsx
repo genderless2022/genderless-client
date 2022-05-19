@@ -35,8 +35,6 @@ const {pathname} = window.location;
   let balance = state.balance
 
   useEffect(() => {
-    console.log(user)
-
   }, [user])
   /**
      //!--------- BUSQUEDA ----------------------------------
@@ -48,19 +46,17 @@ const {pathname} = window.location;
      function handleInputChange(event) {
          event.preventDefault();
          setName(event.target.value.toLowerCase());
-         console.log(name, 'HandleChange')
      }
    
      function handleSubmit(event) {
          event.preventDefault();
          dispatch(getProductsbyName(name))
          setName('')
-         console.log(name, 'HandleSubmit')
         }
 
 
         
-        return ((!pathname.includes("admin") && pathname !=="/" && !pathname.includes("producto"))  &&
+        return ((!pathname.includes("admin") && pathname !=="/")  &&
 
 <Navbar bg="dark" expand="lg" >
   <Container fluid >
@@ -92,17 +88,20 @@ const {pathname} = window.location;
       { localStorage.getItem('balance') ? Number(localStorage.getItem('balance')).toFixed(5) + ' ETH' : null }
 
       </Nav>
-      <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>
-        <FormControl
-          type="search"
-          placeholder="Buscar producto"
-          className="me-2"
-          aria-label="Search"
-          value={name}
-          onChange={(e) => handleInputChange(e)}
-        />
-        <Button type="submit" variant="outline-warning">Buscar</Button>
-      </Form>
+      {
+        !pathname.includes("producto") &&
+        <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>
+          <FormControl
+            type="search"
+            placeholder="Buscar producto"
+            className="me-2"
+            aria-label="Search"
+            value={name}
+            onChange={(e) => handleInputChange(e)}
+          />
+          <Button type="submit" variant="outline-warning">Buscar</Button>
+        </Form>
+      }
 
       <div style={{ marginTop: '10px'}}>
         <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/shoppingcart">  <FiShoppingCart/></Link>
