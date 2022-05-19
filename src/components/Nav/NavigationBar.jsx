@@ -15,12 +15,16 @@ import Cookies from 'universal-cookie';
 import { userLogout } from '../../redux/actions/userActions';
 import ConnectGoogle from '../ConnectGoogle/ConnectGoogle';
 import Chatbot from 'react-chatbot-kit';
+import { getFavorites } from '../../redux/actions/favoritesActions';
+import { getShopping } from '../../redux/actions/shoppingActions';
 
 function NavigationBar() {
 const {pathname} = window.location;
   const cookies = new Cookies();
   const user = useSelector( (state) => state.userReducer.usuario)
   const productos = useSelector((state) => state.productReducer.productos);
+
+
 
   const nav = useNavigate()
   const logout = () => {
@@ -36,6 +40,8 @@ const {pathname} = window.location;
 
   useEffect(() => {
     console.log(user)
+    dispatch(getFavorites({email: user?.user?.email}))
+    dispatch(getShopping({email: user?.user?.email}))
 
   }, [user])
   /**
@@ -58,9 +64,14 @@ const {pathname} = window.location;
          console.log(name, 'HandleSubmit')
         }
 
+  
+        const favs = useSelector((state) => state.favoriteReducer.favorites);
+        const shop = useSelector((state) => state.shoppingReducer.products);
 
+        console.log(favs, 'favs')
+        console.log(shop, 'shop')
         
-        return ((!pathname.includes("admin") && pathname !=="/" && !pathname.includes("producto"))  &&
+        return ((pathname.includes("home") || pathname.includes("miscompras") || pathname.includes("user/profile"))  &&
 
 <Navbar bg="dark" expand="lg" >
   <Container fluid >
@@ -91,6 +102,12 @@ const {pathname} = window.location;
       }
       { localStorage.getItem('balance') ? Number(localStorage.getItem('balance')).toFixed(5) + ' ETH' : null }
 
+      {
+        cookies.get('user')?.user.permission === 'admin' ?
+        <Nav.Link href="/admin" style={{ maxHeight: '100px', color: 'white' }}>Admin</Nav.Link>
+        : null
+      }
+
       </Nav>
       <Form className="d-flex"  onSubmit={(e) => handleSubmit(e)}>
         <FormControl
@@ -105,8 +122,8 @@ const {pathname} = window.location;
       </Form>
 
       <div style={{ marginTop: '10px'}}>
-        <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/shoppingcart">  <FiShoppingCart/></Link>
-        <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/favorites">  <FaRegHeart/></Link>
+        <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/shoppingcart">  <FiShoppingCart/> <span style={{ fontSize: '12px', background: 'red', padding: ' 5px 10px', borderRadius: '50%' }}>{shop.length}</span> </Link>
+        <Link style={{ margin: '40px', color: 'white', textDecoration: 'none', fontSize: '1.3rem' }} to="/favorites">  <FaRegHeart/> <span style={{ fontSize: '12px', background: 'red', padding: ' 5px 10px', borderRadius: '50%' }}>{favs.length}</span> </Link>
       </div>
     </Navbar.Collapse>
   </Container>
