@@ -79,7 +79,7 @@ function CardFavorites({ image, name, stock_by_size, price, discount, id, delete
             </div>
         </div>
     <div className="card-slim-2">
-    <button onClick={() => modalDelete("Está seguro de eliminar este producto?")} className="btn-delete-cart"  >{!stock ? "Eliminar de Favoritos" : "Eliminar del carrito"}</button>
+    <button onClick={() => modalDelete("Está seguro de eliminar este producto?")} className="btn-delete-cart"  >{"Eliminar de Favoritos"}</button>
     </div>
     <Modal
         show={show}
