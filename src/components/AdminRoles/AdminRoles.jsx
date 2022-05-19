@@ -112,6 +112,4 @@ function AdminRoles() {
         </div>
     )
 }
-export default AdminRoles
-
-
+export default  AdminRoles

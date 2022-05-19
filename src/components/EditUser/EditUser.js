@@ -8,7 +8,7 @@ import Cookies from "universal-cookie";
 import { TiArrowBack } from 'react-icons/ti';
 import {Link} from 'react-router-dom'
 import { getUser } from "../../redux/actions/userActions";
-
+import {Modal, Button} from 'react-bootstrap'
 
 function validate(input){
     let errors = {};
@@ -63,6 +63,17 @@ export default function EditUser  () {
          
      })
     const tokenUser = cookie.get('user')?.tokenSession;
+    console.log('editarusuario', tokenUser)
+     const [modal, setModal] = useState("")
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const modalEdit = (value) => {
+    setModal(value)
+    handleShow()
+  }
 
   useEffect(() => {
         dispatch(getUser({ email: user.email, token:tokenUser}))
@@ -83,10 +94,12 @@ export default function EditUser  () {
     function onSubmit(e){
         e.preventDefault();
         if(!input.name || !input.lastName || !input.email || !input.dni|| !input.address|| !input.province  || !input.postal|| !input.phone  ){
-        alert("no completo todo el formulario!")}
+         modalEdit("no completo todo el formulario!")
+        }
         else{
-        dispatch(updateUser({...input, token: tokenUser}))
-        alert('Datos actualizados')
+        modalEdit('Datos actualizados')
+        dispatch(updateUser(input))
+        
         setInput({
             name:'',
             lastName: '',
@@ -101,7 +114,7 @@ export default function EditUser  () {
         nav('/user/profile')
     }
     }
-
+    
             
     return (
         <div className="container-register-form">
@@ -220,14 +233,31 @@ export default function EditUser  () {
                                 </div>
                                 </div>
                                 <div className="form-submit">
-                                <input
-                                type="submit"
-                                value="Actualizar"
-                                />
-                             </div>
+                                <input 
+                                type="submit" value="Actualizar" />
+                                </div>
                          </div>
                    </div>
             </form>
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+            <Modal.Header closeButton>
+                <Modal.Title>Advertencia</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {modal}
+            </Modal.Body>
+            <Modal.Footer>
+                {/* <Button variant="secondary" onClick={handleClose}>
+                    completar
+                </Button> */}
+                <Button variant="primary" onClick={handleClose} >Continuar</Button>
+            </Modal.Footer>
+            </Modal>
 
         </div>
     );
