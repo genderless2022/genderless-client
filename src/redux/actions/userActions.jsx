@@ -14,7 +14,6 @@ export const ERROR = 'ERROR';
 
 // Habilitada
 export const getUsers = ({token}) => async (dispatch) => {
-  console.log(token, 'action')
   await axios.get('http://localhost:3001/usuarios', {headers: {'Authorization': 'Bearer ' + token}}).then(
     (response) => {
       dispatch({
@@ -87,7 +86,6 @@ export const createUser = ({
 export const updateUser = ({
   name, lastName, picture, born, dni, email, address, province, phone, postal,sendAddress, token 
 }) => async (dispatch) => {
-  // console.log(token, '>>action>>')
   await axios.put('http://localhost:3001/usuario', {
     name,
     lastName,
@@ -123,7 +121,6 @@ export const updateUser = ({
 export const forgotPassword = ({
   email
 }) => async (dispatch) => {
-  console.log('email', email)
   await axios.post('http://localhost:3001/usuario/forgotpassword', {
     email,
   }).then(
@@ -146,8 +143,6 @@ export const forgotPassword = ({
 export const updatePassword = ({
   email, password, token 
 }) => async (dispatch) => {
-  // console.log(token, '<<action')
-  // console.log('acton', password)
   await axios.put('http://localhost:3001/usuario/password', {
     email,
     password
@@ -175,13 +170,13 @@ export const updatePassword = ({
 
 //Habilitada
 export const userLogin = ({ email, password}) => async (dispatch) => {
+  console.log('email,password', email,password)
 const cookies = new Cookies();
   axios.post('http://localhost:3001/usuario/login',{
       email,
       password,
   }).then( response => {
     cookies.set('user', response.data, { path: '/', expires: new Date(Date.now() + (3600 * 1000 * 24))}); //1 dia
-    console.log(cookies.get('user')); // Pacman
       dispatch({
           type: USER_LOGIN,
           payload: response.data
@@ -234,7 +229,6 @@ export const userLogout = ({
     (response) => {
     cookies.remove('user');
     localStorage.clear()
-    console.log(cookies.get('user')); // Pacman
       dispatch({
         type: USER_LOGOUT,
         payload: response.data,

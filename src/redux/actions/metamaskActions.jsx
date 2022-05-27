@@ -75,6 +75,7 @@ export const getMetaUserOrders = (
 export const putMetaOrder = (
     {payment_id, email, newStatus, statusDetail}
 ) => async (dispatch) => {
+  console.log(payment_id, email, newStatus, statusDetail);
   await axios.put(`http://localhost:3001/metamask/order`, {
     payment_id, 
     email, 
