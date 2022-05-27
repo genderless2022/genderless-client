@@ -170,6 +170,7 @@ export const updatePassword = ({
 
 //Habilitada
 export const userLogin = ({ email, password}) => async (dispatch) => {
+  console.log('email,password', email,password)
 const cookies = new Cookies();
   axios.post('http://localhost:3001/usuario/login',{
       email,
