@@ -8,6 +8,7 @@ import { getMetaOrders } from "../../redux/actions/metamaskActions";
 
 export default function AdminOrders({ viewOrder, metaOrder }) {
   const dispatch = useDispatch();
+  /*test comment*/
   /* const payments = useSelector((state) => state.mercadoReducer.pagos); */
   /* const price = useSelector((state) => state.mercadoReducer.price); */
   /* const amount = useSelector((state) => state.mercadoReducer.amount); */
