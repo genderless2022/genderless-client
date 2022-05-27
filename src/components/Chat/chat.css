@@ -6,11 +6,12 @@
   .chatlist-h5 {
     font-size: 15px;
   }
-  
-
-  
+    
 }
 .support-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     margin: auto;
     background-color: #ebebeb;
     min-height: 70vh;
@@ -31,6 +32,7 @@
     border-right: 1px solid #0e1428;
     padding: 0 20px 0 0px;
     width: 30%;
+    display: contents;
   }
   .chatlist-heading {
     display: flex;
@@ -130,6 +132,7 @@
     flex-grow: 1;
     width: 70%;
     font-size: 12px;
+    display: contents;
   }
 
   .content-header {
@@ -192,7 +195,9 @@
     border-radius: 10px 10px 0 10px;
     max-width: 50%;
     min-width: 215px;
+    
   }
+ 
   .chat-item-content .chat-meta {
     justify-content: space-between;
     display: flex;
@@ -211,10 +216,11 @@
   .chat-item.other {
     flex-direction: row-reverse;
     transform-origin: left;
+    
   }
   .chat-item.other .chat-item-content {
-    background-color: #ebebeb;
-    color: #0e1428;
+    background-color: #0e1428;
+    color: #ebebeb;
     border-radius: 10px 10px 10px 0;
     max-width: 50%;
   }
@@ -223,7 +229,9 @@
     color: #ebebeb;
   }
   .content-footer {
+    
     padding-top: 0px;
+    
   }
   .sendNewMessage {
     background-color: #ebebeb;
