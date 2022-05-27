@@ -6,19 +6,19 @@
 }
 
 .matematicas{
-  width: 200px;
-  color: black;
+  max-width: 200px;
+  color: rgb(255, 255, 255);
   font-weight: 600;
 }
 
 .imagen_top{
-  height: 170px;
-  width: 150px;
+  max-height: 170px;
+  max-width: 150px;
 }
 
 .top_h2{
   margin-bottom: 10px;
-  color: #4b4c52;
+  color: #ffffff;
 }
 
 /* parte de las ordenes*/
@@ -36,11 +36,11 @@
   justify-content: space-around;
 }
 .container_productos {
-  width: 440px;
-  height: 105px;
-  background-color: #191c24;
+  min-width: 440px;
+  min-height: 105px;
+  background-color: white;
   border-radius: 5px;
-  color: aliceblue;
+  color: #191c24;
   font-size: 20px;
 }
 .container_info {
