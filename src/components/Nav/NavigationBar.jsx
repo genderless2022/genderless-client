@@ -26,10 +26,11 @@ const {pathname} = window.location;
   const stateNav = useSelector((state) => state.shoppingReducer.nav);
   const nav = useNavigate();
 
-  const user = userReducer || userCookie
+  const user = userReducer && userCookie
 
   const logout = () => {
     dispatch(userLogout(cookies.get('user')?.tokenSession))
+    cookies.remove('user')
     nav('/')
   }
 
@@ -61,10 +62,6 @@ const {pathname} = window.location;
   const favsReducer = useSelector((state) => state.favoriteReducer.favorites);
   const shopReducer = useSelector((state) => state.shoppingReducer.products);
 
-  // useEffect(() => {
-  //   console.log('cambio')
-  // },[])
-
   const shopping = cookies.get('shopping');
   const favorites = cookies.get('favorite');
 
@@ -72,21 +69,9 @@ const {pathname} = window.location;
   const shop = shopReducer.length ? shopReducer : shopping
 
   useEffect(() => {
-    console.log(user)
     dispatch(getFavorites({ email : user?.email }))
     dispatch(getShopping({ email: user?.email }))
   },[stateNav])
-
-  console.log('user', user)
-  
-  console.log('shopReducer', shopReducer)
-  console.log('favsReducer', favsReducer)
-
-  console.log('shopping', shopping)
-  console.log('favorites', favorites)
-
-  console.log(favs, 'favs')
-  console.log(shop, 'shop')
   
 return ((!pathname.includes("admin") && pathname !=="/")  &&
 
@@ -126,7 +111,7 @@ return ((!pathname.includes("admin") && pathname !=="/")  &&
         : null
       } */}
       {
-        <Button variant="outline-warning" onClick={() => nav("/admin")}>Panel Admin</Button>
+        // <Button variant="outline-warning" onClick={() => nav("/admin")}>Panel Admin</Button>
       }
 
       </Nav>
