@@ -18,10 +18,6 @@ function Home({alert, setAlert, soporte}) {
     soporte();
   }, []);
 
-  // useEffect(()=> {
-  // },[])
-
-
   /**
    //!--------- PAGINADO ----------------------------------
    **/

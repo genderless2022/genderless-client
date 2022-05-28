@@ -3,6 +3,8 @@ import '../CardSlim/CardSlim.css';
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
 import { deletefavProduct } from '../../redux/actions/favoritesActions';
+import { stateNav  } from "../../redux/actions/shoppingActions"
+
 import { Link } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import { Button, Modal } from 'react-bootstrap';
@@ -15,6 +17,7 @@ function CardFavorites({ image, name, stock_by_size, price, discount, id, delete
     const favoriteCookie = cookie.get('favorite')
 
     const handleDeleteFav = (e) => {
+        dispatch(stateNav())
         e.preventDefault();        
         if(user){
             dispatch(deletefavProduct({ productId: Number(id), email : user?.email }))

@@ -3,7 +3,8 @@ import './CardSlim.css';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom"
-import { returnProduct, totalDeleteShopping, totalShopping, putProduct  } from "../../redux/actions/shoppingActions"
+import { returnProduct, totalDeleteShopping, totalShopping, putProduct, stateNav  } from "../../redux/actions/shoppingActions"
+
 import Cookies from "universal-cookie";
 import { Button, Modal } from 'react-bootstrap';
 
@@ -47,6 +48,7 @@ function CardSlim({ image, name, size, stock, price, index, discount, id, quanti
   },[dispatch, count]);
 
   const handleDelete = () => {
+    dispatch(stateNav())
     dispatch(totalDeleteShopping(index))
     if(user){
       dispatch(returnProduct({ email: user?.email, productId: Number(id) }))
